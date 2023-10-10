@@ -7,11 +7,18 @@ Laboratory works of Web Services Technologies. Software Engineering Course ITMO 
 - [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 - [JUnit 5](https://junit.org/junit5/)
 - [Maven 4](https://maven.apache.org/)
+- Docker (for database and server deployment)
 
 ## Dev deps
 
 - [pre-commit](https://pre-commit.com/)
 - [python 3.9+](https://www.python.org/downloads/release/python-3913/) (for pre-commit setup)
+
+### Start database and application server with docker
+
+```shell
+docker compose -f deploy/local.docker-compose.yml up --build -d
+```
 
 ### Setup dev env
 

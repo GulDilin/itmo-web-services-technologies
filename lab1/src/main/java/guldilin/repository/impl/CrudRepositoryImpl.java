@@ -58,7 +58,8 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
 
     public String test(String a, String b, String c, String d, String e, String f, String g) {
         return null;
-    };
+    }
+    ;
 
     @Override
     public Session openSession() {

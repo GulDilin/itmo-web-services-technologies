@@ -7,7 +7,6 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class CityDTO extends AbstractEntityDTO {
     private String name;
     private Integer area;

@@ -1,0 +1,45 @@
+version: "3.9"
+services:
+  tws-db:
+    restart: unless-stopped
+    container_name: tws-db
+    image: postgres:14.7
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=1000"
+      - "-c"
+      - "shared_buffers=1GB"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-admin}
+      - POSTGRES_DB=tws_db
+    volumes:
+      - ../.database:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  tws-wildfly:
+    restart: unless-stopped
+    container_name: tws-wildfly
+    image: quay.io/wildfly/wildfly:27.0.0.Final-jdk17
+    ports:
+      - "8080:8080"
+      - "9990:9990"
+    volumes:
+      - ../.database:/var/lib/postgresql/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"

@@ -3,13 +3,14 @@ package guldilin.service.impl;
 import guldilin.dto.CityDTO;
 import guldilin.dto.FilterArgumentDTO;
 import guldilin.dto.PaginationDTO;
-import guldilin.dto.PaginationInfoDTO;
+import guldilin.dto.PaginationRequestDTO;
 import guldilin.entity.City;
 import guldilin.repository.interfaces.CityRepository;
 import guldilin.service.interfaces.CityService;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
+import jakarta.jws.soap.SOAPBinding;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 @WebService(serviceName = "CityService", targetNamespace = "http://localhost:8080/CityService")
+@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public final class CityServiceImpl implements CityService {
     @Inject
     private CityRepository cityRepository;
@@ -46,7 +48,7 @@ public final class CityServiceImpl implements CityService {
     @WebMethod
     public PaginationDTO<CityDTO> findByFilter(
             @WebParam(name = "filters") List<FilterArgumentDTO> filters,
-            @WebParam(name = "pagination") PaginationInfoDTO pagination) {
+            @WebParam(name = "pagination") PaginationRequestDTO pagination) {
         return PaginationDTO.<CityDTO>builder()
                 .items(cityRepository.findByCriteria(this.createFilterQuery()).stream()
                         .map(City::mapToDTO)

@@ -4,14 +4,12 @@ import guldilin.entity.AbstractEntity;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public abstract class AbstractEntityDTO implements Serializable {
     private Integer id;
     private Date creationAt;

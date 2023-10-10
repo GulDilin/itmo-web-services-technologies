@@ -45,6 +45,12 @@
                 </dependency>
                 <dependency>
                     <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>jaxws-ri</artifactId>
+                    <version>${jaxws.version}</version>
+                    <type>pom</type>
+                </dependency>
+                <dependency>
+                    <groupId>com.sun.xml.ws</groupId>
                     <artifactId>rt</artifactId>
                     <version>${jaxws.version}</version>
                 </dependency>
