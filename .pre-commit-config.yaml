@@ -1,0 +1,43 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+        name: (Global) Run trailing-whitespace
+      - id: end-of-file-fixer
+        name: (Global) Run end-of-file-fixer
+      - id: check-yaml
+        name: (Global) Run check-yaml
+      - id: check-added-large-files
+        name: (Global) Run check-added-large-files
+
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.4
+    hooks:
+      - id: forbid-crlf
+        name: (Global) Forbid CRLF line endings
+        exclude: \.(txt|lock)$
+      - id: remove-crlf
+        name: (Global) Remove CRLF line endings
+        exclude: \.(txt|lock)$
+
+  - repo: local
+    hooks:
+      - id: checkstyle
+        name: Checkstyle
+        language: system
+        entry: mvn checkstyle:check
+        pass_filenames: false
+      - id: spotless-apply
+        name: spotless apply
+        language: system
+        entry: mvn spotless:apply
+        pass_filenames: false
+
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.17
+    hooks:
+      - id: mdformat
