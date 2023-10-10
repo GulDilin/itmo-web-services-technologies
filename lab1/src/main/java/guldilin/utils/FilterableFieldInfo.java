@@ -1,18 +1,16 @@
 package guldilin.utils;
 
-
+import java.util.function.Function;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.function.Function;
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FilterableField<T> {
+public class FilterableFieldInfo<T> {
     private Class<T> tClass;
     private FilterActionType actionType;
     private String name;

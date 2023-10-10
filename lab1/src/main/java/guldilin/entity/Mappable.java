@@ -1,7 +1,7 @@
 package guldilin.entity;
 
-import guldilin.dto.AbstractDTO;
+import guldilin.dto.AbstractEntityDTO;
 
 public interface Mappable {
-    AbstractDTO mapToDTO();
+    AbstractEntityDTO mapToDTO();
 }

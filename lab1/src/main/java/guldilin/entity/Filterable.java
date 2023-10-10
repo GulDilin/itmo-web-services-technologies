@@ -1,12 +1,11 @@
 package guldilin.entity;
 
-import guldilin.utils.FilterableField;
-
+import guldilin.utils.FilterableFieldInfo;
 import java.util.Collections;
 import java.util.List;
 
 public interface Filterable {
-    static List<FilterableField<?>> getFilterableFields() {
+    static List<FilterableFieldInfo<?>> getFilterableFields() {
         return Collections.emptyList();
     }
 }

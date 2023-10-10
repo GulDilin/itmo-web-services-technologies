@@ -1,23 +1,18 @@
 package guldilin.repository.interfaces;
 
 import guldilin.entity.Mappable;
-import org.hibernate.Session;
-
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
 import java.util.Optional;
+import org.hibernate.Session;
 
 public interface CrudRepository<T extends Mappable> {
     List<T> findByCriteria(CriteriaQuery<T> criteriaQuery);
 
+    Long countByCriteria(CriteriaQuery<Long> criteriaQuery);
+
     Optional<T> findById(Integer id);
-
-    T update(T entry) throws EntryNotFound;
-
-    void save(T entry);
-
-    void deleteById(Integer id) throws EntryNotFound;
 
     EntityManager createEntityManager();
 

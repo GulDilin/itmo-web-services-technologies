@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class FilterAction {
-    private FilterableField<?> filterableField;
+    private FilterableFieldInfo<?> filterableField;
     private FilterActionType filterActionType;
     private String value;
 }

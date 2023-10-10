@@ -14,7 +14,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.plugin.validation>VERBOSE</maven.plugin.validation>
-        <checkstyle.config.location>google_checks.xml</checkstyle.config.location>
+        <log4j.version>2.20.0</log4j.version>
     </properties>
 
     <groupId>guldilin</groupId>
@@ -121,9 +121,8 @@
                 <executions>
                     <execution>
                         <id>checkstyle</id>
-                        <phase>verify</phase>
+                        <phase>validate</phase>
                         <configuration>
-                            <configLocation>${checkstyle.config.location}</configLocation>
                             <failsOnError>true</failsOnError>
                             <consoleOutput>true</consoleOutput>
                             <failOnViolation>true</failOnViolation>
@@ -160,12 +159,10 @@
                         </format>
                     </formats>
                     <java>
-                        <googleJavaFormat>
-                            <version>1.18.1</version>
-                            <style>AOSP</style>
-                            <reflowLongStrings>true</reflowLongStrings>
-                            <formatJavadoc>false</formatJavadoc>
-                        </googleJavaFormat>
+                        <importOrder />
+                        <removeUnusedImports />
+                        <toggleOffOn/>
+                        <palantirJavaFormat />
                     </java>
                 </configuration>
             </plugin>

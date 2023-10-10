@@ -1,23 +1,23 @@
 package guldilin.dto;
 
 import guldilin.entity.AbstractEntity;
+import java.io.Serializable;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public abstract class AbstractDTO {
+public abstract class AbstractEntityDTO implements Serializable {
     private Integer id;
     private Date creationAt;
     private Date updatedAt;
 
-    public AbstractDTO(AbstractEntity entity) {
+    public AbstractEntityDTO(AbstractEntity entity) {
         this.creationAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();
     }
