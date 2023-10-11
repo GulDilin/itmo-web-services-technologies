@@ -2,6 +2,6 @@ package guldilin.repository.interfaces;
 
 import org.hibernate.SessionFactory;
 
-public interface SessionFactoryBuilder {
+public interface SessionFactoryBuilderA {
     SessionFactory getSessionFactory();
 }

@@ -1,14 +1,20 @@
 package guldilin.repository.factory;
 
 import guldilin.repository.impl.SessionFactoryBuilderImpl;
-import guldilin.repository.interfaces.SessionFactoryBuilder;
-import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.Produces;
+import guldilin.repository.interfaces.SessionFactoryBuilderA;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Named;
+import jakarta.inject.Singleton;
+import lombok.NoArgsConstructor;
 
-@ApplicationScoped
-public class SessionFactoryBuilderFactory {
+import java.io.Serializable;
+
+@Singleton
+@NoArgsConstructor
+public class SessionFactoryBuilderFactory implements Serializable {
     @Produces
-    public SessionFactoryBuilder getSessionFactoryBuilder() {
+    @Named("SessionFactoryBuilder")
+    public SessionFactoryBuilderA getSessionFactoryBuilder() {
         return new SessionFactoryBuilderImpl();
     }
 }

@@ -1,20 +1,34 @@
 package guldilin.repository.factory;
 
 import guldilin.repository.impl.CityRepositoryImpl;
+import guldilin.repository.impl.SessionFactoryBuilderImpl;
 import guldilin.repository.interfaces.CityRepository;
-import guldilin.repository.interfaces.SessionFactoryBuilder;
+import guldilin.repository.interfaces.SessionFactoryBuilderA;
+import jakarta.inject.Named;
+import jakarta.inject.Singleton;
+import lombok.NoArgsConstructor;
+
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.ws.rs.Produces;
+import javax.enterprise.inject.New;
+import javax.enterprise.inject.Produces;
 
-@ApplicationScoped
-public class CityRepositoryFactory {
+import java.io.Serializable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    @Inject
-    private SessionFactoryBuilder sessionFactoryBuilder;
+@Singleton
+@NoArgsConstructor
+public class CityRepositoryFactory implements Serializable {
+
+//    @Inject
+//    @New
+//    private SessionFactoryBuilderA sessionFactoryBuilder;
 
     @Produces
+    @Named("CityRepository")
     public CityRepository getCityRepository() {
-        return new CityRepositoryImpl(sessionFactoryBuilder);
+        return new CityRepositoryImpl(new SessionFactoryBuilderImpl());
     }
 }

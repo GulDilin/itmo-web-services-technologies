@@ -6,7 +6,7 @@ Laboratory works of Web Services Technologies. Software Engineering Course ITMO 
 
 - [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 - [JUnit 5](https://junit.org/junit5/)
-- [Maven 4](https://maven.apache.org/)
+- [Maven 3](https://maven.apache.org/)
 - Docker (for database and server deployment)
 
 ## Dev deps
@@ -26,7 +26,7 @@ docker compose -f deploy/local.docker-compose.yml up --build -d
 1. Check path to java in `PATH` env variable (default is `C:\Program Files\Java\jdk-17\bin`)
 1. Check `JAVA_HOME` env variable (default is `C:\Program Files\Java\jdk-17`)
 1. Check `java -version`
-1. Download Maven 4 [\[download\]](https://dlcdn.apache.org/maven/maven-4/)
+1. Download Maven 3 [\[download\]](https://dlcdn.apache.org/maven/maven-3/)
 1. Extract downloaded archive to target installation directory (for example `C:\Program Files\maven`)
 1. Add maven `bin` directory to `PATH` env variable (for example `C:\Program Files\maven\bin`)
 1. Check `mvn -version`

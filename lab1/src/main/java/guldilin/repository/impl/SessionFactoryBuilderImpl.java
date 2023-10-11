@@ -3,10 +3,9 @@ package guldilin.repository.impl;
 import guldilin.config.PropertyKey;
 import guldilin.entity.City;
 import guldilin.exceptions.ErrorMessages;
-import guldilin.repository.interfaces.SessionFactoryBuilder;
+import guldilin.repository.interfaces.SessionFactoryBuilderA;
 import java.util.Optional;
 import java.util.Properties;
-import javax.enterprise.context.ApplicationScoped;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import lombok.NoArgsConstructor;
@@ -18,9 +17,8 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
-@ApplicationScoped
 @NoArgsConstructor
-public class SessionFactoryBuilderImpl implements SessionFactoryBuilder {
+public class SessionFactoryBuilderImpl implements SessionFactoryBuilderA {
     private static final Logger logger = LogManager.getLogger(SessionFactoryBuilderImpl.class);
 
     private void lookupDataSource() throws Exception {
@@ -64,6 +62,7 @@ public class SessionFactoryBuilderImpl implements SessionFactoryBuilder {
         settings.put(Environment.SHOW_SQL, PropertyKey.DB_SHOW_SQL.lookupValue());
         settings.put(Environment.USE_SQL_COMMENTS, PropertyKey.DB_USE_SQL_COMMENTS.lookupValue());
         settings.put(Environment.HBM2DDL_AUTO, "validate");
+        logger.info(String.format("Loaded database properties: %s", settings));
         return settings;
     }
 
