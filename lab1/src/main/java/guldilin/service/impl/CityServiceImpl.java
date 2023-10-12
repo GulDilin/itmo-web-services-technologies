@@ -7,15 +7,17 @@ import guldilin.dto.PaginationRequestDTO;
 import guldilin.entity.City;
 import guldilin.repository.interfaces.CityRepository;
 import guldilin.service.interfaces.CityService;
-import jakarta.inject.Inject;
-import jakarta.jws.WebMethod;
-import jakarta.jws.WebParam;
-import jakarta.jws.WebService;
-import jakarta.jws.soap.SOAPBinding;
+//import jakarta.inject.Inject;
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+
+import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 

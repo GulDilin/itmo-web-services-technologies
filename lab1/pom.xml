@@ -13,32 +13,83 @@
     <packaging>war</packaging>
 
     <dependencies>
+        <!-- CDI 2.0 with SE context loader-->
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>2.0</version>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>${javaee.version}</version>
             <scope>provided</scope>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api -->
-        <dependency>
-            <groupId>jakarta.enterprise</groupId>
-            <artifactId>jakarta.enterprise.cdi-api</artifactId>
-            <version>4.0.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/jakarta.inject/jakarta.inject-api -->
-        <dependency>
-            <groupId>jakarta.inject</groupId>
-            <artifactId>jakarta.inject-api</artifactId>
-            <version>2.0.1</version>
+            <exclusions>
+                <exclusion>
+                    <!-- A little hack to use CDI 2.0 with SE context loader-->
+                    <groupId>javax.exterprise</groupId>
+                    <artifactId>cdi-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jboss.weld.se/weld-se-core -->
+        <!-- CDI 2.0 implementation by Weld-->
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
-            <version>4.0.1.Final</version>
+            <version>3.1.9.Final</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>com.sun.xml.ws</groupId>-->
+<!--            <artifactId>jaxws-rt</artifactId>-->
+<!--            <version>${jaxws.version}</version>-->
+<!--            <type>pom</type>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-ri</artifactId>
+            <version>${jaxws.version}</version>
+            <type>pom</type>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.sun.xml.ws</groupId>-->
+<!--            <artifactId>rt</artifactId>-->
+<!--            <version>${jaxws.version}</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.enterprise</groupId>-->
+<!--            <artifactId>jakarta.enterprise.cdi-api</artifactId>-->
+<!--            <version>3.0.1</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/jakarta.inject/jakarta.inject-api &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.inject</groupId>-->
+<!--            <artifactId>jakarta.inject-api</artifactId>-->
+<!--            <version>2.0.1</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.weld.se</groupId>-->
+<!--            <artifactId>weld-se</artifactId>-->
+<!--            <version>2.4.6.Final</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.jboss.weld/weld-core-impl &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.weld</groupId>-->
+<!--            <artifactId>weld-core-impl</artifactId>-->
+<!--            <version>3.0.4.Final</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.apache.deltaspike.cdictrl/deltaspike-cdictrl-api -->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.deltaspike.cdictrl</groupId>-->
+<!--            <artifactId>deltaspike-cdictrl-api</artifactId>-->
+<!--            <version>1.9.6</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>

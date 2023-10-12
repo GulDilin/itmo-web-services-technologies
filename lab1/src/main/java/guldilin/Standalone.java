@@ -2,18 +2,23 @@ package guldilin;
 
 import guldilin.config.PropertyKey;
 import guldilin.repository.impl.SessionFactoryBuilderImpl;
+import guldilin.repository.interfaces.TestRepo;
 import guldilin.service.impl.CityServiceImpl;
-import jakarta.enterprise.inject.se.SeContainer;
-import jakarta.xml.ws.Endpoint;
+import javax.xml.ws.Endpoint;
+
+import guldilin.service.impl.TestServiceImpl;
+import guldilin.service.interfaces.TestService;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.jboss.weld.environment.se.Weld;
-import org.jboss.weld.environment.se.WeldContainer;
+//import org.jboss.weld.environment.se.Weld;
+//import org.jboss.weld.environment.se.WeldContainer;
 
+import javax.enterprise.inject.se.SeContainer;
+import javax.enterprise.inject.se.SeContainerInitializer;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -85,16 +90,19 @@ public final class Standalone {
         formatter.printHelp("server", defineCliOptions());
     }
 
-    public static void publish(Map<PropertyKey, String> params) {
+    public static void publish(SeContainer container, Map<PropertyKey, String> params) {
         try {
             String baseUrl = params.get(PropertyKey.APP_URL);
             System.out.println("Start server on address " + baseUrl);
             String urlCityService = String.valueOf(new URL(String.format("%s/CityService", baseUrl)));
-            new SessionFactoryBuilderImpl().getSessionFactory();
-            Endpoint.publish(urlCityService, new CityServiceImpl());
+//            new SessionFactoryBuilderImpl().getSessionFactory();
+//            Endpoint.publish(urlCityService, new CityServiceImpl());
+            TestService t = container.select(TestServiceImpl.class).get();
+            Endpoint.publish(urlCityService, t);
 
         } catch (Exception e) {
             System.err.println("Error during server start. Reason: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -112,12 +120,10 @@ public final class Standalone {
                 printHelp();
                 return;
             }
-//            try(SeContainer container = SeContainerInitializer.newInstance().initialize()) {
-//                publish(validateOptions(line));
-//            }
-            try(WeldContainer container = new Weld().initialize()) {
-                publish(validateOptions(line));
-            }
+            SeContainerInitializer initializer = SeContainerInitializer.newInstance();
+            SeContainer container = initializer.initialize();
+            publish(container, validateOptions(line));
+            System.out.println("Server endpoints published");
         } catch (ParseException exp) {
             System.err.println("Parsing failed. Reason: " + exp.getMessage());
             printHelp();

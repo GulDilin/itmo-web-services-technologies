@@ -6,6 +6,7 @@ import guldilin.exceptions.ErrorMessages;
 import guldilin.repository.interfaces.SessionFactoryBuilderA;
 import java.util.Optional;
 import java.util.Properties;
+import javax.ejb.Stateless;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
 @NoArgsConstructor
+@Stateless
 public class SessionFactoryBuilderImpl implements SessionFactoryBuilderA {
     private static final Logger logger = LogManager.getLogger(SessionFactoryBuilderImpl.class);
 

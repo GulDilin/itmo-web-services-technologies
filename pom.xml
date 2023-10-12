@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
         <javaee.version>8.0.1</javaee.version>
-        <jaxws.version>4.0.1</jaxws.version>
+        <jaxws.version>2.3.3</jaxws.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.plugin.validation>VERBOSE</maven.plugin.validation>
@@ -28,34 +28,34 @@
         <module>lab1</module>
     </modules>
 
-    <profiles>
-        <!-- add back the jax-ws SOAP dependencies which were removed in JDK11 -->
-        <profile>
-            <id>jdk11</id>
-            <activation>
-                <jdk>[11,)</jdk>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>com.sun.xml.ws</groupId>
-                    <artifactId>jaxws-rt</artifactId>
-                    <version>${jaxws.version}</version>
-                    <type>pom</type>
-                </dependency>
-                <dependency>
-                    <groupId>com.sun.xml.ws</groupId>
-                    <artifactId>jaxws-ri</artifactId>
-                    <version>${jaxws.version}</version>
-                    <type>pom</type>
-                </dependency>
-                <dependency>
-                    <groupId>com.sun.xml.ws</groupId>
-                    <artifactId>rt</artifactId>
-                    <version>${jaxws.version}</version>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
+<!--    <profiles>-->
+<!--        &lt;!&ndash; add back the jax-ws SOAP dependencies which were removed in JDK11 &ndash;&gt;-->
+<!--        <profile>-->
+<!--            <id>jdk11</id>-->
+<!--            <activation>-->
+<!--                <jdk>[11,)</jdk>-->
+<!--            </activation>-->
+<!--            <dependencies>-->
+<!--                <dependency>-->
+<!--                    <groupId>com.sun.xml.ws</groupId>-->
+<!--                    <artifactId>jaxws-rt</artifactId>-->
+<!--                    <version>${jaxws.version}</version>-->
+<!--                    <type>pom</type>-->
+<!--                </dependency>-->
+<!--                <dependency>-->
+<!--                    <groupId>com.sun.xml.ws</groupId>-->
+<!--                    <artifactId>jaxws-ri</artifactId>-->
+<!--                    <version>${jaxws.version}</version>-->
+<!--                    <type>pom</type>-->
+<!--                </dependency>-->
+<!--                <dependency>-->
+<!--                    <groupId>com.sun.xml.ws</groupId>-->
+<!--                    <artifactId>rt</artifactId>-->
+<!--                    <version>${jaxws.version}</version>-->
+<!--                </dependency>-->
+<!--            </dependencies>-->
+<!--        </profile>-->
+<!--    </profiles>-->
 
     <build>
         <pluginManagement>

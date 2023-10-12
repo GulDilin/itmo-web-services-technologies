@@ -6,4 +6,5 @@ import javax.ejb.EJB;
 import javax.ejb.Local;
 
 
+@Local
 public interface CityRepository extends CrudRepository<City> {}
