@@ -7,7 +7,9 @@ Laboratory works of Web Services Technologies. Software Engineering Course ITMO 
 - [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 - [JUnit 5](https://junit.org/junit5/)
 - [Maven 3](https://maven.apache.org/)
-- Docker (for database and server deployment)
+- [Docker](https://www.docker.com/) (for database and server deployment)
+- [Flyway](https://flywaydb.org/) For database migrations
+- [Weld](https://weld.cdi-spec.org/) For Provide CDI in Standalone application
 
 ## Dev deps
 
@@ -33,11 +35,32 @@ docker compose -f deploy/local.docker-compose.yml up --build -d
 
 ### Commands
 
+#### Run environment
+
+To run `database` and `WildFly` server you can use docker-compose file located in
+`deploy/local.docker-compose.yml`
+
+```shell
+docker compose -f deploy/local/docker-compose.yml up --build -d
+```
+
 #### Build
+
+This command will build next artifacts:
+
+- executable `JAR` package
+- packaged `WAR` for deployment on application server
 
 ```shell
 mvn clean install
 ```
+
+#### Add database migrations
+
+Project uses Flyway migrations. They are stored in /resources/db/migrations.
+File naming format is `V{x}_{x}__{description}.sql`
+
+So to add migration create new sql file and add commands.
 
 #### Check codestyle
 

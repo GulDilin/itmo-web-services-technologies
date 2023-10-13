@@ -5,6 +5,7 @@ import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class CityDTO extends AbstractEntityDTO {

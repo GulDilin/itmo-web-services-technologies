@@ -1,7 +1,7 @@
 package guldilin;
 
+import guldilin.config.FlywayMigrator;
 import guldilin.config.PropertyKey;
-import guldilin.repository.interfaces.SessionFactoryProvider;
 import guldilin.service.interfaces.CityService;
 import jakarta.enterprise.inject.se.SeContainer;
 import jakarta.xml.ws.Endpoint;
@@ -21,7 +21,6 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.hibernate.SessionFactory;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 
@@ -91,12 +90,9 @@ public final class Standalone {
             String baseUrl = params.get(PropertyKey.APP_URL);
             System.out.println("Start server on address " + baseUrl);
             String urlCityService = String.valueOf(new URL(String.format("%s/CityService", baseUrl)));
-            //            new SessionFactoryBuilderImpl().getSessionFactory();
-            //            Endpoint.publish(urlCityService, new CityServiceImpl());
-            SessionFactoryProvider sessionFactoryBuilder =
-                    container.select(SessionFactoryProvider.class).get();
-            SessionFactory sessionFactory = sessionFactoryBuilder.provideSessionFactory();
-            sessionFactory.close();
+            FlywayMigrator flywayMigrator =
+                    container.select(FlywayMigrator.class).get();
+            flywayMigrator.doMigration();
             CityService cityService = container.select(CityService.class).get();
             Endpoint.publish(urlCityService, cityService);
 

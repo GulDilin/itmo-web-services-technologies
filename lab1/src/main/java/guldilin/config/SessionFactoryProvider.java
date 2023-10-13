@@ -1,11 +1,10 @@
-package guldilin.repository.impl;
+package guldilin.config;
 
-import guldilin.config.PropertyKey;
 import guldilin.entity.City;
 import guldilin.exceptions.ErrorMessages;
-import guldilin.repository.interfaces.SessionFactoryProvider;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Singleton;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,8 +24,8 @@ import org.postgresql.ds.PGSimpleDataSource;
 
 @NoArgsConstructor
 @ApplicationScoped
-public class SessionFactoryBuilderImpl implements SessionFactoryProvider {
-    private static final Logger logger = LogManager.getLogger(SessionFactoryBuilderImpl.class);
+public class SessionFactoryProvider {
+    private static final Logger logger = LogManager.getLogger(SessionFactoryProvider.class);
 
     private void lookupDataSource() throws Exception {
         InitialContext cxt = Optional.of(new InitialContext())
@@ -39,8 +38,10 @@ public class SessionFactoryBuilderImpl implements SessionFactoryProvider {
                 .orElseThrow(() -> new Exception("Datasource lookup failed"));
     }
 
-    private Configuration provideHibernateConfiguration() {
-        final Configuration configuration = new Configuration();
+    @Produces
+    @Singleton
+    public Configuration provideHibernateConfiguration() {
+        final Configuration configurationLocal = new Configuration();
         final Properties settings = new Properties();
         settings.put(Environment.DIALECT, PropertyKey.DB_DIALECT.lookupValue());
         settings.put(
@@ -59,19 +60,14 @@ public class SessionFactoryBuilderImpl implements SessionFactoryProvider {
         settings.put(Environment.ORDER_INSERTS, "true");
         settings.put(Environment.SHOW_SQL, PropertyKey.DB_SHOW_SQL.lookupValue());
         settings.put(Environment.USE_SQL_COMMENTS, PropertyKey.DB_USE_SQL_COMMENTS.lookupValue());
-        settings.put(Environment.HBM2DDL_DATABASE_ACTION, "validate");
-        configuration.setProperties(settings);
-        addAnnotatedClasses(configuration, Stream.of(City.class).collect(Collectors.toList()));
-        return configuration;
+        configurationLocal.setProperties(settings);
+        addAnnotatedClasses(configurationLocal, Stream.of(City.class).collect(Collectors.toList()));
+        return configurationLocal;
     }
 
-    @Override
     @Produces
-    public SessionFactory provideSessionFactory() {
-        Configuration configuration = provideHibernateConfiguration();
-        DataSource dataSource = provideDataSource(configuration);
-        ConnectionProvider connectionProvider = provideConnectionProvider(dataSource, configuration);
-
+    @Singleton
+    public SessionFactory provideSessionFactory(Configuration configuration, ConnectionProvider connectionProvider) {
         final ServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .addService(ConnectionProvider.class, connectionProvider)
                 .applySettings(configuration.getProperties())
@@ -80,6 +76,8 @@ public class SessionFactoryBuilderImpl implements SessionFactoryProvider {
         return configuration.buildSessionFactory(registry);
     }
 
+    @Produces
+    @Singleton
     public DataSource provideDataSource(Configuration configuration) {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setUrl(configuration.getProperty(Environment.URL));
@@ -88,15 +86,9 @@ public class SessionFactoryBuilderImpl implements SessionFactoryProvider {
         return dataSource;
     }
 
-    public Properties provideHibernateProperties() {
-        Properties settings = new Properties();
-        settings.put(Environment.SHOW_SQL, PropertyKey.DB_SHOW_SQL.lookupValue());
-        settings.put(Environment.USE_SQL_COMMENTS, PropertyKey.DB_USE_SQL_COMMENTS.lookupValue());
-        settings.put(Environment.HBM2DDL_DATABASE_ACTION, "validate");
-        return settings;
-    }
-
-    public ConnectionProvider provideConnectionProvider(DataSource dataSource, Configuration configuration) {
+    @Produces
+    @Singleton
+    public ConnectionProvider provideConnectionProvider(Configuration configuration, DataSource dataSource) {
         DatasourceConnectionProviderImpl connectionProvider = new DatasourceConnectionProviderImpl();
         connectionProvider.setDataSource(dataSource);
 

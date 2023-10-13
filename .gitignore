@@ -28,3 +28,4 @@ venv/
 target/
 
 .database/
+.jpb/
