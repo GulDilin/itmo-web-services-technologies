@@ -1,24 +1,10 @@
 package guldilin;
 
 import guldilin.config.PropertyKey;
-import guldilin.repository.impl.SessionFactoryBuilderImpl;
-import guldilin.repository.interfaces.TestRepo;
-import guldilin.service.impl.CityServiceImpl;
-import javax.xml.ws.Endpoint;
-
-import guldilin.service.impl.TestServiceImpl;
-import guldilin.service.interfaces.TestService;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-//import org.jboss.weld.environment.se.Weld;
-//import org.jboss.weld.environment.se.WeldContainer;
-
-import javax.enterprise.inject.se.SeContainer;
-import javax.enterprise.inject.se.SeContainerInitializer;
+import guldilin.repository.interfaces.SessionFactoryProvider;
+import guldilin.service.interfaces.CityService;
+import jakarta.enterprise.inject.se.SeContainer;
+import jakarta.xml.ws.Endpoint;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -28,19 +14,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.hibernate.SessionFactory;
+import org.jboss.weld.environment.se.Weld;
+import org.jboss.weld.environment.se.WeldContainer;
 
 public final class Standalone {
-    private final static List<PropertyKey> DB_OPTIONS = Stream.of(PropertyKey.DB_HOST,
-            PropertyKey.DB_DIALECT,
-            PropertyKey.DB_DRIVER,
-            PropertyKey.DB_PROTOCOL,
-            PropertyKey.DB_PORT,
-            PropertyKey.DB_NAME,
-            PropertyKey.DB_USERNAME,
-            PropertyKey.DB_PASSWORD
-    ).toList();
+    private static final List<PropertyKey> DB_OPTIONS = Stream.of(
+                    PropertyKey.DB_HOST,
+                    PropertyKey.DB_DIALECT,
+                    PropertyKey.DB_DRIVER,
+                    PropertyKey.DB_PROTOCOL,
+                    PropertyKey.DB_PORT,
+                    PropertyKey.DB_NAME,
+                    PropertyKey.DB_USERNAME,
+                    PropertyKey.DB_PASSWORD)
+            .toList();
 
     private Standalone() {
         // empty constructor
@@ -52,7 +47,7 @@ public final class Standalone {
         options.addOption(PropertyKey.APP_HOST.getCmdAlias(), true, PropertyKey.APP_HOST.getDescription());
         options.addOption(PropertyKey.APP_PORT.getCmdAlias(), true, PropertyKey.APP_PORT.getDescription());
 
-        DB_OPTIONS.forEach(o-> options.addOption(o.getCmdAlias(), true, o.getDescription()));
+        DB_OPTIONS.forEach(o -> options.addOption(o.getCmdAlias(), true, o.getDescription()));
         return options;
     }
 
@@ -61,6 +56,7 @@ public final class Standalone {
         return Optional.ofNullable(line.getOptionValue(propertyKey.getCmdAlias()))
                 .orElse(propertyKey.getDefaultValue());
     }
+
     public static String getOptionValue(CommandLine line, PropertyKey propertyKey) {
         return line.getOptionValue(propertyKey.getCmdAlias());
     }
@@ -95,10 +91,14 @@ public final class Standalone {
             String baseUrl = params.get(PropertyKey.APP_URL);
             System.out.println("Start server on address " + baseUrl);
             String urlCityService = String.valueOf(new URL(String.format("%s/CityService", baseUrl)));
-//            new SessionFactoryBuilderImpl().getSessionFactory();
-//            Endpoint.publish(urlCityService, new CityServiceImpl());
-            TestService t = container.select(TestServiceImpl.class).get();
-            Endpoint.publish(urlCityService, t);
+            //            new SessionFactoryBuilderImpl().getSessionFactory();
+            //            Endpoint.publish(urlCityService, new CityServiceImpl());
+            SessionFactoryProvider sessionFactoryBuilder =
+                    container.select(SessionFactoryProvider.class).get();
+            SessionFactory sessionFactory = sessionFactoryBuilder.provideSessionFactory();
+            sessionFactory.close();
+            CityService cityService = container.select(CityService.class).get();
+            Endpoint.publish(urlCityService, cityService);
 
         } catch (Exception e) {
             System.err.println("Error during server start. Reason: " + e.getMessage());
@@ -120,8 +120,8 @@ public final class Standalone {
                 printHelp();
                 return;
             }
-            SeContainerInitializer initializer = SeContainerInitializer.newInstance();
-            SeContainer container = initializer.initialize();
+            Weld initializer = new Weld();
+            WeldContainer container = initializer.initialize();
             publish(container, validateOptions(line));
             System.out.println("Server endpoints published");
         } catch (ParseException exp) {

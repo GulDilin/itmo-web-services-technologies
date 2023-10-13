@@ -2,7 +2,6 @@ package guldilin.repository.impl;
 
 import guldilin.entity.AbstractEntity;
 import guldilin.repository.interfaces.CrudRepository;
-import guldilin.repository.interfaces.SessionFactoryBuilderA;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -10,14 +9,15 @@ import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudRepository<T> {
 
-    private final SessionFactoryBuilderA sessionFactoryBuilder;
+    private final SessionFactory sessionFactory;
     private final Class<T> tClass;
 
-    public CrudRepositoryImpl(Class<T> tClass, SessionFactoryBuilderA sessionFactoryBuilder) {
-        this.sessionFactoryBuilder = sessionFactoryBuilder;
+    public CrudRepositoryImpl(Class<T> tClass, SessionFactory sessionFactoryBuilder) {
+        this.sessionFactory = sessionFactoryBuilder;
         this.tClass = tClass;
     }
 
@@ -53,11 +53,11 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
 
     @Override
     public EntityManager createEntityManager() {
-        return sessionFactoryBuilder.getSessionFactory().createEntityManager();
+        return sessionFactory.createEntityManager();
     }
 
     @Override
     public Session openSession() {
-        return sessionFactoryBuilder.getSessionFactory().openSession();
+        return sessionFactory.openSession();
     }
 }

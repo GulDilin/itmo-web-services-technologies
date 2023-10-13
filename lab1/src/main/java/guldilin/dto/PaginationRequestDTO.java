@@ -1,7 +1,7 @@
 package guldilin.dto;
 
+import jakarta.validation.constraints.Min;
 import java.io.Serializable;
-import javax.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

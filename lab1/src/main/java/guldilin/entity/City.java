@@ -2,12 +2,12 @@ package guldilin.entity;
 
 import guldilin.dto.CityDTO;
 import guldilin.exceptions.ErrorMessages;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)

@@ -2,17 +2,14 @@ package guldilin.repository.impl;
 
 import guldilin.entity.City;
 import guldilin.repository.interfaces.CityRepository;
-import guldilin.repository.interfaces.SessionFactoryBuilderA;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import org.hibernate.SessionFactory;
 
-import javax.ejb.Stateless;
-
-
-@Stateless
+@ApplicationScoped
 public class CityRepositoryImpl extends CrudRepositoryImpl<City> implements CityRepository {
-//    public CityRepositoryImpl(SessionFactoryBuilderA sessionFactoryBuilder) {
-//        super(City.class, sessionFactoryBuilder);
-//    }
-    public CityRepositoryImpl() {
-        super(City.class, new SessionFactoryBuilderImpl());
+    @Inject
+    public CityRepositoryImpl(SessionFactory sessionFactory) {
+        super(City.class, sessionFactory);
     }
 }

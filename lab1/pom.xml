@@ -13,90 +13,46 @@
     <packaging>war</packaging>
 
     <dependencies>
-        <!-- CDI 2.0 with SE context loader-->
+        <!-- CDI 2.0 with SE context loader (for executable jar packaging) -->
+        <!-- https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api -->
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
-            <version>2.0</version>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>${jakarta.enterprise.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.inject/jakarta.inject-api -->
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>${javaee.version}</version>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <!-- A little hack to use CDI 2.0 with SE context loader-->
-                    <groupId>javax.exterprise</groupId>
-                    <artifactId>cdi-api</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>${jakarta.inject.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jboss.weld.se/weld-se-core -->
         <!-- CDI 2.0 implementation by Weld-->
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
-            <version>3.1.9.Final</version>
+            <version>5.1.2.Final</version>
         </dependency>
+        <!-- /CDI 2.0 -->
 
-<!--        <dependency>-->
-<!--            <groupId>com.sun.xml.ws</groupId>-->
-<!--            <artifactId>jaxws-rt</artifactId>-->
-<!--            <version>${jaxws.version}</version>-->
-<!--            <type>pom</type>-->
-<!--        </dependency>-->
+        <!-- JAX-WS -->
+        <dependency>
+            <groupId>jakarta.xml.ws</groupId>
+            <artifactId>jakarta.xml.ws-api</artifactId>
+            <version>${jakarta.xml.ws.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
-            <artifactId>jaxws-ri</artifactId>
+            <artifactId>jaxws-rt</artifactId>
             <version>${jaxws.version}</version>
-            <type>pom</type>
+            <scope>runtime</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.sun.xml.ws</groupId>-->
-<!--            <artifactId>rt</artifactId>-->
-<!--            <version>${jaxws.version}</version>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>jakarta.enterprise</groupId>-->
-<!--            <artifactId>jakarta.enterprise.cdi-api</artifactId>-->
-<!--            <version>3.0.1</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/jakarta.inject/jakarta.inject-api &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>jakarta.inject</groupId>-->
-<!--            <artifactId>jakarta.inject-api</artifactId>-->
-<!--            <version>2.0.1</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.jboss.weld.se</groupId>-->
-<!--            <artifactId>weld-se</artifactId>-->
-<!--            <version>2.4.6.Final</version>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.jboss.weld/weld-core-impl &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.jboss.weld</groupId>-->
-<!--            <artifactId>weld-core-impl</artifactId>-->
-<!--            <version>3.0.4.Final</version>-->
-<!--        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/org.apache.deltaspike.cdictrl/deltaspike-cdictrl-api -->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.deltaspike.cdictrl</groupId>-->
-<!--            <artifactId>deltaspike-cdictrl-api</artifactId>-->
-<!--            <version>1.9.6</version>-->
-<!--        </dependency>-->
-
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.2</version>
-            <scope>test</scope>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>rt</artifactId>
+            <version>${jaxws.version}</version>
         </dependency>
+        <!-- /JAX-WS -->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -105,11 +61,31 @@
         </dependency>
 
         <!-- database -->
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>6.3.1.Final</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -135,6 +111,15 @@
             <artifactId>commons-cli</artifactId>
             <version>1.5.0</version>
         </dependency>
+
+        <!-- testing -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- /testing -->
     </dependencies>
 
     <build>

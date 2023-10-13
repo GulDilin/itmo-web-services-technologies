@@ -1,11 +1,8 @@
 package guldilin.repository.impl;
 
 import guldilin.repository.interfaces.TestRepo;
+import jakarta.enterprise.context.ApplicationScoped;
 import lombok.NoArgsConstructor;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
-
 
 @NoArgsConstructor
 @ApplicationScoped

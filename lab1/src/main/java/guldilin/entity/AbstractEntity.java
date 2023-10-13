@@ -1,15 +1,13 @@
 package guldilin.entity;
 
+import jakarta.persistence.*;
 import java.sql.Timestamp;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
+@MappedSuperclass
 public abstract class AbstractEntity implements Mappable, Filterable {
     @Column(name = "id")
     @Id
