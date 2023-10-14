@@ -43,9 +43,26 @@ public interface CrudRepository<T extends Mappable> {
      */
     EntityManager createEntityManager();
 
+    /**
+     * Create CriteriaQuery by filter arguments.
+     *
+     * @param filterArguments list of filter fields arguments
+     * @return Generated CriteriaQuery
+     * @throws FieldIsNotFilterable if some filter fields are incorrect
+     */
     CriteriaQuery<T> createFilterQuery(List<FilterArgumentDTO> filterArguments) throws FieldIsNotFilterable;
 
+    /**
+     * Create CriteriaQuery for count elements.
+     *
+     * @return CriteriaQuery
+     */
     CriteriaQuery<Long> createCounterQuery();
 
+    /**
+     * Opens Session.
+     *
+     * @return Session
+     */
     Session openSession();
 }

@@ -40,6 +40,11 @@ public final class Standalone {
         // empty constructor
     }
 
+    /**
+     * Define options for cmd wrapper.
+     *
+     * @return Options
+     */
     public static Options defineCliOptions() {
         Options options = new Options();
         options.addOption("help", false, "Show help message");
@@ -50,17 +55,38 @@ public final class Standalone {
         return options;
     }
 
-    public static String getOptionOrDefault(CommandLine line, PropertyKey propertyKey) {
+    /**
+     * Get option from CLI or default value if option does not present.
+     *
+     * @param line CMD
+     * @param propertyKey Property info
+     * @return Option value
+     */
+    public static String getOptionOrDefault(final CommandLine line, final PropertyKey propertyKey) {
 
         return Optional.ofNullable(line.getOptionValue(propertyKey.getCmdAlias()))
                 .orElse(propertyKey.getDefaultValue());
     }
 
-    public static String getOptionValue(CommandLine line, PropertyKey propertyKey) {
+    /**
+     * Get option value from CLI (without default if not present).
+     *
+     * @param line CMD
+     * @param propertyKey property info
+     * @return option value
+     */
+    public static String getOptionValue(final CommandLine line, final PropertyKey propertyKey) {
         return line.getOptionValue(propertyKey.getCmdAlias());
     }
 
-    public static Map<PropertyKey, String> validateOptions(CommandLine line) throws ParseException {
+    /**
+     * Validate CMD options.
+     *
+     * @param line CMD
+     * @return Map of property-value options
+     * @throws ParseException if cmd arguments are not parsed
+     */
+    public static Map<PropertyKey, String> validateOptions(final CommandLine line) throws ParseException {
         Map<PropertyKey, String> params = new HashMap<>();
         params.put(PropertyKey.APP_HOST, getOptionOrDefault(line, PropertyKey.APP_HOST));
         params.put(PropertyKey.APP_PORT, getOptionOrDefault(line, PropertyKey.APP_PORT));
@@ -73,19 +99,28 @@ public final class Standalone {
         params.put(PropertyKey.APP_URL, url);
 
         DB_OPTIONS.stream()
-                .map(o -> new AbstractMap.SimpleEntry<PropertyKey, String>(o, getOptionValue(line, o)))
+                .map(o -> new AbstractMap.SimpleEntry<>(o, getOptionValue(line, o)))
                 .filter(o -> Objects.nonNull(o.getValue()))
                 .forEach(o -> System.setProperty(o.getKey().name(), o.getValue()));
 
         return params;
     }
 
+    /**
+     * Print help message.
+     */
     public static void printHelp() {
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp("server", defineCliOptions());
     }
 
-    public static void publish(SeContainer container, Map<PropertyKey, String> params) {
+    /**
+     * Publish endpoints.
+     *
+     * @param container CDI container
+     * @param params property-value params map
+     */
+    public static void publish(final SeContainer container, final Map<PropertyKey, String> params) {
         try {
             String baseUrl = params.get(PropertyKey.APP_URL);
             System.out.println("Start server on address " + baseUrl);

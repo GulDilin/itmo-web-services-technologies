@@ -12,6 +12,14 @@ import java.util.List;
 
 @WebService
 public interface CityService {
+    /**
+     * Find elements by field-value filters.
+     *
+     * @param filters List of field-value filters
+     * @param pagination pagination information
+     * @return Found elements
+     * @throws FieldIsNotFilterable for incorrect filters argument
+     */
     @WebMethod
     PaginationDTO<CityDTO> findByFilter(
             @WebParam(name = "filters") List<FilterArgumentDTO> filters,
