@@ -36,29 +36,26 @@
         <!-- /CDI 2.0 -->
 
         <!-- JAX-WS -->
+        <!-- https://mvnrepository.com/artifact/jakarta.xml.ws/jakarta.xml.ws-api-->
         <dependency>
             <groupId>jakarta.xml.ws</groupId>
             <artifactId>jakarta.xml.ws-api</artifactId>
             <version>${jakarta.xml.ws.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-rt -->
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
             <version>${jaxws.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/rt-->
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>rt</artifactId>
             <version>${jaxws.version}</version>
         </dependency>
         <!-- /JAX-WS -->
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
-        </dependency>
 
         <!-- database -->
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
@@ -91,8 +88,8 @@
             <artifactId>hibernate-validator</artifactId>
             <version>8.0.1.Final</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
         <!-- migrations -->
+        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
@@ -102,11 +99,13 @@
         <!-- /database -->
 
         <!-- logging -->
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
             <version>${log4j.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -114,10 +113,20 @@
         </dependency>
         <!-- /logging -->
 
+        <!-- CLI wrapper-->
+        <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli-->
         <dependency>
             <groupId>commons-cli</groupId>
             <artifactId>commons-cli</artifactId>
             <version>1.5.0</version>
+        </dependency>
+        <!-- /CLI wrapper-->
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
         </dependency>
 
         <!-- testing -->
@@ -151,13 +160,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <attachClasses>true</attachClasses>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
             </plugin>
             <plugin>
@@ -165,8 +167,17 @@
                 <artifactId>maven-deploy-plugin</artifactId>
             </plugin>
 
+            <!-- Package to WAR-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <attachClasses>true</attachClasses>
+                </configuration>
+            </plugin>
+            <!-- /Package to WAR-->
 
-            <!-- Package to jar-->
+            <!-- Package to JAR-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -207,7 +218,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- /Package to jar -->
+            <!-- /Package to JAR -->
         </plugins>
     </build>
 </project>

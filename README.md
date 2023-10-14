@@ -2,19 +2,22 @@
 
 Laboratory works of Web Services Technologies. Software Engineering Course ITMO magistracy 2-year
 
-## Used techs
+## Technology Stack
 
 - [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 - [JUnit 5](https://junit.org/junit5/)
 - [Maven 3](https://maven.apache.org/)
-- [Docker](https://www.docker.com/) (for database and server deployment)
 - [Flyway](https://flywaydb.org/) For database migrations
 - [Weld](https://weld.cdi-spec.org/) For Provide CDI in Standalone application
+- [Hibernate](https://hibernate.org/) Database ORM
+- [Jakarta EE](https://jakarta.ee/) Java EE specifications
+- [PostgreSQL](https://www.postgresql.org/) DBMS
 
 ## Dev deps
 
 - [pre-commit](https://pre-commit.com/)
 - [python 3.9+](https://www.python.org/downloads/release/python-3913/) (for pre-commit setup)
+- [Docker](https://www.docker.com/) (for database and server deployment)
 
 ### Start database and application server with docker
 
