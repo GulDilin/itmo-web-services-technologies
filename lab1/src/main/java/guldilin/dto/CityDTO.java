@@ -1,7 +1,11 @@
 package guldilin.dto;
 
 import guldilin.entity.City;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -16,7 +20,12 @@ public class CityDTO extends AbstractEntityDTO {
     private Integer populationDensity;
     private Integer carCode;
 
-    public CityDTO(City city) {
+    /**
+     * Constructor for DTO object from Entity.
+     *
+     * @param city JPA entity.
+     */
+    public CityDTO(final City city) {
         super(city);
         this.name = city.getName();
         this.area = city.getArea();

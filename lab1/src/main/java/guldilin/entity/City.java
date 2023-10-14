@@ -9,7 +9,12 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
 @Entity(name = "city")
@@ -19,7 +24,9 @@ import org.hibernate.proxy.HibernateProxy;
 @AllArgsConstructor
 @Builder
 @ToString
-public class City extends AbstractEntity {
+public final class City extends AbstractEntity {
+    public static final Long MAX_CAR_CODE = 1000L;
+
     @FilterableField
     @Column(name = "name", nullable = false, unique = true)
     @NotBlank(message = ErrorMessages.NOT_BLANK)
@@ -48,37 +55,35 @@ public class City extends AbstractEntity {
 
     @Column(name = "car_code")
     @Min(value = 0, message = ErrorMessages.MIN_0)
-    @Max(value = 1000, message = ErrorMessages.MAX_1000)
+    @Max(value = City.MAX_CAR_CODE, message = ErrorMessages.MAX_1000)
     @FilterableField
     private Integer carCode;
 
+    /**
+     * Create DTO object from this entity.
+     * @return DTO object.
+     */
     @Override
     public CityDTO mapToDTO() {
         return new CityDTO(this);
     }
 
     @Override
-    public final boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null) return false;
         Class<?> oEffectiveClass = o instanceof HibernateProxy
                 ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass()
                 : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy
-                ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
-                : this.getClass();
+        Class<?> thisEffectiveClass = this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
+        assert o instanceof City;
         City city = (City) o;
         return getId() != null && Objects.equals(getId(), city.getId());
     }
 
     @Override
-    public final int hashCode() {
-        return this instanceof HibernateProxy
-                ? ((HibernateProxy) this)
-                        .getHibernateLazyInitializer()
-                        .getPersistentClass()
-                        .hashCode()
-                : getClass().hashCode();
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

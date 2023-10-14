@@ -4,7 +4,11 @@ import guldilin.entity.AbstractEntity;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import java.io.Serializable;
 import java.util.Date;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @EqualsAndHashCode
@@ -17,7 +21,12 @@ public abstract class AbstractEntityDTO implements Serializable {
     private Date creationAt;
     private Date updatedAt;
 
-    public AbstractEntityDTO(AbstractEntity entity) {
+    /**
+     * Constructor for DTO object from Entity.
+     *
+     * @param entity JPA entity.
+     */
+    public AbstractEntityDTO(final AbstractEntity entity) {
         this.id = entity.getId();
         this.creationAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();

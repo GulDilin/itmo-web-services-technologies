@@ -9,17 +9,20 @@ import org.apache.logging.log4j.Logger;
 import org.flywaydb.core.Flyway;
 
 @Singleton
-public class FlywayMigrator {
-    private static final Logger logger = LogManager.getLogger(FlywayMigrator.class);
+public final class FlywayMigrator {
+    private static final Logger LOGGER = LogManager.getLogger(FlywayMigrator.class);
 
     @Inject
-    DataSource dataSource;
+    private DataSource dataSource;
 
+    /**
+     * Run database migrations.
+     */
     @PostConstruct
     public void doMigration() {
-        logger.info("Start migrations running");
+        LOGGER.info("Start migrations running");
         final Flyway flyway = Flyway.configure().dataSource(dataSource).load();
         flyway.migrate();
-        logger.info("Migrations finished");
+        LOGGER.info("Migrations finished");
     }
 }
