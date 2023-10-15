@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PaginationRequestDTO implements Serializable {
-    public static final Integer DEFAULT_LIMIT = 10;
-    public static final Integer MAX_LIMIT = 100;
+    public static final int DEFAULT_LIMIT = 10;
+    public static final int MAX_LIMIT = 100;
 
     @Min(0)
     @Max(PaginationRequestDTO.MAX_LIMIT)

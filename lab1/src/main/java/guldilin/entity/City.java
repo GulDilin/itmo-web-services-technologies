@@ -25,7 +25,7 @@ import org.hibernate.proxy.HibernateProxy;
 @Builder
 @ToString
 public final class City extends AbstractEntity {
-    public static final Long MAX_CAR_CODE = 1000L;
+    public static final long MAX_CAR_CODE = 1000L;
 
     @FilterableField
     @Column(name = "name", nullable = false, unique = true)

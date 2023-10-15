@@ -31,16 +31,14 @@
         <module>lab1</module>
     </modules>
 
-<!--    <dependencyManagement>-->
-        <dependencies>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-                <scope>provided</scope>
-            </dependency>
-        </dependencies>
-<!--    </dependencyManagement>-->
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>
@@ -116,6 +114,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Static Analysis -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
@@ -138,7 +137,9 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- /Static Analysis -->
 
+            <!-- Formatter -->
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
@@ -174,6 +175,7 @@
                     </java>
                 </configuration>
             </plugin>
+            <!-- /Formatter -->
         </plugins>
     </build>
 </project>
