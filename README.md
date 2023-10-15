@@ -19,6 +19,15 @@ Laboratory works of Web Services Technologies. Software Engineering Course ITMO 
 - [python 3.9+](https://www.python.org/downloads/release/python-3913/) (for pre-commit setup)
 - [Docker](https://www.docker.com/) (for database and server deployment)
 
+### Some notes
+
+> **_NOTE:_**  GitHub workflows are set up for that repo.
+> To **bump** `major version` add `BREAKING CHANGE` string to commit message
+
+> **_NOTE:_** If a commit message begins with the string `feat`
+> then the `minor version` will be increased. This works for most
+> common commit metadata for feature additions: "feat: new API" and "feature: new API".
+
 ### Start database and application server with docker
 
 ```shell
