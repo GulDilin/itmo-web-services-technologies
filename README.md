@@ -22,11 +22,11 @@ Laboratory works of Web Services Technologies. Software Engineering Course ITMO 
 ### Some notes
 
 > **_NOTE:_**  GitHub workflows are set up for that repo.
-> To **bump** `major version` add `BREAKING CHANGE` string to commit message
+> To **bump** `major version` add `#major` string to commit message
 
-> **_NOTE:_** If a commit message begins with the string `feat`
-> then the `minor version` will be increased. This works for most
-> common commit metadata for feature additions: "feat: new API" and "feature: new API".
+> **_NOTE:_** To **bump** `minor version` add `#minor` string to commit message
+
+> **_NOTE:_** To **bump** `third level version` add `#patch` string to commit message
 
 ### Start database and application server with docker
 
