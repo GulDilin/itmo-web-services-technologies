@@ -28,6 +28,7 @@ repos:
     hooks:
       - id: checkstyle
         name: Checkstyle
+        types: [ java ]
         language: system
         entry: mvn checkstyle:check
         pass_filenames: false
