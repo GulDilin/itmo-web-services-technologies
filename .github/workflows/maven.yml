@@ -36,11 +36,11 @@ jobs:
       with:
         ignore-maven-wrapper: true
 
-    - name: Bump Version
-      id: bump
-      uses: nnichols/maven-version-bump-action@v3
-      with:
-        github-token: ${{ secrets.github_token }}
+#    - name: Bump Version
+#      id: bump
+#      uses: nnichols/maven-version-bump-action@v3
+#      with:
+#        github-token: ${{ secrets.github_token }}
 
     - name: Print Version
       run: "echo 'New Version: ${{steps.bump.outputs.version}}'"

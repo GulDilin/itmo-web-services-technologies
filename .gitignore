@@ -30,3 +30,5 @@ target/
 .database/
 .jpb/
 /itmo-web-services-technologies.iml
+
+release.properties
