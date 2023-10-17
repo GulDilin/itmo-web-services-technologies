@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -22,10 +21,9 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/*\.(jar|war)
-          tag: ${{ github.ref }}
-          file_glob: true
+          files: |
+            lab1/target/lab1-lab1.jar
+            lab1/target/lab1-lab1.war
