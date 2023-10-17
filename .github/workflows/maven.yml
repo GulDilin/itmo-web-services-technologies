@@ -58,14 +58,5 @@ jobs:
         mvn versions:set -DnewVersion='${{steps.bump.outputs.version}}'
         echo "Set new version to pom.xml"
 
-    - name: Create Tag
-      if: ${{ env.PROJECT_VERSION != steps.bump.outputs.version}}
-      uses: rickstaa/action-create-tag@v1
-      id: "tag_create"
-      with:
-        tag: "v${{ env.PROJECT_VERSION }}"
-        tag_exists_error: false
-        message: "Release version: v${{ env.PROJECT_VERSION }}"
-
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v5
