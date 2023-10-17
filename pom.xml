@@ -29,7 +29,7 @@
         <connection>${scm.url}</connection>
         <developerConnection>${scm.url}</developerConnection>
         <url>${scm.url}</url>
-        <tag>1.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <modules>
