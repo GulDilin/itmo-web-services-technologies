@@ -36,11 +36,27 @@ jobs:
       with:
         ignore-maven-wrapper: true
 
-#    - name: Bump Version
-#      id: bump
-#      uses: nnichols/maven-version-bump-action@v3
-#      with:
-#        github-token: ${{ secrets.github_token }}
+    - name: Get Maven version
+      run: |
+        PROJECT_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression="project.version" -q -DforceStdout)
+        echo "PROJECT_VERSION=$PROJECT_VERSION" >> "$GITHUB_ENV"
+
+    - name: Bump Version
+      id: bump
+      uses: nnichols/maven-version-bump-action@v3
+      with:
+        github-token: ${{ secrets.github_token }}
 
     - name: Print Version
-      run: "echo 'New Version: ${{steps.bump.outputs.version}}'"
+      run: |
+        echo 'New Version: ${{steps.bump.outputs.version}}'
+        echo "Old Version: $PROJECT_VERSION"
+
+    - name: Set New Project Version
+      if: ${{ env.PROJECT_VERSION != steps.bump.outputs.version}}
+      run: |
+        mvn versions:set -DnewVersion='${{steps.bump.outputs.version}}'
+        echo "Set new version to pom.xml"
+
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v5
