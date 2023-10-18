@@ -55,8 +55,17 @@ jobs:
     - name: Set New Project Version
       if: ${{ env.PROJECT_VERSION != steps.bump.outputs.version}}
       run: |
-        mvn versions:set -DnewVersion='${{steps.bump.outputs.version}}'
+        mvn versions:set -DnewVersion='${{ steps.bump.outputs.version }}'
         echo "Set new version to pom.xml"
 
     - name: Commit changes
       uses: stefanzweifel/git-auto-commit-action@v5
+
+    - name: Release
+      if: ${{ env.PROJECT_VERSION != steps.bump.outputs.version}}
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: "${{ steps.bump.outputs.version }}"
+        files: |
+          lab1/target/lab1-lab1.jar
+          lab1/target/lab1-lab1.war
