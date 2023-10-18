@@ -32,12 +32,19 @@ services:
   tws-wildfly:
     restart: unless-stopped
     container_name: tws-wildfly
-    image: quay.io/wildfly/wildfly:27.0.0.Final-jdk17
+    build:
+      context: .
+      dockerfile: wildfly.Dockerfile
+    environment:
+      - DB_HOST=tws-db
+      - DB_PORT=5432
+      - DB_NAME=tws_db
+      - DB_JNDI_NAME=java:/tws_db
+      - DB_USERNAME=${POSTGRES_USER:-postgres}
+      - DB_PASSWORD=${POSTGRES_USER:-admin}
     ports:
       - "8080:8080"
       - "9990:9990"
-    volumes:
-      - ../.database:/var/lib/postgresql/data
     logging:
       driver: "json-file"
       options:

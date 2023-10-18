@@ -52,7 +52,7 @@ public enum PropertyKey implements Serializable {
     /**
      * Database source lookup path.
      */
-    DB_CTX_LOOKUP_PATH(false, "jdbc/tws-db", "Context datasource lookup path for application server", null),
+    DB_JNDI_NAME(false, "java:/tws", "Context datasource lookup JNDI name", null),
     /**
      * Application host.
      */

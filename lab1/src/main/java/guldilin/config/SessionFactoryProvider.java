@@ -80,25 +80,6 @@ final class SessionFactoryProvider {
     }
 
     /**
-     * Produces SessionFactory.
-     *
-     * @param configuration Hibernate Configuration (Injected)
-     * @param connectionProvider Hibernate Connection Provider (Injected)
-     * @return SessionFactory
-     */
-    @Produces
-    @Singleton
-    public SessionFactory provideSessionFactory(
-            final Configuration configuration, final ConnectionProvider connectionProvider) {
-        final ServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .addService(ConnectionProvider.class, connectionProvider)
-                .applySettings(configuration.getProperties())
-                .build();
-
-        return configuration.buildSessionFactory(registry);
-    }
-
-    /**
      * Lookup for DataSource in JNDI by Lookup path from properties or env.
      *
      * @throws Exception if datasource not found.
@@ -106,9 +87,9 @@ final class SessionFactoryProvider {
     private void lookupDataSource() throws Exception {
         InitialContext cxt = Optional.of(new InitialContext())
                 .orElseThrow(() -> new Exception("Missing Application Context to search datasource"));
-        String lookupPath = Optional.ofNullable(PropertyKey.DB_CTX_LOOKUP_PATH.lookupValue())
+        String lookupPath = Optional.ofNullable(PropertyKey.DB_JNDI_NAME.lookupValue())
                 .orElseThrow(() -> new IllegalArgumentException(
-                        String.format(ErrorMessages.MISSING_REQUIRED_ENV, PropertyKey.DB_CTX_LOOKUP_PATH.name())));
+                        String.format(ErrorMessages.MISSING_REQUIRED_ENV, PropertyKey.DB_JNDI_NAME.name())));
         LOGGER.info(String.format("Detected lookup path: %s", lookupPath));
         Optional.ofNullable((DataSource) cxt.lookup(lookupPath))
                 .orElseThrow(() -> new Exception("Datasource lookup failed"));
@@ -153,12 +134,31 @@ final class SessionFactoryProvider {
         return connectionProvider;
     }
 
+    /**
+     * Produces SessionFactory.
+     *
+     * @param configuration Hibernate Configuration (Injected)
+     * @param connectionProvider Hibernate Connection Provider (Injected)
+     * @return SessionFactory
+     */
+    @Produces
+    @Singleton
+    public SessionFactory provideSessionFactory(
+            final Configuration configuration, final ConnectionProvider connectionProvider) {
+        final ServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .addService(ConnectionProvider.class, connectionProvider)
+                .applySettings(configuration.getProperties())
+                .build();
+
+        return configuration.buildSessionFactory(registry);
+    }
+
     private Properties generateDataSourceProperties() throws Exception {
         try {
             LOGGER.info("Find datasource by JNDI");
             lookupDataSource();
             Properties settings = new Properties();
-            settings.put(Environment.JAKARTA_JTA_DATASOURCE, PropertyKey.DB_CTX_LOOKUP_PATH.lookupValue());
+            settings.put(Environment.JAKARTA_JTA_DATASOURCE, PropertyKey.DB_JNDI_NAME.lookupValue());
             return settings;
         } catch (Exception e) {
             LOGGER.error(String.format("Error during datasource lookup: %s", e.getMessage()));
