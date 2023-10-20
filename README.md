@@ -76,16 +76,26 @@ mvn clean package
 
 #### Deploy to local wildfly server
 
+1. Start docker compose environment
+
+```shell
+docker compose -f deploy/local/docker-compose.yml up --build -d
+```
+
+1. Copy `example.configuration.properties` to `configuration.properties`
+1. Check and update values in `configuration.properties` if you want to use your wildfly or database
+1. Package and deploy app
+
+```shell
+mvn clean install
+```
+
 This command will:
 
 - package app
 - deploy database driver
 - attach datasource
 - deploy WAR package
-
-```shell
-mvn clean install
-```
 
 #### Add database migrations
 

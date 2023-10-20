@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@WebService(serviceName = "CityService")
+@WebService(name = "City", serviceName = "CityService")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class CityServiceImpl implements CityService {
     @Inject

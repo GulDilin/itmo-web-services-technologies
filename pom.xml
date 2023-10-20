@@ -287,6 +287,8 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <configuration>
+                    <hostname>${wildfly.hostname}</hostname>
+                    <port>${wildfly.port}</port>
                     <username>${wildfly.username}</username>
                     <password>${wildfly.username}</password>
                     <commands>

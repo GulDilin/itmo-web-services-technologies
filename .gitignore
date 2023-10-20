@@ -32,5 +32,6 @@ target/
 /itmo-web-services-technologies.iml
 
 release.properties
+configuration.properties
 pom.xml.releaseBackup
 pom.xml.versionsBackup
