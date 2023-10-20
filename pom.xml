@@ -52,6 +52,7 @@
 
     <modules>
         <module>lab1</module>
+        <module>lab1-client</module>
     </modules>
 
     <dependencies>
@@ -217,6 +218,11 @@
                     <groupId>org.wildfly.plugins</groupId>
                     <artifactId>wildfly-maven-plugin</artifactId>
                     <version>4.2.0.Final</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.sun.xml.ws</groupId>
+                    <artifactId>jaxws-maven-plugin</artifactId>
+                    <version>${jakarta.enterprise.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
