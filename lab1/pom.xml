@@ -11,21 +11,9 @@
     <packaging>war</packaging>
 
     <dependencies>
-        <!-- CDI 2.0 with SE context loader (for executable jar packaging) -->
-        <!-- https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api -->
-        <dependency>
-            <groupId>jakarta.enterprise</groupId>
-            <artifactId>jakarta.enterprise.cdi-api</artifactId>
-            <version>${jakarta.enterprise.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/jakarta.inject/jakarta.inject-api -->
-        <dependency>
-            <groupId>jakarta.inject</groupId>
-            <artifactId>jakarta.inject-api</artifactId>
-            <version>${jakarta.inject.version}</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.jboss.weld.se/weld-se-core -->
-        <!-- CDI 2.0 implementation by Weld-->
+        <!-- CDI 2.0 with SE context loader (for executable jar packaging) -->
+        <!-- implementation by Weld-->
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
@@ -55,21 +43,6 @@
         </dependency>
         <!-- /JAX-WS -->
 
-        <!-- logging -->
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api-->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core-->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <!-- /logging -->
-
         <!-- CLI wrapper-->
         <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli-->
         <dependency>
@@ -78,32 +51,39 @@
             <version>1.5.0</version>
         </dependency>
         <!-- /CLI wrapper-->
-
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
-        </dependency>
-
-        <!-- testing -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.2</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- /testing -->
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}-lab1</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
+            <!-- Read properties from parent dir -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <files>
+                        <file>../configuration.properties</file>
+                    </files>
+                    <properties/>
+                </configuration>
+            </plugin>
+            <!-- /Read properties from parent dir -->
+
             <!-- Package to WAR-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
+                    <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
                     <attachClasses>true</attachClasses>
                     <packagingExcludes>
                         WEB-INF/**/package-info.class,
@@ -117,24 +97,6 @@
             <!-- Package to JAR-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>
-                                ${project.build.directory}/libs
-                            </outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <archive>
@@ -144,6 +106,9 @@
                             <mainClass>guldilin.Standalone</mainClass>
                         </manifest>
                     </archive>
+                    <excludes>
+                        <exclude>**/package-info.*</exclude>
+                    </excludes>
                 </configuration>
                 <executions>
                     <execution>

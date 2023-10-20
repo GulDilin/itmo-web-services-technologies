@@ -57,6 +57,7 @@ docker compose -f deploy/local/docker-compose.yml up --build -d
 ```
 
 WildFly will start at port `9990` (admin)
+
 ```shell
 Username: admin
 Password: admin
@@ -70,13 +71,20 @@ This command will build next artifacts:
 - packaged `WAR` for deployment on application server
 
 ```shell
-mvn clean install
+mvn clean package
 ```
 
 #### Deploy to local wildfly server
 
+This command will:
+
+- package app
+- deploy database driver
+- attach datasource
+- deploy WAR package
+
 ```shell
-mvn wildfly:deploy
+mvn clean install
 ```
 
 #### Add database migrations

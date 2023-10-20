@@ -40,6 +40,9 @@ final class SessionFactoryProvider {
     private DataSource jndiDataSource;
     private DatasourceMode datasourceMode;
 
+    /**
+     * Startup.
+     */
     @PostConstruct
     private void init() {
         LOGGER.info("Init SessionFactoryProvider");
@@ -50,7 +53,7 @@ final class SessionFactoryProvider {
             this.datasourceMode = DatasourceMode.JNDI_LOOKUP;
             LOGGER.info("Datasource successfully found");
         } catch (Exception e) {
-            LOGGER.warn("Datasource in context did not found.\nException: " + e.getMessage());
+            LOGGER.warn("Datasource in context did not found.\nException: " + e.getMessage(), e);
         }
     }
 
@@ -108,10 +111,15 @@ final class SessionFactoryProvider {
         LOGGER.info("provideHibernateConfiguration");
         final Configuration configurationLocal = new Configuration();
         final Properties settings;
-        if (this.datasourceMode.equals(DatasourceMode.JNDI_LOOKUP)) {
-            settings = generatePropertiesByLookup();
-        } else {
-            settings = generatePropertiesByParams();
+        try {
+            if (this.datasourceMode.equals(DatasourceMode.JNDI_LOOKUP)) {
+                settings = generatePropertiesByLookup();
+            } else {
+                settings = generatePropertiesByParams();
+            }
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
+            throw e;
         }
         configurationLocal.setProperties(settings);
         addAnnotatedClasses(configurationLocal, Stream.of(City.class).collect(Collectors.toList()));
@@ -130,6 +138,7 @@ final class SessionFactoryProvider {
         String lookupPath = Optional.ofNullable(PropertyKey.DB_JNDI_NAME.lookupValue())
                 .orElseThrow(() -> new IllegalArgumentException(
                         String.format(ErrorMessages.MISSING_REQUIRED_ENV, PropertyKey.DB_JNDI_NAME.name())));
+        LOGGER.info("Lookup JNDI name: " + lookupPath);
         return Optional.ofNullable((DataSource) cxt.lookup(lookupPath))
                 .orElseThrow(() -> new Exception("Datasource lookup failed"));
     }

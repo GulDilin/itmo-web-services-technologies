@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Getter
 @AllArgsConstructor
@@ -52,7 +54,7 @@ public enum PropertyKey implements Serializable {
     /**
      * Database source lookup path.
      */
-    DB_JNDI_NAME(false, "java:/tws", "Context datasource lookup JNDI name", null),
+    DB_JNDI_NAME(false, "java:global/tws_db", "Context datasource lookup JNDI name", null),
     /**
      * Application host.
      */
@@ -71,6 +73,8 @@ public enum PropertyKey implements Serializable {
     private final String description;
     private final String cmdAlias;
 
+    private static final Logger LOGGER = LogManager.getLogger(PropertyKey.class);
+
     /**
      * Lookup for value by system properties or env vars.
      * Priority env -> system property
@@ -80,6 +84,17 @@ public enum PropertyKey implements Serializable {
     public String lookupValue() {
         Optional<String> optionalSystemProp = Optional.ofNullable(System.getProperty(this.name()));
         Optional<String> optionalEnvProp = Optional.ofNullable(System.getenv(this.name()));
+        //        String infoText =
+        //                optionalSystemProp.map(s -> "Found in System Properties: " + s).orElse("");
+        //        infoText = infoText.isEmpty()
+        //                ? optionalEnvProp.map(s -> "Found in ENV: " + s).orElse("Value not found")
+        //                : "Value not found";
+        //        LOGGER.info(String.format("Lookup Value (Default: %s) %s. %s",
+        //        this.getDefaultValue(), this.name(), infoText));
+        LOGGER.info(String.format(
+                "Lookup Value (Default: %s) %s [SYS] %s [ENV] %s",
+                this.getDefaultValue(), this.name(), optionalSystemProp, optionalEnvProp));
+
         if (this.getRequired()) {
             return optionalSystemProp.orElseGet(() -> optionalEnvProp.orElseThrow(() ->
                     new IllegalArgumentException(String.format(ErrorMessages.MISSING_REQUIRED_ENV, this.name()))));

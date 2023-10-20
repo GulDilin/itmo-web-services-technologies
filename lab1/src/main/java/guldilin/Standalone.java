@@ -101,7 +101,10 @@ public final class Standalone {
         DB_OPTIONS.stream()
                 .map(o -> new AbstractMap.SimpleEntry<>(o, getOptionValue(line, o)))
                 .filter(o -> Objects.nonNull(o.getValue()))
-                .forEach(o -> System.setProperty(o.getKey().name(), o.getValue()));
+                .forEach(o -> {
+                    System.out.printf("Set sys prop [%s]: %s%n", o.getKey().name(), o.getValue());
+                    System.setProperty(o.getKey().name(), o.getValue());
+                });
 
         return params;
     }

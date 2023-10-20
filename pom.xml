@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
@@ -16,6 +17,23 @@
         <lombok.version>1.18.30</lombok.version>
         <scm.url>scm:git:git@github.com:GulDilin/itmo-web-services-technologies.git</scm.url>
         <repo.url>https://github.com/GulDilin/itmo-web-services-technologies</repo.url>
+
+        <postgres.driver.groupId>org.postgresql</postgres.driver.groupId>
+        <postgres.driver.artifactId>postgresql</postgres.driver.artifactId>
+        <postgres.driver.version>42.6.0</postgres.driver.version>
+        <postgres.driver.name>postgresql.jar</postgres.driver.name>
+
+<!--        Next properties need to be loaded from file -->
+<!--        wildfly.username -->
+<!--        wildfly.admin -->
+<!--        postgres.db.host -->
+<!--        postgres.db.port -->
+<!--        postgres.db.name -->
+<!--        postgres.db.username -->
+<!--        postgres.db.password -->
+
+        <postgres.db.url>jdbc:postgresql://${postgres.db.host}:${postgres.db.port}/${postgres.db.name}</postgres.db.url>
+        <postgres.db.jndi>java:global/${postgres.db.name}</postgres.db.jndi>
     </properties>
 
     <groupId>guldilin</groupId>
@@ -44,12 +62,48 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Jakarta EE -->
+        <!-- https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api -->
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>${jakarta.enterprise.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.ejb/jakarta.ejb-api -->
+        <dependency>
+            <groupId>jakarta.ejb</groupId>
+            <artifactId>jakarta.ejb-api</artifactId>
+            <version>${jakarta.enterprise.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.inject/jakarta.inject-api -->
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+            <version>${jakarta.inject.version}</version>
+        </dependency>
+        <!-- /Jakarta EE -->
+
+        <!-- logging -->
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!-- /logging -->
+
         <!-- database -->
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.6.0</version>
+            <groupId>${postgres.driver.groupId}</groupId>
+            <artifactId>${postgres.driver.artifactId}</artifactId>
+            <version>${postgres.driver.version}</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api -->
         <dependency>
@@ -83,6 +137,15 @@
             <version>9.22.2</version>
         </dependency>
         <!-- /database -->
+
+        <!-- testing -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.9.2</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- /testing -->
     </dependencies>
 
     <build>
@@ -92,6 +155,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.2.0</version>
+                </plugin>
+                <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/properties-maven-plugin -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>1.2.0</version>
                 </plugin>
                 <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
                 <plugin>
@@ -153,6 +222,50 @@
         </pluginManagement>
 
         <plugins>
+            <!-- Read Configuration properties from file -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <files>
+                        <file>configuration.properties</file>
+                    </files>
+                    <properties/>
+                </configuration>
+            </plugin>
+            <!-- /Read Configuration properties from file -->
+
+            <!-- Copy dependencies to packages -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/libs
+                            </outputDirectory>
+                            <stripVersion>true</stripVersion>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Copy dependencies to packages -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -173,62 +286,67 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
+                <configuration>
+                    <username>${wildfly.username}</username>
+                    <password>${wildfly.username}</password>
+                    <commands>
+                        <!-- Set system property for application database config -->
+                        <command>
+                            /system-property=DB_JNDI_NAME:write-attribute(name="value",value="${postgres.db.jndi}")
+                            /system-property=DB_HOST:write-attribute(name="value",value="${postgres.db.host}")
+                            /system-property=DB_USERNAME:write-attribute(name="value",value="${postgres.db.username}")
+                            /system-property=DB_PASSWORD:write-attribute(name="value",value="${postgres.db.password}")
+                        </command>
+                    </commands>
+                </configuration>
                 <executions>
                     <!-- Deploy the JDBC library -->
                     <execution>
                         <id>deploy-driver</id>
-                        <phase>deploy</phase>
-                        <configuration>
-                            <groupId>postgresql</groupId>
-                            <artifactId>postgresql</artifactId>
-                            <name>postgresql.jar</name>
-                        </configuration>
+                        <phase>install</phase>
                         <goals>
                             <goal>deploy-artifact</goal>
                         </goals>
+                        <configuration>
+                            <groupId>${postgres.driver.groupId}</groupId>
+                            <artifactId>${postgres.driver.artifactId}</artifactId>
+                            <name>${postgres.driver.name}</name>
+                        </configuration>
                     </execution>
 
                     <!-- Add a data source -->
                     <execution>
                         <id>add-datasource</id>
-                        <phase>deploy</phase>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
                         <configuration>
-                            <address>subsystem=datasources,data-source=myDatasource</address>
+                            <address>subsystem=datasources,data-source=${postgres.db.jndi}</address>
+                            <force>true</force>
                             <resources>
                                 <resource>
-                                    <enableResource>true</enableResource>
                                     <properties>
-                                        <connection-url>jdbc:postgresql://tws-db:5432/tws_db</connection-url>
-                                        <jndi-name>java:/tws_db</jndi-name>
+                                        <jndi-name>${postgres.db.jndi}</jndi-name>
                                         <enabled>true</enabled>
-                                        <enable>true</enable>
-                                        <user-name>postgres</user-name>
-                                        <password>admin</password>
-                                        <driver-name>postgresql.jar</driver-name>
-                                        <use-ccm>false</use-ccm>
+                                        <connection-url>${postgres.db.url}</connection-url>
+                                        <driver-class>org.postgresql.Driver</driver-class>
+                                        <driver-name>${postgres.driver.name}</driver-name>
+                                        <user-name>${postgres.db.username}</user-name>
+                                        <password>${postgres.db.password}</password>
                                     </properties>
                                 </resource>
                             </resources>
                         </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>deploy</id>
+                        <phase>install</phase>
                         <goals>
-                            <goal>add-resource</goal>
+                            <goal>deploy</goal>
                         </goals>
                     </execution>
-<!--                    &lt;!&ndash; Add a data source &ndash;&gt;-->
-<!--                    <execution>-->
-<!--                        <id>configure-wsdl</id>-->
-<!--                        <phase>deploy</phase>-->
-<!--                        <configuration>-->
-<!--                            <address>subsystem=webservices</address>-->
-<!--                            <properties>-->
-<!--                                <wsdl-host>127.0.0.1</wsdl-host>-->
-<!--                                <modify-wsdl-address>true</modify-wsdl-address>-->
-<!--                            </properties>-->
-<!--                        </configuration>-->
-<!--                        <goals>-->
-<!--                            <goal>add-resource</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
                 </executions>
             </plugin>
             <!-- /Deployment -->
@@ -284,8 +402,8 @@
                                 <include>.gitignore</include>
                             </includes>
                             <!-- define the steps to apply to those files -->
-                            <trimTrailingWhitespace />
-                            <endWithNewline />
+                            <trimTrailingWhitespace/>
+                            <endWithNewline/>
                             <indent>
                                 <tabs>true</tabs>
                                 <spacesPerTab>4</spacesPerTab>
@@ -293,10 +411,10 @@
                         </format>
                     </formats>
                     <java>
-                        <importOrder />
-                        <removeUnusedImports />
-                        <toggleOffOn />
-                        <palantirJavaFormat />
+                        <importOrder/>
+                        <removeUnusedImports/>
+                        <toggleOffOn/>
+                        <palantirJavaFormat/>
                         <replaceRegex>
                             <name>Remove wildcard imports</name>
                             <searchRegex>import\s+(?:static\s+)?[^\*\s]+\*;(\r\n|\r|\n)</searchRegex>

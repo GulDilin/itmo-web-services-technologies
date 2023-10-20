@@ -8,9 +8,10 @@ import guldilin.exceptions.FieldIsNotFilterable;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
+import jakarta.validation.Valid;
 import java.util.List;
 
-@WebService
+@WebService(serviceName = "CityService")
 public interface CityService {
     /**
      * Find elements by field-value filters.
@@ -23,6 +24,6 @@ public interface CityService {
     @WebMethod
     PaginationDTO<CityDTO> findByFilter(
             @WebParam(name = "filters") List<FilterArgumentDTO> filters,
-            @WebParam(name = "pagination") PaginationRequestDTO pagination)
+            @WebParam(name = "pagination") @Valid PaginationRequestDTO pagination)
             throws FieldIsNotFilterable;
 }

@@ -13,7 +13,10 @@ import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
 import jakarta.jws.soap.SOAPBinding;
+import jakarta.validation.Valid;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @WebService(serviceName = "CityService")
@@ -25,7 +28,7 @@ public class CityServiceImpl implements CityService {
     /**
      * Find elements by field-value filters.
      *
-     * @param filters List of field-value filters
+     * @param filters    List of field-value filters
      * @param pagination pagination information
      * @return Found elements
      * @throws FieldIsNotFilterable for incorrect filters argument
@@ -33,13 +36,23 @@ public class CityServiceImpl implements CityService {
     @Override
     @WebMethod
     public PaginationDTO<CityDTO> findByFilter(
-            @WebParam final List<FilterArgumentDTO> filters, @WebParam final PaginationRequestDTO pagination)
+            @WebParam(name = "filters") final List<FilterArgumentDTO> filters,
+            @WebParam(name = "pagination") @Valid final PaginationRequestDTO pagination)
             throws FieldIsNotFilterable {
+        var filtersV = Optional.ofNullable(filters).orElse(Collections.emptyList());
+        var paginationV = Optional.ofNullable(pagination).orElse(new PaginationRequestDTO());
+        Long nextOffset = null;
+        var items = cityRepository.findByCriteria(cityRepository.createFilterQuery(filtersV), paginationV).stream()
+                .map(City::mapToDTO)
+                .collect(Collectors.toList());
+        var total = cityRepository.countByCriteria(cityRepository.createCounterQuery());
+        if (paginationV.getOffset() + items.size() < total) {
+            nextOffset = (long) (paginationV.getOffset() + paginationV.getLimit());
+        }
         return PaginationDTO.<CityDTO>builder()
-                .items(cityRepository.findByCriteria(cityRepository.createFilterQuery(filters), pagination).stream()
-                        .map(City::mapToDTO)
-                        .collect(Collectors.toList()))
-                .total(cityRepository.countByCriteria(cityRepository.createCounterQuery()))
+                .items(items)
+                .total(total)
+                .nextOffset(nextOffset)
                 .build();
     }
 }

@@ -7,7 +7,6 @@ import guldilin.exceptions.FieldIsNotFilterable;
 import guldilin.repository.interfaces.CrudRepository;
 import guldilin.utils.FilterObjectConverter;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -25,7 +24,8 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
 
     /**
      * Constructor for CrudRepositoryImpl.
-     * @param tClass Entity class
+     *
+     * @param tClass         Entity class
      * @param sessionFactory SessionFactory instance
      */
     public CrudRepositoryImpl(final Class<T> tClass, final SessionFactory sessionFactory) {
@@ -36,10 +36,9 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     /**
      * Get predicate for Filter argument to use in where method.
      *
-     * @param cb CriteriaBuilder
+     * @param cb             CriteriaBuilder
      * @param filterArgument argument filter
-     * @param root Criteria root object
-     *
+     * @param root           Criteria root object
      * @return Predicate
      * @throws FieldIsNotFilterable if incorrect field placed in argument
      */
@@ -66,8 +65,10 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
             Root<T> root = criteriaQuery.from(tClass);
             criteriaQuery.select(root);
             List<Predicate> predicates = new ArrayList<>();
-            for (FilterArgumentDTO filterArgument : filterArguments) {
-                predicates.add(this.getFilterPredicate(cb, filterArgument, root));
+            if (filterArguments != null) {
+                for (FilterArgumentDTO filterArgument : filterArguments) {
+                    predicates.add(this.getFilterPredicate(cb, filterArgument, root));
+                }
             }
             if (!predicates.isEmpty()) criteriaQuery.where(cb.and(predicates.toArray(new Predicate[0])));
             return criteriaQuery;
@@ -92,16 +93,16 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
      * Find all Elements by CriteriaQuery.
      *
      * @param criteriaQuery CriteriaQuery
-     * @param pagination information about pagination properties
+     * @param pagination    information about pagination properties
      * @return Result list
      */
     @Override
     public List<T> findByCriteria(final CriteriaQuery<T> criteriaQuery, final PaginationRequestDTO pagination) {
         try (EntityManager em = this.createEntityManager()) {
-            Query query = em.createQuery(criteriaQuery);
-            query.setFirstResult(pagination.getOffset());
-            query.setMaxResults(pagination.getLimit());
-            return em.createQuery(criteriaQuery).getResultList();
+            return em.createQuery(criteriaQuery)
+                    .setFirstResult(pagination.getOffset())
+                    .setMaxResults(pagination.getLimit())
+                    .getResultList();
         }
     }
 
