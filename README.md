@@ -56,6 +56,12 @@ To run `database` and `WildFly` server you can use docker-compose file located i
 docker compose -f deploy/local/docker-compose.yml up --build -d
 ```
 
+WildFly will start at port `9990` (admin)
+```shell
+Username: admin
+Password: admin
+```
+
 #### Build
 
 This command will build next artifacts:
@@ -65,6 +71,12 @@ This command will build next artifacts:
 
 ```shell
 mvn clean install
+```
+
+#### Deploy to local wildfly server
+
+```shell
+mvn wildfly:deploy
 ```
 
 #### Add database migrations

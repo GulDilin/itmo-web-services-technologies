@@ -43,6 +43,46 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- database -->
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.3.1.Final</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.1.Final</version>
+        </dependency>
+        <!-- migrations -->
+        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>9.22.2</version>
+        </dependency>
+        <!-- /database -->
     </dependencies>
 
     <build>
@@ -104,6 +144,11 @@
                     <artifactId>maven-release-plugin</artifactId>
                     <version>3.0.1</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-maven-plugin</artifactId>
+                    <version>4.2.0.Final</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -123,6 +168,70 @@
                     <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
+
+            <!-- Deployment -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <executions>
+                    <!-- Deploy the JDBC library -->
+                    <execution>
+                        <id>deploy-driver</id>
+                        <phase>deploy</phase>
+                        <configuration>
+                            <groupId>postgresql</groupId>
+                            <artifactId>postgresql</artifactId>
+                            <name>postgresql.jar</name>
+                        </configuration>
+                        <goals>
+                            <goal>deploy-artifact</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- Add a data source -->
+                    <execution>
+                        <id>add-datasource</id>
+                        <phase>deploy</phase>
+                        <configuration>
+                            <address>subsystem=datasources,data-source=myDatasource</address>
+                            <resources>
+                                <resource>
+                                    <enableResource>true</enableResource>
+                                    <properties>
+                                        <connection-url>jdbc:postgresql://tws-db:5432/tws_db</connection-url>
+                                        <jndi-name>java:/tws_db</jndi-name>
+                                        <enabled>true</enabled>
+                                        <enable>true</enable>
+                                        <user-name>postgres</user-name>
+                                        <password>admin</password>
+                                        <driver-name>postgresql.jar</driver-name>
+                                        <use-ccm>false</use-ccm>
+                                    </properties>
+                                </resource>
+                            </resources>
+                        </configuration>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                    </execution>
+<!--                    &lt;!&ndash; Add a data source &ndash;&gt;-->
+<!--                    <execution>-->
+<!--                        <id>configure-wsdl</id>-->
+<!--                        <phase>deploy</phase>-->
+<!--                        <configuration>-->
+<!--                            <address>subsystem=webservices</address>-->
+<!--                            <properties>-->
+<!--                                <wsdl-host>127.0.0.1</wsdl-host>-->
+<!--                                <modify-wsdl-address>true</modify-wsdl-address>-->
+<!--                            </properties>-->
+<!--                        </configuration>-->
+<!--                        <goals>-->
+<!--                            <goal>add-resource</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+                </executions>
+            </plugin>
+            <!-- /Deployment -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

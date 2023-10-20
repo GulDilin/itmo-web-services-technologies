@@ -42,6 +42,7 @@ services:
       - DB_JNDI_NAME=java:/tws_db
       - DB_USERNAME=${POSTGRES_USER:-postgres}
       - DB_PASSWORD=${POSTGRES_USER:-admin}
+      - JBOSS_HOST=host.docker.internal
     ports:
       - "8080:8080"
       - "9990:9990"

@@ -8,6 +8,8 @@ JBOSS_MODE=standalone
 
 DB_URL=jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME
 
+CUR_DIR=$(dirname "$0")
+
 echo "JBOSS_HOME  : " $JBOSS_HOME
 echo "JBOSS_CLI   : " $JBOSS_CLI
 echo "JBOSS_MODE  : " $JBOSS_MODE
@@ -18,7 +20,7 @@ echo "DB_PORT       : " $DB_PORT
 echo "DB_NAME       : " $DB_NAME
 echo "DB_URL        : " $DB_URL
 
-echo "=> Current dir" `dirname "$0"`
+echo "=> Current dir" $CUR_DIR
 
 function wait_for_server() {
   until `$JBOSS_CLI -c ":read-attribute(name=server-state)" 2> /dev/null | grep -q running`; do
@@ -26,16 +28,22 @@ function wait_for_server() {
   done
 }
 
-echo "=> Download ${POSTGRES_JAR_NAME}"
-wget "${MAVEN_REPO}/org/postgresql/postgresql/${POSTGRES_DRIVER_VERSION}/${POSTGRES_JAR_NAME}"
+#POSTGRES_JAR_PATH=$CUR_DIR/$POSTGRES_JAR_NAME
+#echo "=> Download ${POSTGRES_JAR_NAME} to ${POSTGRES_JAR_PATH}"
+#wget "${MAVEN_REPO}/org/postgresql/postgresql/${POSTGRES_DRIVER_VERSION}/${POSTGRES_JAR_NAME}" -P $CUR_DIR
+#ls $POSTGRES_JAR_PATH
+
 
 echo "=> Write datasource commands"
-echo "module add --name=org.postgres --resources=${POSTGRES_JAR_NAME} --dependencies=javax.api,javax.transaction.api" >> commands.cli
-echo '/subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver)' >> commands.cli
-echo "data-source add --jndi-name=${DB_JNDI_NAME} --name=${DB_NAME} --connection-url=${DB_URL} --driver-name=postgres --user-name=${DB_USERNAME} --password=${DB_PASSWORD}" >> commands.cli
+COMMANDS_FILE_PATH=$(dirname "$0")/commands.cli
+#echo "module add --name=org.postgres --resources=${POSTGRES_JAR_PATH} --dependencies=jakarta.api,jakarta.transaction.api" >> $COMMANDS_FILE_PATH
+#echo '/subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver)' >> $COMMANDS_FILE_PATH
+#echo "data-source add --jndi-name=${DB_JNDI_NAME} --name=${DB_NAME} --connection-url=${DB_URL} --driver-name=postgres --user-name=${DB_USERNAME} --password=${DB_PASSWORD}" >> $COMMANDS_FILE_PATH
+echo '/subsystem=webservices:write-attribute(name=wsdl-host,value=host.docker.internal)' >> $COMMANDS_FILE_PATH
+echo '/subsystem=webservices:write-attribute(name=modify-wsdl-address,value=true)' >> $COMMANDS_FILE_PATH
 
 echo "=> Written commands:"
-cat commands.cli
+cat $COMMANDS_FILE_PATH
 
 $JBOSS_HOME/bin/$JBOSS_MODE.sh -b 0.0.0.0 &
 
@@ -43,7 +51,7 @@ echo "=> Waiting for the server to boot"
 wait_for_server
 
 echo "=> Executing the commands"
-$JBOSS_CLI -c --file=`dirname "$0"`/commands.cli
+$JBOSS_CLI -c --file=$COMMANDS_FILE_PATH
 
 echo "=> Shutting down WildFly"
 $JBOSS_CLI -c ":shutdown"

@@ -50,7 +50,7 @@ final class SessionFactoryProvider {
             this.datasourceMode = DatasourceMode.JNDI_LOOKUP;
             LOGGER.info("Datasource successfully found");
         } catch (Exception e) {
-            LOGGER.warn("Datasource in context did not found");
+            LOGGER.warn("Datasource in context did not found.\nException: " + e.getMessage());
         }
     }
 

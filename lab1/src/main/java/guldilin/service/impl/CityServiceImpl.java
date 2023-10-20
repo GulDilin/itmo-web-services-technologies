@@ -18,10 +18,18 @@ import java.util.stream.Collectors;
 
 @WebService(serviceName = "CityService")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
-public final class CityServiceImpl implements CityService {
+public class CityServiceImpl implements CityService {
     @Inject
     private CityRepository cityRepository;
 
+    /**
+     * Find elements by field-value filters.
+     *
+     * @param filters List of field-value filters
+     * @param pagination pagination information
+     * @return Found elements
+     * @throws FieldIsNotFilterable for incorrect filters argument
+     */
     @Override
     @WebMethod
     public PaginationDTO<CityDTO> findByFilter(
