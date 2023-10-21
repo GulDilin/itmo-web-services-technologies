@@ -15,7 +15,8 @@ import lombok.EqualsAndHashCode;
 public class FindArgs extends Args {
     @Parameter(
             names = {"-filter", "-f"},
-            description = "Filters for read command in format field:operation:value (area:=:1)")
+            description = "Filters for read command in format field:operation:value (area:=:1)",
+            validateWith = {FindFilterArgumentValidator.class})
     private List<String> filters = new ArrayList<>();
 
     @Parameter(

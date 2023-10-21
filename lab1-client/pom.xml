@@ -93,7 +93,7 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>make-a-jar</id>
+                        <id>package-jar-lab1-client</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>jar</goal>

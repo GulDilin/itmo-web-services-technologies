@@ -27,6 +27,8 @@ Laboratory works of Web Services Technologies. Software Engineering Course ITMO 
 > **_NOTE:_** To **bump** `minor version` add `#minor` string to commit message
 
 > **_NOTE:_** To **bump** `third level version` add `#patch` string to commit message
+>
+> **_NOTE:_** To develop `lab1-client` you need to have deployed lab1 app
 
 ### Start database and application server with docker
 

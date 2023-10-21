@@ -55,9 +55,10 @@ public interface CrudRepository<T extends Mappable> {
     /**
      * Create CriteriaQuery for count elements.
      *
+     * @param filterArguments List of filters
      * @return CriteriaQuery
      */
-    CriteriaQuery<Long> createCounterQuery();
+    CriteriaQuery<Long> createCounterQuery(List<FilterArgumentDTO> filterArguments) throws FieldIsNotFilterable;
 
     /**
      * Opens Session.

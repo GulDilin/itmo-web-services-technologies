@@ -51,26 +51,73 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
+     * Parse predicates from filters list.
+     *
+     * @param cb      CriteriaBuilder
+     * @param root    Selection root
+     * @param filters Filters list
+     * @return List of WHERE predicates
+     * @throws FieldIsNotFilterable if filters are incorrect
+     */
+    public List<Predicate> parsePredicates(
+            final CriteriaBuilder cb, final Root<T> root, final List<FilterArgumentDTO> filters)
+            throws FieldIsNotFilterable {
+        List<Predicate> predicates = new ArrayList<>();
+        if (filters != null) {
+            for (FilterArgumentDTO filterArgument : filters) {
+                predicates.add(this.getFilterPredicate(cb, filterArgument, root));
+            }
+        }
+        return predicates;
+    }
+
+    /**
+     * Apply predicates to query.
+     *
+     * @param cb            CriteriaBuilder
+     * @param criteriaQuery CriteriaQuery
+     * @param predicates    List of WHERE predicates
+     */
+    public void applyPredicates(
+            final CriteriaBuilder cb, final CriteriaQuery<?> criteriaQuery, final List<Predicate> predicates) {
+        if (!predicates.isEmpty()) criteriaQuery.where(cb.and(predicates.toArray(new Predicate[0])));
+    }
+
+    /**
+     * Apply filters to query.
+     *
+     * @param cb            CriteriaBuilder
+     * @param root          Selection root
+     * @param criteriaQuery CriteriaQuery
+     * @param filters       Filters list
+     * @throws FieldIsNotFilterable if filters are incorrect
+     */
+    public void applyFilters(
+            final CriteriaBuilder cb,
+            final Root<T> root,
+            final CriteriaQuery<?> criteriaQuery,
+            final List<FilterArgumentDTO> filters)
+            throws FieldIsNotFilterable {
+        List<Predicate> predicates = parsePredicates(cb, root, filters);
+        applyPredicates(cb, criteriaQuery, predicates);
+    }
+
+    /**
      * Create CriteriaQuery by filter arguments.
      *
-     * @param filterArguments list of filter fields arguments
+     * @param filters list of filter fields arguments
      * @return Generated CriteriaQuery
      * @throws FieldIsNotFilterable if some filter fields are incorrect
      */
-    public CriteriaQuery<T> createFilterQuery(final List<FilterArgumentDTO> filterArguments)
-            throws FieldIsNotFilterable {
+    public CriteriaQuery<T> createFilterQuery(final List<FilterArgumentDTO> filters) throws FieldIsNotFilterable {
         try (EntityManager em = this.createEntityManager()) {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<T> criteriaQuery = cb.createQuery(tClass);
+
             Root<T> root = criteriaQuery.from(tClass);
             criteriaQuery.select(root);
-            List<Predicate> predicates = new ArrayList<>();
-            if (filterArguments != null) {
-                for (FilterArgumentDTO filterArgument : filterArguments) {
-                    predicates.add(this.getFilterPredicate(cb, filterArgument, root));
-                }
-            }
-            if (!predicates.isEmpty()) criteriaQuery.where(cb.and(predicates.toArray(new Predicate[0])));
+            applyFilters(cb, root, criteriaQuery, filters);
+
             return criteriaQuery;
         }
     }
@@ -78,13 +125,18 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     /**
      * Create CriteriaQuery for count elements.
      *
+     * @param filters List of filters
      * @return CriteriaQuery
      */
-    public CriteriaQuery<Long> createCounterQuery() {
+    public CriteriaQuery<Long> createCounterQuery(final List<FilterArgumentDTO> filters) throws FieldIsNotFilterable {
         try (EntityManager em = this.createEntityManager()) {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Long> criteriaQuery = cb.createQuery(Long.class);
-            criteriaQuery.select(cb.count(criteriaQuery.from(tClass)));
+
+            Root<T> root = criteriaQuery.from(tClass);
+            criteriaQuery.select(cb.count(root));
+            applyFilters(cb, root, criteriaQuery, filters);
+
             return criteriaQuery;
         }
     }

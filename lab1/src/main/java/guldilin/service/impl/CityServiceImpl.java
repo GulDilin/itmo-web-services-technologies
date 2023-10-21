@@ -45,7 +45,7 @@ public class CityServiceImpl implements CityService {
         var items = cityRepository.findByCriteria(cityRepository.createFilterQuery(filtersV), paginationV).stream()
                 .map(City::mapToDTO)
                 .collect(Collectors.toList());
-        var total = cityRepository.countByCriteria(cityRepository.createCounterQuery());
+        var total = cityRepository.countByCriteria(cityRepository.createCounterQuery(filtersV));
         if (paginationV.getOffset() + items.size() < total) {
             nextOffset = (long) (paginationV.getOffset() + paginationV.getLimit());
         }
