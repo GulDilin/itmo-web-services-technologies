@@ -20,37 +20,30 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api -->
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
             <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>${jakarta.enterprise.version}</version>
         </dependency>
         <!-- JAX-WS -->
-        <!-- https://mvnrepository.com/artifact/jakarta.xml.ws/jakarta.xml.ws-api-->
         <dependency>
             <groupId>jakarta.xml.ws</groupId>
             <artifactId>jakarta.xml.ws-api</artifactId>
-            <version>${jakarta.xml.ws.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-rt -->
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
-            <version>${jaxws.version}</version>
             <scope>runtime</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/rt-->
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>rt</artifactId>
-            <version>${jaxws.version}</version>
         </dependency>
         <!-- /JAX-WS -->
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Generate WSDL client classes -->
             <plugin>
                 <groupId>com.sun.xml.ws</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
@@ -70,6 +63,33 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- /Generate WSDL client classes -->
+
+            <!-- Package to JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classesDirectory>target/wsgen/classes</classesDirectory>
+                            <archive>
+                                <index>true</index>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <packageName>guldilin.proxy.api</packageName>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Package to JAR -->
         </plugins>
     </build>
 </project>

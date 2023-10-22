@@ -23,14 +23,14 @@
         <postgres.driver.version>42.6.0</postgres.driver.version>
         <postgres.driver.name>postgresql.jar</postgres.driver.name>
 
-<!--        Next properties need to be loaded from file -->
-<!--        wildfly.username -->
-<!--        wildfly.admin -->
-<!--        postgres.db.host -->
-<!--        postgres.db.port -->
-<!--        postgres.db.name -->
-<!--        postgres.db.username -->
-<!--        postgres.db.password -->
+        <!--        Next properties need to be loaded from file -->
+        <!--        wildfly.username -->
+        <!--        wildfly.admin -->
+        <!--        postgres.db.host -->
+        <!--        postgres.db.port -->
+        <!--        postgres.db.name -->
+        <!--        postgres.db.username -->
+        <!--        postgres.db.password -->
 
         <postgres.db.url>jdbc:postgresql://${postgres.db.host}:${postgres.db.port}/${postgres.db.name}</postgres.db.url>
         <postgres.db.jndi>java:global/${postgres.db.name}</postgres.db.jndi>
@@ -56,99 +56,157 @@
         <module>lab1-client</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
 
-        <!-- Jakarta EE -->
-        <!-- https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api -->
-        <dependency>
-            <groupId>jakarta.enterprise</groupId>
-            <artifactId>jakarta.enterprise.cdi-api</artifactId>
-            <version>${jakarta.enterprise.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/jakarta.ejb/jakarta.ejb-api -->
-        <dependency>
-            <groupId>jakarta.ejb</groupId>
-            <artifactId>jakarta.ejb-api</artifactId>
-            <version>${jakarta.enterprise.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/jakarta.inject/jakarta.inject-api -->
-        <dependency>
-            <groupId>jakarta.inject</groupId>
-            <artifactId>jakarta.inject-api</artifactId>
-            <version>${jakarta.inject.version}</version>
-        </dependency>
-        <!-- /Jakarta EE -->
+            <!-- https://mvnrepository.com/artifact/org.jboss.weld.se/weld-se-core -->
+            <!-- CDI 2.0 with SE context loader (for executable jar packaging) -->
+            <!-- implementation by Weld-->
+            <dependency>
+                <groupId>org.jboss.weld.se</groupId>
+                <artifactId>weld-se-core</artifactId>
+                <version>5.1.2.Final</version>
+            </dependency>
+            <!-- /CDI 2.0 -->
 
-        <!-- logging -->
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api-->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core-->
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j.version}</version>
-        </dependency>
-        <!-- /logging -->
 
-        <!-- database -->
-        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-        <dependency>
-            <groupId>${postgres.driver.groupId}</groupId>
-            <artifactId>${postgres.driver.artifactId}</artifactId>
-            <version>${postgres.driver.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api -->
-        <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>3.0.2</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>6.3.1.Final</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>8.0.1.Final</version>
-        </dependency>
-        <!-- migrations -->
-        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-            <version>9.22.2</version>
-        </dependency>
-        <!-- /database -->
+            <!-- Jakarta EE -->
+            <!-- https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api -->
+            <dependency>
+                <groupId>jakarta.enterprise</groupId>
+                <artifactId>jakarta.enterprise.cdi-api</artifactId>
+                <version>${jakarta.enterprise.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/jakarta.ejb/jakarta.ejb-api -->
+            <dependency>
+                <groupId>jakarta.ejb</groupId>
+                <artifactId>jakarta.ejb-api</artifactId>
+                <version>${jakarta.enterprise.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/jakarta.inject/jakarta.inject-api -->
+            <dependency>
+                <groupId>jakarta.inject</groupId>
+                <artifactId>jakarta.inject-api</artifactId>
+                <version>${jakarta.inject.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api -->
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>${jakarta.enterprise.version}</version>
+            </dependency>
+            <!-- /Jakarta EE -->
 
-        <!-- testing -->
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.2</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- /testing -->
-    </dependencies>
+            <!-- logging -->
+            <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <!-- /logging -->
+
+            <!-- Database Driver -->
+            <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+            <dependency>
+                <groupId>${postgres.driver.groupId}</groupId>
+                <artifactId>${postgres.driver.artifactId}</artifactId>
+                <version>${postgres.driver.version}</version>
+            </dependency>
+            <!-- /Database Driver -->
+
+            <!-- Persistence API Implementation -->
+            <!-- https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api -->
+            <dependency>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
+            <dependency>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>3.0.2</version>
+            </dependency>
+            <!-- /Persistence API -->
+
+            <!-- Persistence API Implementation -->
+            <!-- https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core -->
+            <dependency>
+                <groupId>org.hibernate.orm</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>6.3.1.Final</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>8.0.1.Final</version>
+            </dependency>
+            <!-- /Persistence API Implementation -->
+
+            <!-- database migrations -->
+            <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>9.22.2</version>
+            </dependency>
+            <!-- /database migrations -->
+
+            <!-- JAX-WS -->
+            <!-- https://mvnrepository.com/artifact/jakarta.xml.ws/jakarta.xml.ws-api-->
+            <dependency>
+                <groupId>jakarta.xml.ws</groupId>
+                <artifactId>jakarta.xml.ws-api</artifactId>
+                <version>${jakarta.xml.ws.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-rt -->
+            <dependency>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>jaxws-rt</artifactId>
+                <version>${jaxws.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/rt-->
+            <dependency>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>rt</artifactId>
+                <version>${jaxws.version}</version>
+            </dependency>
+            <!-- /JAX-WS -->
+
+            <!-- testing -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>5.9.2</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- /testing -->
+
+            <!-- CLI wrapper -->
+            <!-- https://mvnrepository.com/artifact/com.beust/jcommander -->
+            <dependency>
+                <groupId>com.beust</groupId>
+                <artifactId>jcommander</artifactId>
+                <version>1.82</version>
+            </dependency>
+            <!-- /CLI wrapper -->
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <pluginManagement>
@@ -292,76 +350,6 @@
                 </configuration>
             </plugin>
 
-            <!-- Deployment -->
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <configuration>
-                    <hostname>${wildfly.hostname}</hostname>
-                    <port>${wildfly.port}</port>
-                    <username>${wildfly.username}</username>
-                    <password>${wildfly.username}</password>
-                    <commands>
-                        <!-- Set system property for application database config -->
-                        <command>
-                            /system-property=DB_JNDI_NAME:write-attribute(name="value",value="${postgres.db.jndi}")
-                            /system-property=DB_HOST:write-attribute(name="value",value="${postgres.db.host}")
-                            /system-property=DB_USERNAME:write-attribute(name="value",value="${postgres.db.username}")
-                            /system-property=DB_PASSWORD:write-attribute(name="value",value="${postgres.db.password}")
-                        </command>
-                    </commands>
-                </configuration>
-                <executions>
-                    <!-- Deploy the JDBC library -->
-                    <execution>
-                        <id>deploy-driver</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>deploy-artifact</goal>
-                        </goals>
-                        <configuration>
-                            <groupId>${postgres.driver.groupId}</groupId>
-                            <artifactId>${postgres.driver.artifactId}</artifactId>
-                            <name>${postgres.driver.name}</name>
-                        </configuration>
-                    </execution>
-
-                    <!-- Add a data source -->
-                    <execution>
-                        <id>add-datasource</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>add-resource</goal>
-                        </goals>
-                        <configuration>
-                            <address>subsystem=datasources,data-source=${postgres.db.jndi}</address>
-                            <force>true</force>
-                            <resources>
-                                <resource>
-                                    <properties>
-                                        <jndi-name>${postgres.db.jndi}</jndi-name>
-                                        <enabled>true</enabled>
-                                        <connection-url>${postgres.db.url}</connection-url>
-                                        <driver-class>org.postgresql.Driver</driver-class>
-                                        <driver-name>${postgres.driver.name}</driver-name>
-                                        <user-name>${postgres.db.username}</user-name>
-                                        <password>${postgres.db.password}</password>
-                                    </properties>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>deploy</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- /Deployment -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
