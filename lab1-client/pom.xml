@@ -18,6 +18,13 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>lab1-proxy-api</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api -->
         <dependency>
             <groupId>jakarta.xml.bind</groupId>
@@ -53,44 +60,57 @@
             <version>1.82</version>
         </dependency>
 
+
+
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>com.sun.xml.ws</groupId>
-                <artifactId>jaxws-maven-plugin</artifactId>
-                <configuration>
-                    <wsdlUrls>
-                        <wsdlUrl>http://localhost:8080/lab1/CityService?wsdl</wsdlUrl>
-                    </wsdlUrls>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>wsimport</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>wsimport</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
+<!--            &lt;!&ndash; Generate WSDL client classes &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>com.sun.xml.ws</groupId>-->
+<!--                <artifactId>jaxws-maven-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>generate-wsdl</id>-->
+<!--                        <phase>process-classes</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>wsgen</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <sei>guldilin.service.impl.CityServiceImpl</sei>-->
+<!--                            <genWsdl>true</genWsdl>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>wsimport</id>-->
+<!--                        <phase>process-classes</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>wsimport</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <wsdlDirectory>target/generated-sources/wsdl</wsdlDirectory>-->
+<!--                            <destDir>target/wsgen/classes</destDir>-->
+<!--                            <packageName>guldilin</packageName>-->
+<!--                            <xnocompile>false</xnocompile>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>${project.groupId}</groupId>-->
+<!--                        <artifactId>lab1</artifactId>-->
+<!--                        <version>${project.version}</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash; /Generate WSDL client classes &ndash;&gt;-->
+
             <!-- Package to JAR-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>libs/</classpathPrefix>
-                            <mainClass>guldilin.Main</mainClass>
-                        </manifest>
-                    </archive>
-                    <excludes>
-                        <exclude>**/package-info.*</exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <execution>
                         <id>package-jar-lab1-client</id>
@@ -98,6 +118,16 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <configuration>
+                            <classifier>lab1-client</classifier>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <classpathPrefix>libs/</classpathPrefix>
+                                    <mainClass>guldilin.Main</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

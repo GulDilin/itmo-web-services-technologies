@@ -3,12 +3,12 @@ package guldilin.commands.find;
 import com.beust.jcommander.JCommander;
 import guldilin.commands.common.EntitiesPrinter;
 import guldilin.commands.common.Executor;
-import guldilin.service.impl.CityService;
-import guldilin.service.impl.CityService_Service;
-import guldilin.service.impl.FieldIsNotFilterable;
-import guldilin.service.interfaces.FilterArgumentDTO;
-import guldilin.service.interfaces.PaginationDTO;
-import guldilin.service.interfaces.PaginationRequestDTO;
+import guldilin.proxy.api.City;
+import guldilin.proxy.api.CityService;
+import guldilin.proxy.api.FieldIsNotFilterable_Exception;
+import guldilin.proxy.api.FilterArgumentDTO;
+import guldilin.proxy.api.PaginationDTO;
+import guldilin.proxy.api.PaginationRequestDTO;
 import java.util.List;
 
 /**
@@ -45,18 +45,18 @@ public class FindExecutor implements Executor {
      * Execute find command.
      *
      * @param argv Unparsed CLI args
-     * @throws FieldIsNotFilterable for incorrect filter.
+     * @throws FieldIsNotFilterable_Exception for incorrect filter.
      */
     @Override
-    public void execute(final String[] argv) throws FieldIsNotFilterable {
+    public void execute(final String[] argv) throws FieldIsNotFilterable_Exception {
         FindArgs args = parseArgs(argv);
 
         var pagination = new PaginationRequestDTO();
         pagination.setLimit(args.getLimit());
         pagination.setOffset(args.getOffset());
 
-        CityService_Service service = new CityService_Service();
-        CityService cityService = service.getCityPort();
+        CityService service = new CityService();
+        City cityService = service.getCityPort();
         PaginationDTO cityResults = cityService.findByFilter(parseFilters(args), pagination);
 
         EntitiesPrinter.print(System.out, cityResults);

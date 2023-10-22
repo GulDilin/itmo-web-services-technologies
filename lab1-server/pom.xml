@@ -7,7 +7,7 @@
         <version>1.1.2</version>
     </parent>
 
-    <artifactId>lab1</artifactId>
+    <artifactId>lab1-server</artifactId>
     <packaging>war</packaging>
 
     <dependencies>
@@ -78,6 +78,26 @@
             </plugin>
             <!-- /Read properties from parent dir -->
 
+            <!-- Generate WSDL -->
+            <plugin>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-wsdl</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>wsgen</goal>
+                        </goals>
+                        <configuration>
+                            <sei>guldilin.service.impl.CityServiceImpl</sei>
+                            <genWsdl>true</genWsdl>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Generate WSDL -->
+
             <!-- Package to WAR-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -86,7 +106,6 @@
                     <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
                     <attachClasses>true</attachClasses>
                     <packagingExcludes>
-                        WEB-INF/**/package-info.class,
                         WEB-INF/classes/guldilin/Standalone.class,
                         WEB-INF/lib/weld-*.jar
                     </packagingExcludes>
@@ -98,25 +117,22 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>libs/</classpathPrefix>
-                            <mainClass>guldilin.Standalone</mainClass>
-                        </manifest>
-                    </archive>
-                    <excludes>
-                        <exclude>**/package-info.*</exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <execution>
-                        <id>make-a-jar</id>
+                        <id>package-jar-lab1</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <addClasspath>true</addClasspath>
+                                    <classpathPrefix>libs/</classpathPrefix>
+                                    <mainClass>guldilin.Standalone</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

@@ -1,8 +1,8 @@
 package guldilin.commands.common;
 
-import guldilin.service.interfaces.AbstractEntityDTO;
-import guldilin.service.interfaces.CityDTO;
-import guldilin.service.interfaces.PaginationDTO;
+import guldilin.proxy.api.AbstractEntityDTO;
+import guldilin.proxy.api.CityDTO;
+import guldilin.proxy.api.PaginationDTO;
 import java.io.PrintStream;
 import java.util.stream.Collectors;
 
