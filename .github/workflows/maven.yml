@@ -69,5 +69,7 @@ jobs:
       with:
         tag_name: "${{ steps.bump.outputs.version }}"
         files: |
-          lab1/target/lab1-lab1.jar
-          lab1/target/lab1-lab1.war
+          lab1-server/target/lab1-server.jar
+          lab1-server/target/lab1-server.war
+          lab1-client/target/lab1-client.jar
+          lab1-proxy-api/target/lab1-proxy-api.jar
