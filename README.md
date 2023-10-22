@@ -27,6 +27,8 @@ Laboratory works of Web Services Technologies. Software Engineering Course ITMO 
 > **_NOTE:_** To **bump** `minor version` add `#minor` string to commit message
 
 > **_NOTE:_** To **bump** `third level version` add `#patch` string to commit message
+>
+> **_NOTE:_** To develop `lab1-client` you need to have deployed lab1 app
 
 ### Start database and application server with docker
 
@@ -56,6 +58,13 @@ To run `database` and `WildFly` server you can use docker-compose file located i
 docker compose -f deploy/local/docker-compose.yml up --build -d
 ```
 
+WildFly will start at port `9990` (admin)
+
+```shell
+Username: admin
+Password: admin
+```
+
 #### Build
 
 This command will build next artifacts:
@@ -64,8 +73,31 @@ This command will build next artifacts:
 - packaged `WAR` for deployment on application server
 
 ```shell
+mvn clean package
+```
+
+#### Deploy to local wildfly server
+
+1. Start docker compose environment
+
+```shell
+docker compose -f deploy/local/docker-compose.yml up --build -d
+```
+
+1. Copy `example.configuration.properties` to `configuration.properties`
+1. Check and update values in `configuration.properties` if you want to use your wildfly or database
+1. Package and deploy app
+
+```shell
 mvn clean install
 ```
+
+This command will:
+
+- package app
+- deploy database driver
+- attach datasource
+- deploy WAR package
 
 #### Add database migrations
 
