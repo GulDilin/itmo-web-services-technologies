@@ -324,7 +324,7 @@
                             <outputDirectory>
                                 ${project.build.directory}/libs
                             </outputDirectory>
-                            <stripVersion>true</stripVersion>
+<!--                            <stripVersion>true</stripVersion>-->
                         </configuration>
                     </execution>
                 </executions>

@@ -4,6 +4,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import guldilin.commands.common.Args;
 import guldilin.commands.common.Executor;
+import guldilin.commands.common.HelpArgs;
 import guldilin.commands.find.FindExecutor;
 
 /**
@@ -24,6 +25,16 @@ public class MainExecutor implements Executor {
     }
 
     /**
+     * Build JCommander arguments parser.
+     *
+     * @return JCommander object
+     */
+    @Override
+    public JCommander buildCommander() {
+        return JCommander.newBuilder().addObject(new MainArgs()).build();
+    }
+
+    /**
      * Parse main arguments.
      *
      * @param argv Unparsed CLI args
@@ -32,8 +43,11 @@ public class MainExecutor implements Executor {
     @Override
     public MainArgs parseArgs(final String[] argv) {
         MainArgs args = new MainArgs();
-        JCommander.newBuilder().addObject(args).build().parse(argv);
-
+        JCommander.newBuilder()
+                .programName("lab1-client.jar")
+                .addObject(args)
+                .build()
+                .parse(argv);
         return args;
     }
 
@@ -45,6 +59,12 @@ public class MainExecutor implements Executor {
      */
     @Override
     public void execute(final String[] argv) throws Exception {
+        HelpArgs argsHelp = new HelpArgs();
+        JCommander.newBuilder().addObject(argsHelp).build().parse(argv);
+        if (argsHelp.getHelp() && argsHelp.getCommand() == null) {
+            buildCommander().usage();
+            return;
+        }
         MainArgs args = parseArgs(argv);
         Executor executor = getExecutorByCommand(args);
         executor.execute(argv);

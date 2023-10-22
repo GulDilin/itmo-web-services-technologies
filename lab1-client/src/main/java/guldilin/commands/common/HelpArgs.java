@@ -1,14 +1,14 @@
 package guldilin.commands.common;
 
 import com.beust.jcommander.Parameter;
-import java.net.URL;
+import java.util.List;
 import lombok.Data;
 
 /**
  * Arguments class for commands.
  */
 @Data
-public class Args {
+public class HelpArgs {
     @Parameter(
             names = {"-help", "-h"},
             help = true,
@@ -17,13 +17,9 @@ public class Args {
 
     @Parameter(
             names = {"-c", "-command"},
-            required = true,
             description = "Command name")
     private Command command;
 
-    @Parameter(
-            names = {"-url"},
-            required = true,
-            description = "Server URL base (example: http://localhost:8080)")
-    private URL url;
+    @Parameter
+    private List<String> parameters;
 }

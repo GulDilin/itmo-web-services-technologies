@@ -79,7 +79,7 @@
                         <configuration>
                             <classesDirectory>target/wsgen/classes</classesDirectory>
                             <archive>
-                                <index>true</index>
+<!--                                <index>true</index>-->
                                 <manifest>
                                     <addClasspath>true</addClasspath>
                                     <packageName>guldilin.proxy.api</packageName>

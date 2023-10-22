@@ -102,14 +102,13 @@
         </dependency>
         <!-- /JAX-WS -->
 
-        <!-- CLI wrapper-->
-        <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli-->
+        <!-- CLI wrapper -->
         <dependency>
-            <groupId>commons-cli</groupId>
-            <artifactId>commons-cli</artifactId>
-            <version>1.5.0</version>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+            <version>1.82</version>
         </dependency>
-        <!-- /CLI wrapper-->
+        <!-- /CLI wrapper -->
     </dependencies>
 
     <build>
@@ -165,7 +164,7 @@
                     <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
                     <attachClasses>true</attachClasses>
                     <packagingExcludes>
-                        WEB-INF/classes/guldilin/Standalone.class,
+                        WEB-INF/classes/guldilin/cli/*,
                         WEB-INF/lib/weld-*.jar
                     </packagingExcludes>
                 </configuration>
@@ -178,18 +177,17 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>package-jar-lab1</id>
+                        <id>default-jar</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>jar</goal>
                         </goals>
                         <configuration>
-                            <classifier>server</classifier>
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>
                                     <classpathPrefix>libs/</classpathPrefix>
-                                    <mainClass>guldilin.Standalone</mainClass>
+                                    <mainClass>guldilin.cli.Standalone</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
@@ -221,7 +219,7 @@
                     <!-- Deploy the JDBC library -->
                     <execution>
                         <id>deploy-driver</id>
-<!--                        <phase>install</phase>-->
+                        <phase>install</phase>
                         <goals>
                             <goal>deploy-artifact</goal>
                         </goals>
@@ -235,7 +233,7 @@
                     <!-- Add a data source -->
                     <execution>
                         <id>add-datasource</id>
-<!--                        <phase>install</phase>-->
+                        <phase>install</phase>
                         <goals>
                             <goal>add-resource</goal>
                         </goals>
@@ -260,7 +258,7 @@
 
                     <execution>
                         <id>deploy</id>
-<!--                        <phase>install</phase>-->
+                        <phase>install</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>

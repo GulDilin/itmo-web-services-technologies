@@ -28,13 +28,13 @@ public enum PropertyKey implements Serializable {
      */
     DB_HOST(true, null, "Database host", "db_host"),
     /**
-     * Database name.
-     */
-    DB_NAME(true, null, "Database name", "db_name"),
-    /**
      * Database port.
      */
     DB_PORT(true, null, "Database port", "db_port"),
+    /**
+     * Database name.
+     */
+    DB_NAME(true, null, "Database name", "db_name"),
     /**
      * Database username.
      */

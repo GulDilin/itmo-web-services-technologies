@@ -28,9 +28,9 @@ public final class EntitiesPrinter {
         return String.format(
                 """
                             Entity:
-                            - id:                   %d
-                            - created:              %s
-                            - updated:              %s
+                            - id:           %d
+                            - createdAt:    %s
+                            - updatedAt:    %s
                         """,
                 entityDTO.getId(), entityDTO.getCreationAt(), entityDTO.getUpdatedAt());
     }
@@ -48,12 +48,12 @@ public final class EntitiesPrinter {
                             - id:                   %d
                             - name:                 %s
                             - area:                 %d
-                            - car code:             %d
-                            - above sea level:      %f meters
+                            - carCode:              %d
+                            - metersAboveSeaLevel:  %f
                             - population:           %d meters
-                            - population density:   %d people/km^2
-                            - created:              %s
-                            - updated:              %s
+                            - populationDensity:    %d people/km^2
+                            - createdAt:            %s
+                            - updatedAt:            %s
                         """,
                 cityDTO.getId(),
                 cityDTO.getName(),
@@ -78,8 +78,8 @@ public final class EntitiesPrinter {
         return String.format(
                 """
                         Result:
-                        - total:         %d
-                        - next offset:   %d
+                        - total:        %d
+                        - nextOffset:   %d
                         - items:
                         %s
                          """,

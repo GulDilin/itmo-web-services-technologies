@@ -9,6 +9,8 @@ import guldilin.proxy.api.FieldIsNotFilterable_Exception;
 import guldilin.proxy.api.FilterArgumentDTO;
 import guldilin.proxy.api.PaginationDTO;
 import guldilin.proxy.api.PaginationRequestDTO;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -51,15 +53,38 @@ public class FindExecutor implements Executor {
     public void execute(final String[] argv) throws FieldIsNotFilterable_Exception {
         FindArgs args = parseArgs(argv);
 
+        if (args.getHelp()) {
+            buildCommander().usage();
+            return;
+        }
+
         var pagination = new PaginationRequestDTO();
         pagination.setLimit(args.getLimit());
         pagination.setOffset(args.getOffset());
 
-        CityService service = new CityService();
-        City cityService = service.getCityPort();
-        PaginationDTO cityResults = cityService.findByFilter(parseFilters(args), pagination);
+        try {
+            var url = new URL(String.format("%s/CityService?wsdl", args.getUrl()));
+            CityService service = new CityService(url);
+            City cityService = service.getCityPort();
+            PaginationDTO cityResults = cityService.findByFilter(parseFilters(args), pagination);
 
-        EntitiesPrinter.print(System.out, cityResults);
+            EntitiesPrinter.print(System.out, cityResults);
+        } catch (MalformedURLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Build JCommander arguments parser.
+     *
+     * @return JCommander object
+     */
+    @Override
+    public JCommander buildCommander() {
+        return JCommander.newBuilder()
+                .programName("lab1-client.jar")
+                .addObject(new FindArgs())
+                .build();
     }
 
     /**

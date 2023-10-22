@@ -53,7 +53,7 @@ final class SessionFactoryProvider {
             this.datasourceMode = DatasourceMode.JNDI_LOOKUP;
             LOGGER.info("Datasource successfully found");
         } catch (Exception e) {
-            LOGGER.warn("Datasource in context did not found.\nException: " + e.getMessage(), e);
+            LOGGER.warn("Datasource in context did not found.\nException: " + e.getMessage());
         }
     }
 
@@ -86,7 +86,6 @@ final class SessionFactoryProvider {
         settings.put(AvailableSettings.USER, PropertyKey.DB_USERNAME.lookupValue());
         settings.put(AvailableSettings.PASS, PropertyKey.DB_PASSWORD.lookupValue());
         settings.put(AvailableSettings.USE_GET_GENERATED_KEYS, "true");
-        settings.put(AvailableSettings.GENERATE_STATISTICS, "true");
         settings.put(AvailableSettings.ORDER_UPDATES, "true");
         settings.put(AvailableSettings.ORDER_INSERTS, "true");
         settings.put(AvailableSettings.SHOW_SQL, PropertyKey.DB_SHOW_SQL.lookupValue());

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@WebService(name = "City", serviceName = "CityService")
+@WebService(name = "City", serviceName = "CityService", targetNamespace = "http://service.guldilin")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class CityServiceImpl implements CityService {
     @Inject
@@ -40,6 +40,7 @@ public class CityServiceImpl implements CityService {
             @WebParam(name = "pagination") @Valid final PaginationRequestDTO pagination)
             throws FieldIsNotFilterable {
         var filtersV = Optional.ofNullable(filters).orElse(Collections.emptyList());
+        System.out.println(filtersV);
         var paginationV = Optional.ofNullable(pagination).orElse(new PaginationRequestDTO());
         Long nextOffset = null;
         var items = cityRepository.findByCriteria(cityRepository.createFilterQuery(filtersV), paginationV).stream()

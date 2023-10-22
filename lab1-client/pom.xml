@@ -22,7 +22,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>lab1-proxy-api</artifactId>
             <version>${project.parent.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -55,11 +54,13 @@
         <dependency>
             <groupId>com.beust</groupId>
             <artifactId>jcommander</artifactId>
+            <version>1.82</version>
         </dependency>
         <!-- /CLI wrapper -->
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <!-- Package to JAR-->
             <plugin>

@@ -1,5 +1,7 @@
 package guldilin.commands.common;
 
+import com.beust.jcommander.JCommander;
+
 public interface Executor {
     /**
      * Execute command.
@@ -16,4 +18,11 @@ public interface Executor {
      * @return parsed Args object
      */
     Args parseArgs(String[] argv);
+
+    /**
+     * Build JCommander arguments parser.
+     *
+     * @return JCommander object
+     */
+    JCommander buildCommander();
 }
