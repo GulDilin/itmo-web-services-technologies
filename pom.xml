@@ -38,7 +38,7 @@
 
     <groupId>guldilin</groupId>
     <artifactId>itmo-web-services-technologies</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
     <packaging>pom</packaging>
 
     <name>Web Services Technologies SOAP API</name>
