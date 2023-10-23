@@ -1,11 +1,11 @@
-# Web Server for lab1
+# Web Server for lab2
 
 ## Standalone
 
 Usage:
 
 ```shell
-Usage: lab1-server.jar [options]
+Usage: lab2-server.jar [options]
   Options:
   * -db_host
       Database host (example: localhost)
@@ -30,7 +30,7 @@ Usage: lab1-server.jar [options]
 Example:
 
 ```shell
-java -jar lab1-server.jar \
+java -jar lab2-server.jar \
     -host http://localhost -port 9595 \
     -db_host localhost -db_port 5439 -db_name tws_db -db_username postgres -db_password admin
 ```

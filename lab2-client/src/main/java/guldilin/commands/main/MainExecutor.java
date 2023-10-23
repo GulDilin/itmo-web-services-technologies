@@ -44,7 +44,7 @@ public class MainExecutor implements Executor {
     public MainArgs parseArgs(final String[] argv) {
         MainArgs args = new MainArgs();
         JCommander.newBuilder()
-                .programName("lab1-client.jar")
+                .programName("lab2-client.jar")
                 .addObject(args)
                 .build()
                 .parse(argv);

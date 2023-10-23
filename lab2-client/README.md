@@ -1,9 +1,9 @@
-# CLI client for lab1-server
+# CLI client for lab2-server
 
 ## Usage
 
 ```shell
-Usage: lab1-client.jar [options]
+Usage: lab2-client.jar [options]
   Options:
   * -c, -command
       Command name
@@ -18,7 +18,7 @@ Usage: lab1-client.jar [options]
 ## Use find command
 
 ```shell
-Usage: lab1-client.jar [options]
+Usage: lab2-client.jar [options]
   Options:
   * -c, -command
       Command name
@@ -40,7 +40,7 @@ Usage: lab1-client.jar [options]
 Example
 
 ```shell
-java -jar lab1-client.jar \
+java -jar lab2-client.jar \
     -url http://localhost:8080 \
     -c find \
     -f area:=:78 -f carCode:=:198 \

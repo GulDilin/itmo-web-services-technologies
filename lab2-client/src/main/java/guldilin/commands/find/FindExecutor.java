@@ -82,7 +82,7 @@ public class FindExecutor implements Executor {
     @Override
     public JCommander buildCommander() {
         return JCommander.newBuilder()
-                .programName("lab1-client.jar")
+                .programName("lab2-client.jar")
                 .addObject(new FindArgs())
                 .build();
     }

@@ -9,7 +9,7 @@
         <version>1.1.5</version>
     </parent>
 
-    <artifactId>lab1-client</artifactId>
+    <artifactId>lab2-client</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>lab1-proxy-api</artifactId>
+            <artifactId>lab2-proxy-api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 

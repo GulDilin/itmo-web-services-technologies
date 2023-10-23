@@ -9,14 +9,14 @@
         <version>1.1.5</version>
     </parent>
 
-    <artifactId>lab1-proxy-api</artifactId>
+    <artifactId>lab2-proxy-api</artifactId>
     <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <module.lab1-server.dir>lab1-server</module.lab1-server.dir>
+        <module.lab2-server.dir>lab2-server</module.lab2-server.dir>
     </properties>
 
     <dependencies>
@@ -55,7 +55,7 @@
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
-                            <wsdlDirectory>../lab1-server/target/generated-sources/wsdl</wsdlDirectory>
+                            <wsdlDirectory>../lab2-server/target/generated-sources/wsdl</wsdlDirectory>
                             <destDir>target/wsgen/classes</destDir>
                             <packageName>guldilin.proxy.api</packageName>
                             <xnocompile>false</xnocompile>
