@@ -14,64 +14,63 @@ public enum PropertyKey implements Serializable {
     /**
      * Database driver class.
      */
-    DB_DRIVER(false, "org.postgresql.Driver", "Database driver", "db_driver"),
+    DB_DRIVER(false, "org.postgresql.Driver", "Database driver"),
     /**
      * Database dialect.
      */
-    DB_DIALECT(false, "org.hibernate.dialect.PostgreSQLDialect", "Database dialect", "db_dialect"),
+    DB_DIALECT(false, "org.hibernate.dialect.PostgreSQLDialect", "Database dialect"),
     /**
      * Database protocol.
      */
-    DB_PROTOCOL(false, "jdbc:postgresql", "Database protocol", "db_protocol"),
+    DB_PROTOCOL(false, "jdbc:postgresql", "Database protocol"),
     /**
      * Database host.
      */
-    DB_HOST(true, null, "Database host", "db_host"),
+    DB_HOST(true, null, "Database host"),
     /**
      * Database port.
      */
-    DB_PORT(true, null, "Database port", "db_port"),
+    DB_PORT(true, null, "Database port"),
     /**
      * Database name.
      */
-    DB_NAME(true, null, "Database name", "db_name"),
+    DB_NAME(true, null, "Database name"),
     /**
      * Database username.
      */
-    DB_USERNAME(true, null, "Database user", "db_username"),
+    DB_USERNAME(true, null, "Database user"),
     /**
      * Database password.
      */
-    DB_PASSWORD(true, null, "Database password", "db_password"),
+    DB_PASSWORD(true, null, "Database password"),
     /**
      * Database show SQL to output.
      */
-    DB_SHOW_SQL(false, "false", "Show SQL in console", null),
+    DB_SHOW_SQL(false, "false", "Show SQL in console"),
     /**
      * Database use sql comments.
      */
-    DB_USE_SQL_COMMENTS(false, "false", "Show SQL comments", null),
+    DB_USE_SQL_COMMENTS(false, "false", "Show SQL comments"),
     /**
      * Database source lookup path.
      */
-    DB_JNDI_NAME(false, "java:global/tws_db", "Context datasource lookup JNDI name", null),
+    DB_JNDI_NAME(false, "java:global/tws_db", "Context datasource lookup JNDI name"),
     /**
      * Application host.
      */
-    APP_HOST(false, "http://localhost", "Application standalone server host listener", "host"),
+    APP_HOST(false, "http://localhost", "Application standalone server host listener"),
     /**
      * Application port.
      */
-    APP_PORT(false, "8080", "Application standalone server listener port", "port"),
+    APP_PORT(false, "8080", "Application standalone server listener port"),
     /**
      * Application startup url.
      */
-    APP_URL(false, null, "Application url", null);
+    APP_URL(false, null, "Application url");
 
     private final Boolean required;
     private final String defaultValue;
     private final String description;
-    private final String cmdAlias;
 
     private static final Logger LOGGER = LogManager.getLogger(PropertyKey.class);
 
@@ -84,13 +83,6 @@ public enum PropertyKey implements Serializable {
     public String lookupValue() {
         Optional<String> optionalSystemProp = Optional.ofNullable(System.getProperty(this.name()));
         Optional<String> optionalEnvProp = Optional.ofNullable(System.getenv(this.name()));
-        //        String infoText =
-        //                optionalSystemProp.map(s -> "Found in System Properties: " + s).orElse("");
-        //        infoText = infoText.isEmpty()
-        //                ? optionalEnvProp.map(s -> "Found in ENV: " + s).orElse("Value not found")
-        //                : "Value not found";
-        //        LOGGER.info(String.format("Lookup Value (Default: %s) %s. %s",
-        //        this.getDefaultValue(), this.name(), infoText));
         LOGGER.info(String.format(
                 "Lookup Value (Default: %s) %s [SYS] %s [ENV] %s",
                 this.getDefaultValue(), this.name(), optionalSystemProp, optionalEnvProp));
