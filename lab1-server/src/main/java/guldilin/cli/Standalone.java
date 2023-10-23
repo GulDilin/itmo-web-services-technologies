@@ -78,7 +78,12 @@ public final class Standalone {
                 .programName("lab1-server.jar")
                 .addObject(args)
                 .build();
-        commander.parse(argv);
+        try {
+            commander.parse(argv);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return;
+        }
         if (args.getHelp()) {
             commander.usage();
             return;
