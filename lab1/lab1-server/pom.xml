@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>guldilin</groupId>
-        <artifactId>itmo-web-services-technologies</artifactId>
+        <artifactId>lab1</artifactId>
         <version>1.1.5</version>
     </parent>
 

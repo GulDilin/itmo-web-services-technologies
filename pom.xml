@@ -51,9 +51,7 @@
     </scm>
 
     <modules>
-        <module>lab1-server</module>
-        <module>lab1-proxy-api</module>
-        <module>lab1-client</module>
+        <module>lab1</module>
     </modules>
 
     <dependencyManagement>
