@@ -129,7 +129,7 @@
                 </executions>
                 <configuration>
                     <files>
-                        <file>../configuration.properties</file>
+                        <file>../../configuration.properties</file>
                     </files>
                     <properties/>
                 </configuration>
