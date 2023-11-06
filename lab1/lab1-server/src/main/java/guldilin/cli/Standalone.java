@@ -55,9 +55,8 @@ public final class Standalone {
             String baseUrl = params.get(PropertyKey.APP_URL);
             System.out.println("Start server on address " + baseUrl);
             String urlCityService = String.valueOf(new URL(String.format("%s/CityService", baseUrl)));
-            FlywayMigrator flywayMigrator =
-                    container.select(FlywayMigrator.class).get();
-            flywayMigrator.doMigration();
+            // Get bean from CDI container to invoke startup migrations
+            container.select(FlywayMigrator.class).get();
             CityService cityService = container.select(CityService.class).get();
             Endpoint.publish(urlCityService, cityService);
 

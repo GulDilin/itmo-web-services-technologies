@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>guldilin</groupId>
-        <artifactId>itmo-web-services-technologies</artifactId>
+        <artifactId>lab1</artifactId>
         <version>1.1.5</version>
     </parent>
 
@@ -129,7 +129,7 @@
                 </executions>
                 <configuration>
                     <files>
-                        <file>../configuration.properties</file>
+                        <file>../../configuration.properties</file>
                     </files>
                     <properties/>
                 </configuration>
@@ -243,6 +243,7 @@
                             <resources>
                                 <resource>
                                     <properties>
+                                        <jta>false</jta>
                                         <jndi-name>${postgres.db.jndi}</jndi-name>
                                         <enabled>true</enabled>
                                         <connection-url>${postgres.db.url}</connection-url>
