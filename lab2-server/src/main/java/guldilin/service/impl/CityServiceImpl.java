@@ -56,4 +56,62 @@ public class CityServiceImpl implements CityService {
                 .nextOffset(nextOffset)
                 .build();
     }
+
+    /**
+     * Create city.
+     *
+     * @param name city name
+     * @param area area information
+     * @param population population information
+     * @param metersAboveSeaLevel metersAboveSeaLevel information
+     * @param populationDensity populationDensity information
+     * @param carCode carCode information
+     * @return CityDTO
+     */
+    @Override
+    @WebMethod
+    public CityDTO createCity(
+            @WebParam(name = "name") String name,
+            @WebParam(name = "area") Integer area,
+            @WebParam(name = "population") Integer population,
+            @WebParam(name = "metersAboveSeaLevel") Integer metersAboveSeaLevel,
+            @WebParam(name = "populationDensity") Integer populationDensity,
+            @WebParam(name = "carCode") Integer carCode){
+        return new CityDTO();
+    }
+
+    /**
+     * Find elements by field-value filters.
+     *
+     * @param name city name
+     * @param area area information
+     * @param population population information
+     * @param metersAboveSeaLevel metersAboveSeaLevel information
+     * @param populationDensity populationDensity information
+     * @param carCode carCode information
+     */
+    @Override
+    @WebMethod
+    public CityDTO updateCity(
+            @WebParam(name = "name") String name,
+            @WebParam(name = "area") Integer area,
+            @WebParam(name = "population") Integer population,
+            @WebParam(name = "metersAboveSeaLevel") Integer metersAboveSeaLevel,
+            @WebParam(name = "populationDensity") Integer populationDensity,
+            @WebParam(name = "carCode") Integer carCode){
+        return new CityDTO();
+    }
+
+    /**
+     * Find elements by field-value filters.
+     *
+     * @param cityId city id
+     * @return delete status
+     */
+    @Override
+    @WebMethod
+    public boolean deleteById(
+            @WebParam(name = "id") String cityId){
+        return true;
+    }
 }

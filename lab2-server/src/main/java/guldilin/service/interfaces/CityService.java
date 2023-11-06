@@ -26,4 +26,53 @@ public interface CityService {
             @WebParam(name = "filters") List<FilterArgumentDTO> filters,
             @WebParam(name = "pagination") @Valid PaginationRequestDTO pagination)
             throws FieldIsNotFilterable;
+
+    /**
+     * Create city.
+     *
+     * @param name city name
+     * @param area area information
+     * @param population population information
+     * @param metersAboveSeaLevel metersAboveSeaLevel information
+     * @param populationDensity populationDensity information
+     * @param carCode carCode information
+     * @return CityDTO
+     */
+    @WebMethod
+    CityDTO createCity(
+            @WebParam(name = "name") String name,
+            @WebParam(name = "area") Integer area,
+            @WebParam(name = "population") Integer population,
+            @WebParam(name = "metersAboveSeaLevel") Integer metersAboveSeaLevel,
+            @WebParam(name = "populationDensity") Integer populationDensity,
+            @WebParam(name = "carCode") Integer carCode);
+
+    /**
+     * Find elements by field-value filters.
+     *
+     * @param name city name
+     * @param area area information
+     * @param population population information
+     * @param metersAboveSeaLevel metersAboveSeaLevel information
+     * @param populationDensity populationDensity information
+     * @param carCode carCode information
+     */
+    @WebMethod
+    CityDTO updateCity(
+            @WebParam(name = "name") String name,
+            @WebParam(name = "area") Integer area,
+            @WebParam(name = "population") Integer population,
+            @WebParam(name = "metersAboveSeaLevel") Integer metersAboveSeaLevel,
+            @WebParam(name = "populationDensity") Integer populationDensity,
+            @WebParam(name = "carCode") Integer carCode);
+
+    /**
+     * Find elements by field-value filters.
+     *
+     * @param cityId city id
+     * @return delete status
+     */
+    @WebMethod
+    boolean deleteById(
+            @WebParam(name = "id") String cityId);
 }
