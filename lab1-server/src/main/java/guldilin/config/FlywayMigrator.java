@@ -34,14 +34,6 @@ public class FlywayMigrator {
     @PostConstruct
     public void init() {
         LOGGER.info("init FlywayMigrator");
+        this.doMigration();
     }
-
-    //    /**
-    //     * Run database migrations on initialized event.
-    //     *
-    //     * @param event ContainerInitialized event
-    //     */
-    //    public void onContainerInitialized(@Observes final ContainerInitialized event) {
-    //        this.doMigration();
-    //    }
 }
