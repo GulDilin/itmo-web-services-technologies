@@ -1,9 +1,6 @@
 package guldilin.service.interfaces;
 
-import guldilin.dto.CityDTO;
-import guldilin.dto.FilterArgumentDTO;
-import guldilin.dto.PaginationDTO;
-import guldilin.dto.PaginationRequestDTO;
+import guldilin.dto.*;
 import guldilin.exceptions.FieldIsNotFilterable;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
@@ -39,7 +36,7 @@ public interface CityService {
      * @return CityDTO
      */
     @WebMethod
-    CityDTO createCity(
+    CityCreateDTO createCity(
             @WebParam(name = "name") String name,
             @WebParam(name = "area") Integer area,
             @WebParam(name = "population") Integer population,
@@ -58,7 +55,7 @@ public interface CityService {
      * @param carCode carCode information
      */
     @WebMethod
-    CityDTO updateCity(
+    CityCreateDTO updateCity(
             @WebParam(name = "name") String name,
             @WebParam(name = "area") Integer area,
             @WebParam(name = "population") Integer population,

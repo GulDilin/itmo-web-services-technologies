@@ -1,9 +1,6 @@
 package guldilin.service.impl;
 
-import guldilin.dto.CityDTO;
-import guldilin.dto.FilterArgumentDTO;
-import guldilin.dto.PaginationDTO;
-import guldilin.dto.PaginationRequestDTO;
+import guldilin.dto.*;
 import guldilin.entity.City;
 import guldilin.exceptions.FieldIsNotFilterable;
 import guldilin.repository.interfaces.CityRepository;
@@ -70,14 +67,14 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     @WebMethod
-    public CityDTO createCity(
+    public CityCreateDTO createCity(
             @WebParam(name = "name") String name,
             @WebParam(name = "area") Integer area,
             @WebParam(name = "population") Integer population,
             @WebParam(name = "metersAboveSeaLevel") Integer metersAboveSeaLevel,
             @WebParam(name = "populationDensity") Integer populationDensity,
-            @WebParam(name = "carCode") Integer carCode) {
-        return new CityDTO();
+            @WebParam(name = "carCode") Integer carCode){
+        return new CityCreateDTO();
     }
 
     /**
@@ -92,14 +89,14 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     @WebMethod
-    public CityDTO updateCity(
+    public CityCreateDTO updateCity(
             @WebParam(name = "name") String name,
             @WebParam(name = "area") Integer area,
             @WebParam(name = "population") Integer population,
             @WebParam(name = "metersAboveSeaLevel") Integer metersAboveSeaLevel,
             @WebParam(name = "populationDensity") Integer populationDensity,
-            @WebParam(name = "carCode") Integer carCode) {
-        return new CityDTO();
+            @WebParam(name = "carCode") Integer carCode){
+        return new CityCreateDTO();
     }
 
     /**
@@ -110,7 +107,8 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     @WebMethod
-    public boolean deleteById(@WebParam(name = "id") String cityId) {
+    public boolean deleteById(
+            @WebParam(name = "id") String cityId){
         return true;
     }
 }
