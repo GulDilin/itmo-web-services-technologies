@@ -1,6 +1,7 @@
 package guldilin.service.interfaces;
 
 import guldilin.dto.*;
+import guldilin.exceptions.EntryNotFound;
 import guldilin.exceptions.FieldIsNotFilterable;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
@@ -24,51 +25,35 @@ public interface CityService {
             @WebParam(name = "pagination") @Valid PaginationRequestDTO pagination)
             throws FieldIsNotFilterable;
 
+
     /**
      * Create city.
      *
-     * @param name city name
-     * @param area area information
-     * @param population population information
-     * @param metersAboveSeaLevel metersAboveSeaLevel information
-     * @param populationDensity populationDensity information
-     * @param carCode carCode information
-     * @return CityDTO
+     * @param city new city data
+     * @return created city
      */
     @WebMethod
-    CityCreateDTO createCity(
-            @WebParam(name = "name") String name,
-            @WebParam(name = "area") Integer area,
-            @WebParam(name = "population") Integer population,
-            @WebParam(name = "metersAboveSeaLevel") Integer metersAboveSeaLevel,
-            @WebParam(name = "populationDensity") Integer populationDensity,
-            @WebParam(name = "carCode") Integer carCode);
+    CityDTO createCity(@WebParam(name = "city") CityCreateUpdateDTO city);
 
     /**
-     * Find elements by field-value filters.
+     * Create city.
      *
-     * @param name city name
-     * @param area area information
-     * @param population population information
-     * @param metersAboveSeaLevel metersAboveSeaLevel information
-     * @param populationDensity populationDensity information
-     * @param carCode carCode information
+     * @param id id of city to update
+     * @param city city data you want to update
+     * @return updated city
      */
     @WebMethod
-    CityCreateDTO updateCity(
-            @WebParam(name = "name") String name,
-            @WebParam(name = "area") Integer area,
-            @WebParam(name = "population") Integer population,
-            @WebParam(name = "metersAboveSeaLevel") Integer metersAboveSeaLevel,
-            @WebParam(name = "populationDensity") Integer populationDensity,
-            @WebParam(name = "carCode") Integer carCode);
+    CityDTO updateCity(
+            @WebParam(name = "id") Integer id,
+            @WebParam(name = "city") CityCreateUpdateDTO city
+    ) throws EntryNotFound;
 
     /**
-     * Find elements by field-value filters.
+     * Delete city by id.
      *
-     * @param cityId city id
+     * @param id city id
      * @return delete status
      */
     @WebMethod
-    boolean deleteById(@WebParam(name = "id") String cityId);
+    Boolean deleteById(@WebParam(name = "id") Integer id) throws EntryNotFound ;
 }

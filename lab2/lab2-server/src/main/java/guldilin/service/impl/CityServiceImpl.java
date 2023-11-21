@@ -2,6 +2,7 @@ package guldilin.service.impl;
 
 import guldilin.dto.*;
 import guldilin.entity.City;
+import guldilin.exceptions.EntryNotFound;
 import guldilin.exceptions.FieldIsNotFilterable;
 import guldilin.repository.interfaces.CityRepository;
 import guldilin.service.interfaces.CityService;
@@ -57,58 +58,45 @@ public class CityServiceImpl implements CityService {
     /**
      * Create city.
      *
-     * @param name city name
-     * @param area area information
-     * @param population population information
-     * @param metersAboveSeaLevel metersAboveSeaLevel information
-     * @param populationDensity populationDensity information
-     * @param carCode carCode information
-     * @return CityDTO
+     * @param city new city data
+     * @return created city
      */
-    @Override
     @WebMethod
-    public CityCreateDTO createCity(
-            @WebParam(name = "name") String name,
-            @WebParam(name = "area") Integer area,
-            @WebParam(name = "population") Integer population,
-            @WebParam(name = "metersAboveSeaLevel") Integer metersAboveSeaLevel,
-            @WebParam(name = "populationDensity") Integer populationDensity,
-            @WebParam(name = "carCode") Integer carCode){
-        return new CityCreateDTO();
+    public CityDTO createCity(@WebParam(name = "city") CityCreateUpdateDTO city) {
+        return this.cityRepository.create(city.mapToEntity()).mapToDTO();
     }
 
     /**
-     * Find elements by field-value filters.
+     * Create city.
      *
-     * @param name city name
-     * @param area area information
-     * @param population population information
-     * @param metersAboveSeaLevel metersAboveSeaLevel information
-     * @param populationDensity populationDensity information
-     * @param carCode carCode information
+     * @param id id of city to update
+     * @param city city data you want to update
+     * @return updated city
      */
-    @Override
     @WebMethod
-    public CityCreateDTO updateCity(
-            @WebParam(name = "name") String name,
-            @WebParam(name = "area") Integer area,
-            @WebParam(name = "population") Integer population,
-            @WebParam(name = "metersAboveSeaLevel") Integer metersAboveSeaLevel,
-            @WebParam(name = "populationDensity") Integer populationDensity,
-            @WebParam(name = "carCode") Integer carCode){
-        return new CityCreateDTO();
+    public CityDTO updateCity(
+            @WebParam(name = "id") Integer id,
+            @WebParam(name = "city") CityCreateUpdateDTO city
+    ) throws EntryNotFound {
+        City cityEntry = this.cityRepository.getById(id);
+        city.updateEntity(cityEntry);
+        return this.cityRepository.update(cityEntry).mapToDTO();
     }
 
     /**
-     * Find elements by field-value filters.
+     * Delete city by id.
      *
-     * @param cityId city id
+     * @param id city id
      * @return delete status
      */
     @Override
     @WebMethod
-    public boolean deleteById(
-            @WebParam(name = "id") String cityId){
-        return true;
+    public Boolean deleteById(@WebParam(name = "id") Integer id) {
+        try {
+            this.cityRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

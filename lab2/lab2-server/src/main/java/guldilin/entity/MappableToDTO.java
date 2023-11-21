@@ -2,7 +2,7 @@ package guldilin.entity;
 
 import guldilin.dto.AbstractEntityDTO;
 
-public interface Mappable {
+public interface MappableToDTO {
     /**
      * Map to DTO object.
      *

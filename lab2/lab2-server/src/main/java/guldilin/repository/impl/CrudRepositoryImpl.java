@@ -3,10 +3,12 @@ package guldilin.repository.impl;
 import guldilin.dto.FilterArgumentDTO;
 import guldilin.dto.PaginationRequestDTO;
 import guldilin.entity.AbstractEntity;
+import guldilin.exceptions.EntryNotFound;
 import guldilin.exceptions.FieldIsNotFilterable;
 import guldilin.repository.interfaces.CrudRepository;
 import guldilin.utils.FilterObjectConverter;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -14,6 +16,8 @@ import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import jakarta.validation.Valid;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -181,6 +185,17 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
+     * Get item by id.
+     *
+     * @param id Item id
+     * @return Optional Entity
+     */
+    @Override
+    public T getById(final Integer id)throws EntryNotFound {
+        return this.findById(id).orElseThrow(EntryNotFound::new);
+    }
+
+    /**
      * Count elements in database by criteria.
      *
      * @param criteriaQuery CriteriaQuery
@@ -192,6 +207,59 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
             return em.createQuery(criteriaQuery).getSingleResult();
         }
     }
+
+    /**
+     * Creates new item.
+     *
+     * @param entry Item to create
+     * @return Created item
+     */
+    @Override
+    public T create(@Valid T entry) {
+        try (EntityManager em = this.createEntityManager()) {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+            em.persist(entry);
+            tx.commit();
+            return entry;
+        }
+    }
+
+    /**
+     * Update item.
+     *
+     * @param entry Item with updated fields.
+     * @return Updated item
+     * @throws EntryNotFound If item with specified id does not exist
+     */
+    @Override
+    public T update(@Valid T entry) throws EntryNotFound {
+        try (EntityManager em = this.createEntityManager()) {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+            this.getById(entry.getId());
+            em.merge(entry);
+            tx.commit();
+            return entry;
+        }
+    }
+
+    /**
+     * Delete item by id.
+     *
+     * @param id Item id
+     * @throws EntryNotFound If item with specified id does not exist
+     */
+    @Override
+    public void deleteById(Integer id) throws EntryNotFound {
+        try (EntityManager em = this.createEntityManager()) {
+            EntityTransaction tx = em.getTransaction();
+            tx.begin();
+            em.remove(this.getById(id));
+            tx.commit();
+        }
+    }
+
 
     /**
      * Creates Entity Manager.

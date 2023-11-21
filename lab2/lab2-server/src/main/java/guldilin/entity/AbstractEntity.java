@@ -24,7 +24,7 @@ import org.hibernate.proxy.HibernateProxy;
 @ToString
 @RequiredArgsConstructor
 @MappedSuperclass
-public abstract class AbstractEntity implements Mappable {
+public abstract class AbstractEntity implements MappableToDTO {
     @FilterableField
     @Column(name = "id")
     @Id
