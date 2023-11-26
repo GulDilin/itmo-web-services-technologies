@@ -5,68 +5,74 @@ import com.beust.jcommander.ParameterException;
 import guldilin.commands.common.Args;
 import guldilin.commands.common.Executor;
 import guldilin.commands.common.HelpArgs;
+import guldilin.commands.create.CreateExecutor;
+import guldilin.commands.delete.DeleteExecutor;
 import guldilin.commands.find.FindExecutor;
+import guldilin.commands.update.UpdateExecutor;
+import guldilin.service.ServiceProvider;
 
 /**
  * Executor for main method.
  */
-public class MainExecutor implements Executor {
+public class MainExecutor extends Executor<MainArgs> {
     /**
      * Get executor by passed command.
      *
      * @param args Parsed arguments
      * @return Executor object
      */
-    private Executor getExecutorByCommand(final Args args) {
+    private Executor<?> getExecutorByCommand(final Args args) {
         return switch (args.getCommand()) {
             case find -> new FindExecutor();
+            case create -> new CreateExecutor();
+            case update -> new UpdateExecutor();
+            case delete -> new DeleteExecutor();
             default -> throw new ParameterException("Executor for command not found");
         };
     }
 
     /**
-     * Build JCommander arguments parser.
-     *
-     * @return JCommander object
-     */
-    @Override
-    public JCommander buildCommander() {
-        return JCommander.newBuilder().addObject(new MainArgs()).build();
-    }
-
-    /**
-     * Parse main arguments.
+     * Main execute function that should be invoked by CLI wrapper.
      *
      * @param argv Unparsed CLI args
-     * @return Parsed arguments
      */
     @Override
-    public MainArgs parseArgs(final String[] argv) {
-        MainArgs args = new MainArgs();
-        JCommander.newBuilder()
-                .programName("lab2-client.jar")
-                .addObject(args)
-                .build()
-                .parse(argv);
-        return args;
-    }
-
-    /**
-     * Execute main command.
-     *
-     * @param argv Unparsed CLI args
-     * @throws Exception if execution failed
-     */
-    @Override
-    public void execute(final String[] argv) throws Exception {
+    public void executeWrapper(final String[] argv) {
         HelpArgs argsHelp = new HelpArgs();
         JCommander.newBuilder().addObject(argsHelp).build().parse(argv);
         if (argsHelp.getHelp() && argsHelp.getCommand() == null) {
             buildCommander().usage();
             return;
         }
-        MainArgs args = parseArgs(argv);
-        Executor executor = getExecutorByCommand(args);
-        executor.execute(argv);
+
+        try {
+            var args = this.parseArgs(argv);
+            this.execute(argv, args, null);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Create empty MainArgs instance for parsing later.
+     *
+     * @return empty args object for executor
+     */
+    @Override
+    public MainArgs createEmptyArgs() {
+        return new MainArgs();
+    }
+
+    /**
+     * Execute main command.
+     *
+     * @param argv            Unparsed CLI args
+     * @param args            Parsed CLI args
+     * @param serviceProvider ServiceProvider implementation
+     */
+    @Override
+    public void execute(final String[] argv, final MainArgs args, final ServiceProvider serviceProvider) {
+        Executor<?> executor = getExecutorByCommand(args);
+        executor.executeWrapper(argv);
     }
 }

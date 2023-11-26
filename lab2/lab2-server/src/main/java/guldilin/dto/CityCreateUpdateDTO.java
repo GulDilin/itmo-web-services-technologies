@@ -1,7 +1,10 @@
 package guldilin.dto;
 
 import guldilin.entity.City;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @ToString
@@ -38,7 +41,7 @@ public class CityCreateUpdateDTO implements MappableToEntity, UpdatableToEntity<
      * @param entity entry to update
      */
     @Override
-    public void updateEntity(City entity) {
+    public void updateEntity(final City entity) {
         entity.setName(name);
         entity.setArea(area);
         entity.setPopulation(population);

@@ -1,22 +1,17 @@
 package guldilin.commands.find;
 
-import com.beust.jcommander.JCommander;
 import guldilin.commands.common.EntitiesPrinter;
 import guldilin.commands.common.Executor;
-import guldilin.proxy.api.City;
-import guldilin.proxy.api.CityService;
 import guldilin.proxy.api.FieldIsNotFilterable_Exception;
 import guldilin.proxy.api.FilterArgumentDTO;
 import guldilin.proxy.api.PaginationDTO;
-import guldilin.proxy.api.PaginationRequestDTO;
-import java.net.MalformedURLException;
-import java.net.URL;
+import guldilin.service.ServiceProvider;
 import java.util.List;
 
 /**
  * Executor for find command.
  */
-public class FindExecutor implements Executor {
+public class FindExecutor extends Executor<FindArgs> {
     /**
      * Parse filter from filter string (field:operation:value).
      *
@@ -44,59 +39,26 @@ public class FindExecutor implements Executor {
     }
 
     /**
+     * Create empty FindArgs instance for parsing later.
+     *
+     * @return empty args object for executor
+     */
+    @Override
+    public FindArgs createEmptyArgs() {
+        return new FindArgs();
+    }
+
+    /**
      * Execute find command.
      *
-     * @param argv Unparsed CLI args
+     * @param args Parsed CLI args
      * @throws FieldIsNotFilterable_Exception for incorrect filter.
      */
     @Override
-    public void execute(final String[] argv) throws FieldIsNotFilterable_Exception {
-        FindArgs args = parseArgs(argv);
-
-        if (args.getHelp()) {
-            buildCommander().usage();
-            return;
-        }
-
-        var pagination = new PaginationRequestDTO();
-        pagination.setLimit(args.getLimit());
-        pagination.setOffset(args.getOffset());
-
-        try {
-            var url = new URL(String.format("%s/CityService?wsdl", args.getUrl()));
-            CityService service = new CityService(url);
-            City cityService = service.getCityPort();
-            PaginationDTO cityResults = cityService.findByFilter(parseFilters(args), pagination);
-
-            EntitiesPrinter.print(System.out, cityResults);
-        } catch (MalformedURLException e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    /**
-     * Build JCommander arguments parser.
-     *
-     * @return JCommander object
-     */
-    @Override
-    public JCommander buildCommander() {
-        return JCommander.newBuilder()
-                .programName("lab2-client.jar")
-                .addObject(new FindArgs())
-                .build();
-    }
-
-    /**
-     * Parse Find command arguments.
-     *
-     * @param argv Unparsed CLI args
-     * @return parsed args
-     */
-    @Override
-    public FindArgs parseArgs(final String[] argv) {
-        FindArgs args = new FindArgs();
-        JCommander.newBuilder().addObject(args).build().parse(argv);
-        return args;
+    public void execute(final String[] argv, final FindArgs args, final ServiceProvider serviceProvider)
+            throws FieldIsNotFilterable_Exception {
+        var pagination = args.toDTO();
+        PaginationDTO cityResults = serviceProvider.provideCityService().findByFilter(parseFilters(args), pagination);
+        EntitiesPrinter.print(System.out, cityResults);
     }
 }

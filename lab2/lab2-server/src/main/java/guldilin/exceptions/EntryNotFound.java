@@ -1,11 +1,21 @@
 package guldilin.exceptions;
 
-public class EntryNotFound extends Exception{
+/**
+ * Exception for entry not found.
+ */
+public class EntryNotFound extends Exception {
+    /**
+     * Default constructor.
+     */
     public EntryNotFound() {
         super(ErrorMessages.NOT_FOUND);
     }
 
-    public EntryNotFound(String m) {
+    /**
+     * Message constructor.
+     * @param m message
+     */
+    public EntryNotFound(final String m) {
         super(m);
     }
 }

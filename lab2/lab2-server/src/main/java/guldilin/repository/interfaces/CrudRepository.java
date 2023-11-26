@@ -3,15 +3,13 @@ package guldilin.repository.interfaces;
 import guldilin.dto.FilterArgumentDTO;
 import guldilin.dto.PaginationRequestDTO;
 import guldilin.entity.AbstractEntity;
-import guldilin.entity.MappableToDTO;
 import guldilin.exceptions.EntryNotFound;
 import guldilin.exceptions.FieldIsNotFilterable;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-
-import jakarta.validation.Valid;
 import org.hibernate.Session;
 
 public interface CrudRepository<T extends AbstractEntity> {
@@ -47,7 +45,7 @@ public interface CrudRepository<T extends AbstractEntity> {
      * @return Found item
      * @throws EntryNotFound If item with specified id does not exist
      */
-    T getById(final Integer id)throws EntryNotFound;
+    T getById(Integer id) throws EntryNotFound;
 
     /**
      * Creates new item.

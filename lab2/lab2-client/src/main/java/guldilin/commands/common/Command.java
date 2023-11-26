@@ -7,7 +7,10 @@ import java.util.List;
  * Command enum for cli commands.
  */
 public enum Command {
-    find;
+    find,
+    create,
+    update,
+    delete;
 
     /**
      * Get enum names list.

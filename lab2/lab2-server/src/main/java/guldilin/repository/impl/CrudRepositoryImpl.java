@@ -13,11 +13,10 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import jakarta.validation.Valid;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -191,7 +190,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
      * @return Optional Entity
      */
     @Override
-    public T getById(final Integer id)throws EntryNotFound {
+    public T getById(final Integer id) throws EntryNotFound {
         return this.findById(id).orElseThrow(EntryNotFound::new);
     }
 
@@ -215,7 +214,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
      * @return Created item
      */
     @Override
-    public T create(@Valid T entry) {
+    public T create(@Valid final T entry) {
         try (EntityManager em = this.createEntityManager()) {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
@@ -233,7 +232,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
      * @throws EntryNotFound If item with specified id does not exist
      */
     @Override
-    public T update(@Valid T entry) throws EntryNotFound {
+    public T update(@Valid final T entry) throws EntryNotFound {
         try (EntityManager em = this.createEntityManager()) {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
@@ -251,7 +250,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
      * @throws EntryNotFound If item with specified id does not exist
      */
     @Override
-    public void deleteById(Integer id) throws EntryNotFound {
+    public void deleteById(final Integer id) throws EntryNotFound {
         try (EntityManager em = this.createEntityManager()) {
             EntityTransaction tx = em.getTransaction();
             tx.begin();
@@ -259,7 +258,6 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
             tx.commit();
         }
     }
-
 
     /**
      * Creates Entity Manager.

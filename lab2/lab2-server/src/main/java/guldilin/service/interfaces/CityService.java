@@ -1,6 +1,10 @@
 package guldilin.service.interfaces;
 
-import guldilin.dto.*;
+import guldilin.dto.CityCreateUpdateDTO;
+import guldilin.dto.CityDTO;
+import guldilin.dto.FilterArgumentDTO;
+import guldilin.dto.PaginationDTO;
+import guldilin.dto.PaginationRequestDTO;
 import guldilin.exceptions.EntryNotFound;
 import guldilin.exceptions.FieldIsNotFilterable;
 import jakarta.jws.WebMethod;
@@ -25,7 +29,6 @@ public interface CityService {
             @WebParam(name = "pagination") @Valid PaginationRequestDTO pagination)
             throws FieldIsNotFilterable;
 
-
     /**
      * Create city.
      *
@@ -43,10 +46,8 @@ public interface CityService {
      * @return updated city
      */
     @WebMethod
-    CityDTO updateCity(
-            @WebParam(name = "id") Integer id,
-            @WebParam(name = "city") CityCreateUpdateDTO city
-    ) throws EntryNotFound;
+    CityDTO updateCity(@WebParam(name = "id") Integer id, @WebParam(name = "city") CityCreateUpdateDTO city)
+            throws EntryNotFound;
 
     /**
      * Delete city by id.
@@ -55,5 +56,5 @@ public interface CityService {
      * @return delete status
      */
     @WebMethod
-    Boolean deleteById(@WebParam(name = "id") Integer id) throws EntryNotFound ;
+    Boolean deleteById(@WebParam(name = "id") Integer id) throws EntryNotFound;
 }

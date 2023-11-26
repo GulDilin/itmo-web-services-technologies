@@ -2,6 +2,7 @@ package guldilin.commands.find;
 
 import com.beust.jcommander.Parameter;
 import guldilin.commands.common.Args;
+import guldilin.proxy.api.PaginationRequestDTO;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
@@ -28,4 +29,16 @@ public class FindArgs extends Args {
             names = {"-offset"},
             description = "Results offset")
     private Integer offset;
+
+    /**
+     * Convert arguments to DTO for service usage.
+     *
+     * @return PaginationRequestDTO instance
+     */
+    public PaginationRequestDTO toDTO() {
+        var pagination = new PaginationRequestDTO();
+        pagination.setLimit(this.limit);
+        pagination.setOffset(this.offset);
+        return pagination;
+    }
 }

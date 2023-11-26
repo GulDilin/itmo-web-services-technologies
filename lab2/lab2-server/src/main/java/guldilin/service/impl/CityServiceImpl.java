@@ -1,6 +1,10 @@
 package guldilin.service.impl;
 
-import guldilin.dto.*;
+import guldilin.dto.CityCreateUpdateDTO;
+import guldilin.dto.CityDTO;
+import guldilin.dto.FilterArgumentDTO;
+import guldilin.dto.PaginationDTO;
+import guldilin.dto.PaginationRequestDTO;
 import guldilin.entity.City;
 import guldilin.exceptions.EntryNotFound;
 import guldilin.exceptions.FieldIsNotFilterable;
@@ -62,7 +66,7 @@ public class CityServiceImpl implements CityService {
      * @return created city
      */
     @WebMethod
-    public CityDTO createCity(@WebParam(name = "city") CityCreateUpdateDTO city) {
+    public CityDTO createCity(@WebParam(name = "city") final CityCreateUpdateDTO city) {
         return this.cityRepository.create(city.mapToEntity()).mapToDTO();
     }
 
@@ -75,9 +79,8 @@ public class CityServiceImpl implements CityService {
      */
     @WebMethod
     public CityDTO updateCity(
-            @WebParam(name = "id") Integer id,
-            @WebParam(name = "city") CityCreateUpdateDTO city
-    ) throws EntryNotFound {
+            @WebParam(name = "id") final Integer id, @WebParam(name = "city") final CityCreateUpdateDTO city)
+            throws EntryNotFound {
         City cityEntry = this.cityRepository.getById(id);
         city.updateEntity(cityEntry);
         return this.cityRepository.update(cityEntry).mapToDTO();
@@ -91,7 +94,7 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     @WebMethod
-    public Boolean deleteById(@WebParam(name = "id") Integer id) {
+    public Boolean deleteById(@WebParam(name = "id") final Integer id) {
         try {
             this.cityRepository.deleteById(id);
             return true;
