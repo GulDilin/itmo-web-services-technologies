@@ -14,7 +14,13 @@ import java.util.Map;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 
+/**
+ * CLI wrapper for standalone server run (without application server).
+ */
 public final class Standalone {
+    /**
+     * Default empty constructor.
+     */
     private Standalone() {
         // empty constructor
     }

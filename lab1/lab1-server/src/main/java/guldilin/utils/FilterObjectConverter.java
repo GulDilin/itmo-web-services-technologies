@@ -10,6 +10,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Converter for fields marked as @FilterableField.
+ */
 public final class FilterObjectConverter {
 
     /**

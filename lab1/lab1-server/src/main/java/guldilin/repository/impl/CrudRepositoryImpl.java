@@ -17,9 +17,21 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+/**
+ * Generic Implementation for CRUD repository.
+ *
+ * @param <T> Entity class
+ */
 public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudRepository<T> {
 
+    /**
+     * Implementation for SessionFactory interface.
+     */
     private final SessionFactory sessionFactory;
+
+    /**
+     * Generic Entity Class.
+     */
     private final Class<T> tClass;
 
     /**

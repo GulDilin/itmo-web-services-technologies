@@ -6,6 +6,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.hibernate.SessionFactory;
 
+/**
+ * Implementation for CRUD repository for City entity. It is Bean in Application Scope.
+ */
 @ApplicationScoped
 public class CityRepositoryImpl extends CrudRepositoryImpl<City> implements CityRepository {
     /**

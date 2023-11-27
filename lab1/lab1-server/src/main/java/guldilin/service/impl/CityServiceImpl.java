@@ -19,9 +19,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation for CityService.
+ */
 @WebService(name = "City", serviceName = "CityService", targetNamespace = "http://service.guldilin")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class CityServiceImpl implements CityService {
+    /**
+     * City repository implementation. Autoinjected.
+     */
     @Inject
     private CityRepository cityRepository;
 

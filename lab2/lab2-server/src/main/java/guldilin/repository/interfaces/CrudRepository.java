@@ -93,6 +93,7 @@ public interface CrudRepository<T extends AbstractEntity> {
      *
      * @param filterArguments List of filters
      * @return CriteriaQuery
+     * @throws FieldIsNotFilterable if some filter fields are incorrect
      */
     CriteriaQuery<Long> createCounterQuery(List<FilterArgumentDTO> filterArguments) throws FieldIsNotFilterable;
 

@@ -1,6 +1,7 @@
 package guldilin.dto;
 
 import guldilin.entity.AbstractEntity;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlSeeAlso;
 import java.io.Serializable;
 import java.util.Date;
@@ -10,15 +11,28 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Abstract Entity DTO class with default fields.
+ */
 @Data
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@XmlRootElement
 @XmlSeeAlso({CityDTO.class})
 public abstract class AbstractEntityDTO implements Serializable {
+    /**
+     * Id.
+     */
     private Integer id;
+    /**
+     * Creation date.
+     */
     private Date creationAt;
+    /**
+     * Last update date.
+     */
     private Date updatedAt;
 
     /**

@@ -92,4 +92,16 @@
             <!-- /Package to JAR -->
         </plugins>
     </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <sourceFileIncludes>target/generated-sources/**/*.java</sourceFileIncludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

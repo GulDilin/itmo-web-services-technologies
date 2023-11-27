@@ -11,6 +11,9 @@ import jakarta.jws.WebService;
 import jakarta.validation.Valid;
 import java.util.List;
 
+/**
+ * CityService interface.
+ */
 @WebService(serviceName = "CityService", targetNamespace = "http://service.guldilin")
 public interface CityService {
     /**
