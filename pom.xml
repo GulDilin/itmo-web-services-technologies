@@ -259,16 +259,6 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>3.6.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.3.0</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
                     <version>3.0.1</version>
                 </plugin>
@@ -288,9 +278,19 @@
                     <version>3.6.2</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.6.0</version>
+                </plugin>
+                <plugin>
                     <groupId>com.sun.xml.ws</groupId>
                     <artifactId>jaxws-maven-plugin</artifactId>
                     <version>${jakarta.enterprise.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.smallrye</groupId>
+                    <artifactId>jandex-maven-plugin</artifactId>
+                    <version>3.1.6</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -317,28 +317,6 @@
                 </configuration>
             </plugin>
             <!-- /Read Configuration properties from file -->
-
-            <!-- Copy dependencies to packages -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>
-                                ${project.build.directory}/libs
-                            </outputDirectory>
-                            <!--                            <stripVersion>true</stripVersion>-->
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- /Copy dependencies to packages -->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -2,7 +2,6 @@ package guldilin.dto;
 
 import guldilin.entity.City;
 import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +16,6 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@XmlType(name = "city")
 @XmlRootElement
 public class CityDTO extends AbstractEntityDTO {
 

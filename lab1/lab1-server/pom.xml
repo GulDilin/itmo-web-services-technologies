@@ -136,6 +136,7 @@
             </plugin>
             <!-- /Read properties from parent dir -->
 
+
             <!-- Generate WSDL -->
             <plugin>
                 <groupId>com.sun.xml.ws</groupId>
@@ -156,13 +157,43 @@
             </plugin>
             <!-- /Generate WSDL -->
 
+            <!-- Index beans-->
+            <plugin>
+                <!-- https://github.com/wildfly/jandex-maven-plugin -->
+                <groupId>io.smallrye</groupId>
+                <artifactId>jandex-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>make-index</id>
+                        <goals>
+                            <!-- phase is 'process-classes by default' -->
+                            <goal>jandex</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>uberjar-index</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jandex-jar</goal>
+                        </goals>
+                        <configuration>
+                            <jar>${project.build.directory}/${project.build.finalName}.jar</jar>
+                            <includes>
+                                <include>guldilin/**/*.class</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Index beans-->
+
             <!-- Package to WAR-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <configuration>
                     <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
-                    <attachClasses>true</attachClasses>
+                    <attachClasses>false</attachClasses>
                     <packagingExcludes>
                         WEB-INF/classes/guldilin/cli/*,
                         WEB-INF/lib/weld-*.jar
@@ -174,23 +205,25 @@
             <!-- Package to JAR-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <archive>
+                        <manifest>
+                            <mainClass>guldilin.cli.Standalone</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>default-jar</id>
+                        <!-- Do not change to package, it won't include project classes for unknown reason-->
                         <phase>compile</phase>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>single</goal>
                         </goals>
-                        <configuration>
-                            <archive>
-                                <manifest>
-                                    <addClasspath>true</addClasspath>
-                                    <classpathPrefix>libs/</classpathPrefix>
-                                    <mainClass>guldilin.cli.Standalone</mainClass>
-                                </manifest>
-                            </archive>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
