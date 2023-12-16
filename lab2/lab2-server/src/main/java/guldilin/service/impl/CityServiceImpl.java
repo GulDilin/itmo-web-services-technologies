@@ -28,12 +28,7 @@ public class CityServiceImpl implements CityService {
     private CityRepository cityRepository;
 
     /**
-     * Find elements by field-value filters.
-     *
-     * @param filters    List of field-value filters
-     * @param pagination pagination information
-     * @return Found elements
-     * @throws FieldIsNotFilterable for incorrect filters argument
+     * {@inheritDoc}
      */
     @Override
     @WebMethod
@@ -60,25 +55,18 @@ public class CityServiceImpl implements CityService {
     }
 
     /**
-     * Create city.
-     *
-     * @param city new city data
-     * @return created city
+     * {@inheritDoc}
      */
     @WebMethod
-    public CityDTO createCity(@WebParam(name = "city") final CityCreateUpdateDTO city) {
+    public CityDTO create(@WebParam(name = "city") final CityCreateUpdateDTO city) {
         return this.cityRepository.create(city.mapToEntity()).mapToDTO();
     }
 
     /**
-     * Create city.
-     *
-     * @param id id of city to update
-     * @param city city data you want to update
-     * @return updated city
+     * {@inheritDoc}
      */
     @WebMethod
-    public CityDTO updateCity(
+    public CityDTO update(
             @WebParam(name = "id") final Integer id, @WebParam(name = "city") final CityCreateUpdateDTO city)
             throws EntryNotFound {
         City cityEntry = this.cityRepository.getById(id);
@@ -87,10 +75,19 @@ public class CityServiceImpl implements CityService {
     }
 
     /**
-     * Delete city by id.
-     *
-     * @param id city id
-     * @return delete status
+     * {@inheritDoc}
+     */
+    @WebMethod
+    public CityDTO updatePart(
+            @WebParam(name = "id") final Integer id, @WebParam(name = "city") final CityCreateUpdateDTO city)
+            throws EntryNotFound {
+        City cityEntry = this.cityRepository.getById(id);
+        city.updateEntity(cityEntry);
+        return this.cityRepository.update(cityEntry).mapToDTO();
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     @WebMethod

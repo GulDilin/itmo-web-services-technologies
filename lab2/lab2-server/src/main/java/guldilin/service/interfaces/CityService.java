@@ -36,17 +36,28 @@ public interface CityService {
      * @return created city
      */
     @WebMethod
-    CityDTO createCity(@WebParam(name = "city") CityCreateUpdateDTO city);
+    CityDTO create(@WebParam(name = "city") CityCreateUpdateDTO city);
 
     /**
-     * Create city.
+     * Update city.
      *
      * @param id id of city to update
      * @param city city data you want to update
      * @return updated city
      */
     @WebMethod
-    CityDTO updateCity(@WebParam(name = "id") Integer id, @WebParam(name = "city") CityCreateUpdateDTO city)
+    CityDTO update(@WebParam(name = "id") Integer id, @WebParam(name = "city") CityCreateUpdateDTO city)
+            throws EntryNotFound;
+
+    /**
+     * Update city part.
+     *
+     * @param id id of city to update
+     * @param city city data you want to update
+     * @return updated city
+     */
+    @WebMethod
+    CityDTO updatePart(@WebParam(name = "id") Integer id, @WebParam(name = "city") CityCreateUpdateDTO city)
             throws EntryNotFound;
 
     /**

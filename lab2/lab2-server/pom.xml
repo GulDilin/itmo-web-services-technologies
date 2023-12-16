@@ -275,7 +275,7 @@
                             <resources>
                                 <resource>
                                     <properties>
-                                        <jta>false</jta>
+                                        <jta>true</jta>
                                         <jndi-name>${postgres.db.jndi}</jndi-name>
                                         <enabled>true</enabled>
                                         <connection-url>${postgres.db.url}</connection-url>
