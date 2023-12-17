@@ -5,9 +5,15 @@ import guldilin.commands.common.Args;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Arguments class for delete command.
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class DeleteArgs extends Args {
+    /**
+     * Identifier of city to delete.
+     */
     @Parameter(
             names = {"-id"},
             required = true,

@@ -7,16 +7,38 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * DTO for creation and updating a city.
+ * {@link City}
+ */
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class CityCreateUpdateDTO implements MappableToEntity, UpdatableToEntity<City> {
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private String name;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Integer area;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Integer population;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Float metersAboveSeaLevel;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Integer populationDensity;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Integer carCode;
 
     /**
@@ -51,7 +73,7 @@ public class CityCreateUpdateDTO implements MappableToEntity, UpdatableToEntity<
      * {@inheritDoc}
      */
     @Override
-    public void patchEntity(City entity) {
+    public void patchEntity(final City entity) {
         Optional.ofNullable(name).ifPresent(entity::setName);
         Optional.ofNullable(area).ifPresent(entity::setArea);
         Optional.ofNullable(population).ifPresent(entity::setPopulation);

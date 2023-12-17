@@ -7,21 +7,45 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * City DTO class.
+ * {@link City}
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class CityDTO extends AbstractEntityDTO {
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private String name;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Integer area;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Integer population;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Float metersAboveSeaLevel;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Integer populationDensity;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Integer carCode;
 
     /**
-     * {@inheritDoc}
+     * Constructor for DTO object from Entity.
+     *
+     * @param city JPA entity.
      */
     public CityDTO(final City city) {
         super(city);

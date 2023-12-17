@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.Optional;
 import org.hibernate.Session;
 
+/**
+ * Generic Interface for Entity Repository.
+ *
+ * @param <T> Entity class
+ */
 public interface CrudRepository<T extends AbstractEntity> {
     /**
      * Find all Elements by CriteriaQuery.

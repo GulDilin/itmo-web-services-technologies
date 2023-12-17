@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 /**
  * Validator for filter argument using JCommander IParameterValidator interface.
+ * @see <a href="https://jcommander.org/#_parameter_validation">Parameter validation guide</a>
  */
 public class FindFilterArgumentValidator implements IParameterValidator {
 

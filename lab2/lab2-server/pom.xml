@@ -156,6 +156,30 @@
             </plugin>
             <!-- /Generate WSDL -->
 
+            <!-- Copy generated WSDL to META-INF/wsdl-->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/classes/META-INF/wsdl</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/generated-sources/wsdl</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Copy generated WSDL to META-INF/wsdl-->
+
             <!-- Index beans-->
             <plugin>
                 <!-- https://github.com/wildfly/jandex-maven-plugin -->
@@ -185,29 +209,6 @@
                 </executions>
             </plugin>
             <!-- /Index beans-->
-
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <!-- here the phase you need -->
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/classes/META-INF/wsdl</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.build.directory}/generated-sources/wsdl</directory>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
 
             <!-- Package to WAR-->
             <plugin>

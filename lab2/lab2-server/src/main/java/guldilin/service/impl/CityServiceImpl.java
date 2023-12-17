@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation for CityService.
+ */
 @WebService(
         name = "CityWs",
         serviceName = "CityService",
@@ -31,6 +34,9 @@ import java.util.stream.Collectors;
         wsdlLocation = "META-INF/wsdl/CityService.wsdl")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class CityServiceImpl implements CityService {
+    /**
+     * City repository implementation. Auto-injected.
+     */
     @Inject
     private CityRepository cityRepository;
 

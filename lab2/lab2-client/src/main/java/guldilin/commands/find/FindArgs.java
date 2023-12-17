@@ -14,17 +14,26 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class FindArgs extends Args {
+    /**
+     * Filter list.
+     */
     @Parameter(
             names = {"-filter", "-f"},
             description = "Filters for read command in format field:operation:value (area:=:1)",
             validateWith = {FindFilterArgumentValidator.class})
     private List<String> filters = new ArrayList<>();
 
+    /**
+     * Items limit.
+     */
     @Parameter(
             names = {"-limit"},
             description = "Results limit")
     private Integer limit;
 
+    /**
+     * Items offset.
+     */
     @Parameter(
             names = {"-offset"},
             description = "Results offset")

@@ -12,6 +12,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class MainArgs extends Args {
+    /**
+     * Parameters list.
+     */
     @Parameter
     private List<String> parameters;
 }

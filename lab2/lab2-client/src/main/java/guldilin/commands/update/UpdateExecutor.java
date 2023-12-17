@@ -5,6 +5,9 @@ import guldilin.commands.common.Executor;
 import guldilin.proxy.api.EntryNotFound_Exception;
 import guldilin.service.ServiceProvider;
 
+/**
+ * Executor for update command. Update only specified fields.
+ */
 public class UpdateExecutor extends Executor<UpdateArgs> {
     /**
      * Create empty UpdateArgs instance for parsing later.

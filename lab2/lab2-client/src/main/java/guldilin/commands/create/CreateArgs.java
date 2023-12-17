@@ -6,39 +6,66 @@ import guldilin.proxy.api.CityCreateUpdateDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Arguments class for create command.
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class CreateArgs extends Args {
+    /**
+     * City name.
+     * {@link guldilin.proxy.api.CityDTO#getName()}
+     */
     @Parameter(
             names = {"-name"},
             required = true,
             description = "City name")
     private String name;
 
+    /**
+     * City area.
+     * {@link guldilin.proxy.api.CityDTO#getArea()}
+     */
     @Parameter(
             names = {"-area"},
             required = true,
             description = "City area number")
     private Integer area;
 
+    /**
+     * City population.
+     * {@link guldilin.proxy.api.CityDTO#getPopulation()}
+     */
     @Parameter(
             names = {"-population"},
             required = true,
             description = "City population value")
     private Integer population;
 
+    /**
+     * City metersAboveSeaLevel.
+     * {@link guldilin.proxy.api.CityDTO#getMetersAboveSeaLevel()}
+     */
     @Parameter(
             names = {"-meters-above-sea-level"},
             required = true,
             description = "Meters above sea level for City")
     private Float metersAboveSeaLevel;
 
+    /**
+     * City populationDensity.
+     * {@link guldilin.proxy.api.CityDTO#getPopulationDensity()}
+     */
     @Parameter(
             names = {"-population-density"},
             required = true,
             description = "City population density")
     private Integer populationDensity;
 
+    /**
+     * City carCode.
+     * {@link guldilin.proxy.api.CityDTO#getCarCode()}
+     */
     @Parameter(
             names = {"-car-code"},
             required = true,

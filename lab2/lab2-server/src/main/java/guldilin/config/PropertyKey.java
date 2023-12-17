@@ -8,6 +8,9 @@ import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Enum for standalone parameters.
+ */
 @Getter
 @AllArgsConstructor
 public enum PropertyKey implements Serializable {
@@ -68,10 +71,22 @@ public enum PropertyKey implements Serializable {
      */
     APP_URL(false, null, "Application url");
 
+    /**
+     * Required state. (For exception throwing if did not pass).
+     */
     private final Boolean required;
+    /**
+     * Default parameter value.
+     */
     private final String defaultValue;
+    /**
+     * Parameter description.
+     */
     private final String description;
 
+    /**
+     * Just logger.
+     */
     private static final Logger LOGGER = LogManager.getLogger(PropertyKey.class);
 
     /**

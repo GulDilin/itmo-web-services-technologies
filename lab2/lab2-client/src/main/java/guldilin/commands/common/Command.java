@@ -7,10 +7,25 @@ import java.util.List;
  * Command enum for cli commands.
  */
 public enum Command {
+    /**
+     * Find command.
+     */
     find,
+    /**
+     * Create command.
+     */
     create,
+    /**
+     * Update command.
+     */
     update,
+    /**
+     * Patch command.
+     */
     patch,
+    /**
+     * Delete command.
+     */
     delete;
 
     /**

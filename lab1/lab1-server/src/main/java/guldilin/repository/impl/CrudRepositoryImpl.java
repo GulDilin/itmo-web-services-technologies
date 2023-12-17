@@ -154,11 +154,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Find all Elements by CriteriaQuery.
-     *
-     * @param criteriaQuery CriteriaQuery
-     * @param pagination    information about pagination properties
-     * @return Result list
+     * {@inheritDoc}
      */
     @Override
     public List<T> findByCriteria(final CriteriaQuery<T> criteriaQuery, final PaginationRequestDTO pagination) {
@@ -171,10 +167,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Find item by id.
-     *
-     * @param id Item id
-     * @return Optional Entity
+     * {@inheritDoc}
      */
     @Override
     public Optional<T> findById(final Integer id) {
@@ -193,10 +186,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Count elements in database by criteria.
-     *
-     * @param criteriaQuery CriteriaQuery
-     * @return Number of elements
+     * {@inheritDoc}
      */
     @Override
     public Long countByCriteria(final CriteriaQuery<Long> criteriaQuery) {
@@ -206,9 +196,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Creates Entity Manager.
-     *
-     * @return EntityManager
+     * {@inheritDoc}
      */
     @Override
     public EntityManager createEntityManager() {
@@ -216,9 +204,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Opens Session.
-     *
-     * @return Session
+     * {@inheritDoc}
      */
     @Override
     public Session openSession() {

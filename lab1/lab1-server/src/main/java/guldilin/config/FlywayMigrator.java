@@ -3,6 +3,8 @@ package guldilin.config;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
 import jakarta.ejb.Startup;
+import jakarta.ejb.TransactionManagement;
+import jakarta.ejb.TransactionManagementType;
 import jakarta.inject.Inject;
 import javax.sql.DataSource;
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +16,7 @@ import org.flywaydb.core.Flyway;
  */
 @Singleton
 @Startup
+@TransactionManagement(value = TransactionManagementType.BEAN)
 public class FlywayMigrator {
     /**
      * Just logger.

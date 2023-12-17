@@ -4,6 +4,11 @@ import com.beust.jcommander.JCommander;
 import guldilin.service.ServiceProvider;
 import guldilin.service.ServiceProviderImpl;
 
+/**
+ * Executor interface for commands.
+ *
+ * @param <T> Arguments class.
+ */
 public abstract class Executor<T extends Args> {
 
     /**

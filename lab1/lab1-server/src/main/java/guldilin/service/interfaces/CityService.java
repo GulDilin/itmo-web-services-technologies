@@ -14,7 +14,12 @@ import java.util.List;
 /**
  * CityService interface.
  */
-@WebService(serviceName = "CityService", targetNamespace = "http://service.guldilin")
+@WebService(
+        name = "CityWs",
+        serviceName = "CityService",
+        targetNamespace = "http://service.guldilin",
+        portName = "CityPort",
+        wsdlLocation = "META-INF/wsdl/CityService.wsdl")
 public interface CityService {
     /**
      * Find elements by field-value filters.

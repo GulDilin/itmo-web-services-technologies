@@ -28,16 +28,37 @@ import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.service.ServiceRegistry;
 import org.postgresql.ds.PGSimpleDataSource;
 
+/**
+ * Mode of DataSource passing.
+ */
 enum DatasourceMode {
+    /**
+     * Datasource generates by passed arguments.
+     */
     ARGUMENTS,
+    /**
+     * Datasource is found by JNDI name.
+     */
     JNDI_LOOKUP,
 }
 
+/**
+ * Provides SessionFactory.
+ */
 @NoArgsConstructor
 @ApplicationScoped
 final class SessionFactoryProvider {
+    /**
+     * Just logger.
+     */
     private static final Logger LOGGER = LogManager.getLogger(SessionFactoryProvider.class);
+    /**
+     * Datasource find with JNDI.
+     */
     private DataSource jndiDataSource;
+    /**
+     * Mode of DataSource generation.
+     */
     private DatasourceMode datasourceMode;
 
     /**

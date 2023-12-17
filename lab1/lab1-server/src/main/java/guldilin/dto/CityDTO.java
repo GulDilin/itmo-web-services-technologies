@@ -10,6 +10,7 @@ import lombok.ToString;
 
 /**
  * City DTO class.
+ * {@link City}
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -18,30 +19,28 @@ import lombok.ToString;
 @AllArgsConstructor
 @XmlRootElement
 public class CityDTO extends AbstractEntityDTO {
-
     /**
-     * City name.
+     * DTO field shading an entity field with same name.
      */
     private String name;
     /**
-     * City area number.
+     * DTO field shading an entity field with same name.
      */
     private Integer area;
     /**
-     * City population.
+     * DTO field shading an entity field with same name.
      */
     private Integer population;
     /**
-     * Meters above sea level.
+     * DTO field shading an entity field with same name.
      */
     private Float metersAboveSeaLevel;
-
     /**
-     * Population density. people / meters ^ 2.
+     * DTO field shading an entity field with same name.
      */
     private Integer populationDensity;
     /**
-     * City car code.
+     * DTO field shading an entity field with same name.
      */
     private Integer carCode;
 

@@ -6,6 +6,9 @@ import guldilin.proxy.api.PaginationDTO;
 import java.io.PrintStream;
 import java.util.stream.Collectors;
 
+/**
+ * Class that helps with printing entities to string.
+ */
 public final class EntitiesPrinter {
 
     /**

@@ -20,13 +20,27 @@ import java.util.Optional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+/**
+ * Generic Implementation for CRUD repository.
+ *
+ * @param <T> Entity class
+ */
 public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudRepository<T> {
 
+    /**
+     * Implementation for SessionFactory interface.
+     */
     private final SessionFactory sessionFactory;
+    /**
+     * Generic Entity Class.
+     */
     private final Class<T> tClass;
 
     /**
-     * {@inheritDoc}
+     * Constructor for CrudRepositoryImpl.
+     *
+     * @param tClass         Entity class
+     * @param sessionFactory SessionFactory instance
      */
     public CrudRepositoryImpl(final Class<T> tClass, final SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -34,7 +48,13 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * {@inheritDoc}
+     * Get predicate for Filter argument to use in where method.
+     *
+     * @param cb             CriteriaBuilder
+     * @param filterArgument argument filter
+     * @param root           Criteria root object
+     * @return Predicate
+     * @throws FieldIsNotFilterable if incorrect field placed in argument
      */
     public Predicate getFilterPredicate(
             final CriteriaBuilder cb, final FilterArgumentDTO filterArgument, final Root<?> root)
@@ -45,7 +65,13 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * {@inheritDoc}
+     * Parse predicates from filters list.
+     *
+     * @param cb      CriteriaBuilder
+     * @param root    Selection root
+     * @param filters Filters list
+     * @return List of WHERE predicates
+     * @throws FieldIsNotFilterable if filters are incorrect
      */
     public List<Predicate> parsePredicates(
             final CriteriaBuilder cb, final Root<T> root, final List<FilterArgumentDTO> filters)
@@ -60,7 +86,11 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * {@inheritDoc}
+     * Apply predicates to query.
+     *
+     * @param cb            CriteriaBuilder
+     * @param criteriaQuery CriteriaQuery
+     * @param predicates    List of WHERE predicates
      */
     public void applyPredicates(
             final CriteriaBuilder cb, final CriteriaQuery<?> criteriaQuery, final List<Predicate> predicates) {
@@ -68,7 +98,13 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * {@inheritDoc}
+     * Apply filters to query.
+     *
+     * @param cb            CriteriaBuilder
+     * @param root          Selection root
+     * @param criteriaQuery CriteriaQuery
+     * @param filters       Filters list
+     * @throws FieldIsNotFilterable if filters are incorrect
      */
     public void applyFilters(
             final CriteriaBuilder cb,
@@ -97,7 +133,11 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * {@inheritDoc}
+     * Create CriteriaQuery by filter arguments.
+     *
+     * @param filters list of filter fields arguments
+     * @return Generated CriteriaQuery
+     * @throws FieldIsNotFilterable if some filter fields are incorrect
      */
     public CriteriaQuery<Long> createCounterQuery(final List<FilterArgumentDTO> filters) throws FieldIsNotFilterable {
         try (EntityManager em = this.createEntityManager()) {

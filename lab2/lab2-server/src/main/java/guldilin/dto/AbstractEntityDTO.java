@@ -10,6 +10,10 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+/**
+ * Abstract Entity DTO class with default fields.
+ * {@link AbstractEntity}
+ */
 @Data
 @EqualsAndHashCode
 @ToString
@@ -17,8 +21,17 @@ import lombok.ToString;
 @AllArgsConstructor
 @XmlSeeAlso({CityDTO.class})
 public abstract class AbstractEntityDTO implements Serializable {
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Integer id;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Date creationAt;
+    /**
+     * DTO field shading an entity field with same name.
+     */
     private Date updatedAt;
 
     /**

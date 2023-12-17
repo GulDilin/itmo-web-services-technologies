@@ -2,6 +2,11 @@ package guldilin.dto;
 
 import guldilin.entity.AbstractEntity;
 
+/**
+ * Interface to mark class that can be used to update and patch realization.
+ *
+ * @param <T> Database Entity
+ */
 public interface UpdatableToEntity<T extends AbstractEntity> {
 
     /**

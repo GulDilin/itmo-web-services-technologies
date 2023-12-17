@@ -27,8 +27,7 @@ import java.util.stream.Collectors;
         serviceName = "CityService",
         targetNamespace = "http://service.guldilin",
         portName = "CityPort",
-        endpointInterface = "guldilin.service.interfaces.CityService"
-)
+        wsdlLocation = "META-INF/wsdl/CityService.wsdl")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class CityServiceImpl implements CityService {
     /**
