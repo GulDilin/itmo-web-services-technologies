@@ -2,6 +2,9 @@ package guldilin;
 
 import guldilin.commands.main.MainExecutor;
 
+/**
+ * Main class for CLI wrapper.
+ */
 public final class Main {
 
     /**

@@ -10,4 +10,11 @@ public interface UpdatableToEntity<T extends AbstractEntity> {
      * @param entity entry to update
      */
     void updateEntity(T entity);
+
+    /**
+     * Path entity with current data for non-null fields.
+     *
+     * @param entity entry to patch
+     */
+    void patchEntity(T entity);
 }

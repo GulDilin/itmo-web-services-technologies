@@ -60,14 +60,16 @@ public final class City extends AbstractEntity {
     private Integer carCode;
 
     /**
-     * Create DTO object from this entity.
-     * @return DTO object.
+     * {@inheritDoc}
      */
     @Override
     public CityDTO mapToDTO() {
         return new CityDTO(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -82,6 +84,9 @@ public final class City extends AbstractEntity {
         return getId() != null && Objects.equals(getId(), city.getId());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return getClass().hashCode();

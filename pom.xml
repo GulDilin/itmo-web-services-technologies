@@ -33,7 +33,7 @@
         <!--        postgres.db.password -->
 
         <postgres.db.url>jdbc:postgresql://${postgres.db.host}:${postgres.db.port}/${postgres.db.name}</postgres.db.url>
-        <postgres.db.jndi>java:global/db/${postgres.db.name}</postgres.db.jndi>
+        <postgres.db.jndi>java:global/${postgres.db.name}</postgres.db.jndi>
     </properties>
 
     <groupId>guldilin</groupId>

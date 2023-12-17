@@ -16,12 +16,19 @@ import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
 import jakarta.jws.soap.SOAPBinding;
 import jakarta.validation.Valid;
+import jakarta.xml.ws.Action;
+import jakarta.xml.ws.FaultAction;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@WebService(name = "City", serviceName = "CityService", targetNamespace = "http://service.guldilin")
+@WebService(
+        name = "CityWs",
+        serviceName = "CityService",
+        targetNamespace = "http://service.guldilin",
+        portName = "CityPort",
+        wsdlLocation = "META-INF/wsdl/CityService.wsdl")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class CityServiceImpl implements CityService {
     @Inject
@@ -58,6 +65,9 @@ public class CityServiceImpl implements CityService {
      * {@inheritDoc}
      */
     @WebMethod
+    @Action(
+            input = "http://service.guldilin/City/createRequest",
+            output = "http://service.guldilin/City/createResponse")
     public CityDTO create(@WebParam(name = "city") final CityCreateUpdateDTO city) {
         return this.cityRepository.create(city.mapToEntity()).mapToDTO();
     }
@@ -66,6 +76,14 @@ public class CityServiceImpl implements CityService {
      * {@inheritDoc}
      */
     @WebMethod
+    @Action(
+            input = "http://service.guldilin/City/updateRequest",
+            output = "http://service.guldilin/City/updateResponse",
+            fault = {
+                @FaultAction(
+                        className = EntryNotFound.class,
+                        value = "http://service.guldilin/City/update/Fault/EntryNotFound")
+            })
     public CityDTO update(
             @WebParam(name = "id") final Integer id, @WebParam(name = "city") final CityCreateUpdateDTO city)
             throws EntryNotFound {
@@ -78,11 +96,19 @@ public class CityServiceImpl implements CityService {
      * {@inheritDoc}
      */
     @WebMethod
-    public CityDTO updatePart(
+    @Action(
+            input = "http://service.guldilin/City/patchRequest",
+            output = "http://service.guldilin/City/patchResponse",
+            fault = {
+                @FaultAction(
+                        className = EntryNotFound.class,
+                        value = "http://service.guldilin/City/patch/Fault/EntryNotFound")
+            })
+    public CityDTO patch(
             @WebParam(name = "id") final Integer id, @WebParam(name = "city") final CityCreateUpdateDTO city)
             throws EntryNotFound {
         City cityEntry = this.cityRepository.getById(id);
-        city.updateEntity(cityEntry);
+        city.patchEntity(cityEntry);
         return this.cityRepository.update(cityEntry).mapToDTO();
     }
 
@@ -91,6 +117,9 @@ public class CityServiceImpl implements CityService {
      */
     @Override
     @WebMethod
+    @Action(
+            input = "http://service.guldilin/City/deleteByIdRequest",
+            output = "http://service.guldilin/City/deleteByIdResponse")
     public Boolean deleteById(@WebParam(name = "id") final Integer id) {
         try {
             this.cityRepository.deleteById(id);

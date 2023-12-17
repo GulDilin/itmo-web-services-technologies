@@ -1,6 +1,7 @@
 package guldilin.dto;
 
 import guldilin.entity.City;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,9 +20,7 @@ public class CityCreateUpdateDTO implements MappableToEntity, UpdatableToEntity<
     private Integer carCode;
 
     /**
-     * Map DTO instance to City entity object.
-     *
-     * @return City object
+     * {@inheritDoc}
      */
     @Override
     public City mapToEntity() {
@@ -36,9 +35,7 @@ public class CityCreateUpdateDTO implements MappableToEntity, UpdatableToEntity<
     }
 
     /**
-     * Update entity with current data.
-     *
-     * @param entity entry to update
+     * {@inheritDoc}
      */
     @Override
     public void updateEntity(final City entity) {
@@ -48,5 +45,18 @@ public class CityCreateUpdateDTO implements MappableToEntity, UpdatableToEntity<
         entity.setMetersAboveSeaLevel(metersAboveSeaLevel);
         entity.setPopulationDensity(populationDensity);
         entity.setCarCode(carCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void patchEntity(City entity) {
+        Optional.ofNullable(name).ifPresent(entity::setName);
+        Optional.ofNullable(area).ifPresent(entity::setArea);
+        Optional.ofNullable(population).ifPresent(entity::setPopulation);
+        Optional.ofNullable(populationDensity).ifPresent(entity::setPopulationDensity);
+        Optional.ofNullable(metersAboveSeaLevel).ifPresent(entity::setMetersAboveSeaLevel);
+        Optional.ofNullable(carCode).ifPresent(entity::setCarCode);
     }
 }

@@ -26,10 +26,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     private final Class<T> tClass;
 
     /**
-     * Constructor for CrudRepositoryImpl.
-     *
-     * @param tClass         Entity class
-     * @param sessionFactory SessionFactory instance
+     * {@inheritDoc}
      */
     public CrudRepositoryImpl(final Class<T> tClass, final SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -37,13 +34,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Get predicate for Filter argument to use in where method.
-     *
-     * @param cb             CriteriaBuilder
-     * @param filterArgument argument filter
-     * @param root           Criteria root object
-     * @return Predicate
-     * @throws FieldIsNotFilterable if incorrect field placed in argument
+     * {@inheritDoc}
      */
     public Predicate getFilterPredicate(
             final CriteriaBuilder cb, final FilterArgumentDTO filterArgument, final Root<?> root)
@@ -54,13 +45,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Parse predicates from filters list.
-     *
-     * @param cb      CriteriaBuilder
-     * @param root    Selection root
-     * @param filters Filters list
-     * @return List of WHERE predicates
-     * @throws FieldIsNotFilterable if filters are incorrect
+     * {@inheritDoc}
      */
     public List<Predicate> parsePredicates(
             final CriteriaBuilder cb, final Root<T> root, final List<FilterArgumentDTO> filters)
@@ -75,11 +60,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Apply predicates to query.
-     *
-     * @param cb            CriteriaBuilder
-     * @param criteriaQuery CriteriaQuery
-     * @param predicates    List of WHERE predicates
+     * {@inheritDoc}
      */
     public void applyPredicates(
             final CriteriaBuilder cb, final CriteriaQuery<?> criteriaQuery, final List<Predicate> predicates) {
@@ -87,13 +68,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Apply filters to query.
-     *
-     * @param cb            CriteriaBuilder
-     * @param root          Selection root
-     * @param criteriaQuery CriteriaQuery
-     * @param filters       Filters list
-     * @throws FieldIsNotFilterable if filters are incorrect
+     * {@inheritDoc}
      */
     public void applyFilters(
             final CriteriaBuilder cb,
@@ -106,11 +81,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Create CriteriaQuery by filter arguments.
-     *
-     * @param filters list of filter fields arguments
-     * @return Generated CriteriaQuery
-     * @throws FieldIsNotFilterable if some filter fields are incorrect
+     * {@inheritDoc}
      */
     public CriteriaQuery<T> createFilterQuery(final List<FilterArgumentDTO> filters) throws FieldIsNotFilterable {
         try (EntityManager em = this.createEntityManager()) {
@@ -126,10 +97,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Create CriteriaQuery for count elements.
-     *
-     * @param filters List of filters
-     * @return CriteriaQuery
+     * {@inheritDoc}
      */
     public CriteriaQuery<Long> createCounterQuery(final List<FilterArgumentDTO> filters) throws FieldIsNotFilterable {
         try (EntityManager em = this.createEntityManager()) {
@@ -145,11 +113,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Find all Elements by CriteriaQuery.
-     *
-     * @param criteriaQuery CriteriaQuery
-     * @param pagination    information about pagination properties
-     * @return Result list
+     * {@inheritDoc}
      */
     @Override
     public List<T> findByCriteria(final CriteriaQuery<T> criteriaQuery, final PaginationRequestDTO pagination) {
@@ -162,10 +126,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Find item by id.
-     *
-     * @param id Item id
-     * @return Optional Entity
+     * {@inheritDoc}
      */
     @Override
     public Optional<T> findById(final Integer id) {
@@ -184,10 +145,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Get item by id.
-     *
-     * @param id Item id
-     * @return Optional Entity
+     * {@inheritDoc}
      */
     @Override
     public T getById(final Integer id) throws EntryNotFound {
@@ -195,10 +153,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Count elements in database by criteria.
-     *
-     * @param criteriaQuery CriteriaQuery
-     * @return Number of elements
+     * {@inheritDoc}
      */
     @Override
     public Long countByCriteria(final CriteriaQuery<Long> criteriaQuery) {
@@ -208,10 +163,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Creates new item.
-     *
-     * @param entry Item to create
-     * @return Created item
+     * {@inheritDoc}
      */
     @Override
     public T create(@Valid final T entry) {
@@ -225,11 +177,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Update item.
-     *
-     * @param entry Item with updated fields.
-     * @return Updated item
-     * @throws EntryNotFound If item with specified id does not exist
+     * {@inheritDoc}
      */
     @Override
     public T update(@Valid final T entry) throws EntryNotFound {
@@ -244,10 +192,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Delete item by id.
-     *
-     * @param id Item id
-     * @throws EntryNotFound If item with specified id does not exist
+     * {@inheritDoc}
      */
     @Override
     public void deleteById(final Integer id) throws EntryNotFound {
@@ -260,9 +205,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Creates Entity Manager.
-     *
-     * @return EntityManager
+     * {@inheritDoc}
      */
     @Override
     public EntityManager createEntityManager() {
@@ -270,9 +213,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     }
 
     /**
-     * Opens Session.
-     *
-     * @return Session
+     * {@inheritDoc}
      */
     @Override
     public Session openSession() {

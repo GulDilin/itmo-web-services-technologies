@@ -5,6 +5,9 @@ import com.beust.jcommander.ParameterException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+/**
+ * Validator for filter argument using JCommander IParameterValidator interface.
+ */
 public class FindFilterArgumentValidator implements IParameterValidator {
 
     /**

@@ -1,6 +1,6 @@
 package guldilin.service;
 
-import guldilin.proxy.api.City;
+import guldilin.proxy.api.CityWs;
 
 public interface ServiceProvider {
     /**
@@ -8,5 +8,5 @@ public interface ServiceProvider {
      *
      * @return City service instance
      */
-    City provideCityService();
+    CityWs provideCityService();
 }

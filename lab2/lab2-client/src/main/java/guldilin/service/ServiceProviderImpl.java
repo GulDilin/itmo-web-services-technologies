@@ -1,7 +1,7 @@
 package guldilin.service;
 
-import guldilin.proxy.api.City;
 import guldilin.proxy.api.CityService;
+import guldilin.proxy.api.CityWs;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -9,22 +9,17 @@ public class ServiceProviderImpl implements ServiceProvider {
     private final URL cityServiceUrl;
 
     /**
-     * Default constructor.
-     *
-     * @param baseUrl base url of server
-     * @throws MalformedURLException If base URL is not correct
+     * {@inheritDoc}
      */
     public ServiceProviderImpl(final URL baseUrl) throws MalformedURLException {
         this.cityServiceUrl = new URL(String.format("%s/CityService?wsdl", baseUrl));
     }
 
     /**
-     * Provides City service of proxy-api for server.
-     *
-     * @return City service instance
+     * {@inheritDoc}
      */
     @Override
-    public City provideCityService() {
+    public CityWs provideCityService() {
         var service = new CityService(this.cityServiceUrl);
         return service.getCityPort();
     }

@@ -9,10 +9,7 @@ import org.hibernate.SessionFactory;
 @ApplicationScoped
 public class CityRepositoryImpl extends CrudRepositoryImpl<City> implements CityRepository {
     /**
-     * Constructor for CityRepositoryImpl.
-     * Shouldn't be called because it is Bean.
-     *
-     * @param sessionFactory SessionFactory (Injected)
+     * {@inheritDoc}
      */
     @Inject
     public CityRepositoryImpl(final SessionFactory sessionFactory) {

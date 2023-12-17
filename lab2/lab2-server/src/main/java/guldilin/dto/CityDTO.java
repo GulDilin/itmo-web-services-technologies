@@ -21,9 +21,7 @@ public class CityDTO extends AbstractEntityDTO {
     private Integer carCode;
 
     /**
-     * Constructor for DTO object from Entity.
-     *
-     * @param city JPA entity.
+     * {@inheritDoc}
      */
     public CityDTO(final City city) {
         super(city);

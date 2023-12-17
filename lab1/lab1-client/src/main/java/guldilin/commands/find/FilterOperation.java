@@ -4,13 +4,30 @@ import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * Enum for filter operation.
+ */
 @AllArgsConstructor
 @Getter
 public enum FilterOperation {
+    /**
+     * Equal operation.
+     */
     EQUAL("=", "Equals");
 
+    /**
+     * Parts size of filter argument.
+     */
     public static final int FILTER_ARGUMENTS_PARTS = 3;
+
+    /**
+     * Key that will be used in arguments.
+     */
     private final String operationKey;
+
+    /**
+     * Operation description.
+     */
     private final String description;
 
     /**

@@ -8,6 +8,7 @@ import guldilin.commands.common.HelpArgs;
 import guldilin.commands.create.CreateExecutor;
 import guldilin.commands.delete.DeleteExecutor;
 import guldilin.commands.find.FindExecutor;
+import guldilin.commands.patch.PatchExecutor;
 import guldilin.commands.update.UpdateExecutor;
 import guldilin.service.ServiceProvider;
 
@@ -26,6 +27,7 @@ public class MainExecutor extends Executor<MainArgs> {
             case find -> new FindExecutor();
             case create -> new CreateExecutor();
             case update -> new UpdateExecutor();
+            case patch -> new PatchExecutor();
             case delete -> new DeleteExecutor();
             default -> throw new ParameterException("Executor for command not found");
         };

@@ -29,7 +29,7 @@ public class CreateExecutor extends Executor<CreateArgs> {
     @Override
     public void execute(final String[] argv, final CreateArgs args, final ServiceProvider serviceProvider) {
         var cityService = serviceProvider.provideCityService();
-        var created = cityService.createCity(args.toDTO());
+        var created = cityService.create(args.toDTO());
         EntitiesPrinter.print(System.out, created);
     }
 }

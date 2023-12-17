@@ -35,6 +35,8 @@ java -jar lab2-server.jar \
     -db_host localhost -db_port 5439 -db_name tws_db -db_username postgres -db_password admin
 ```
 
+java -jar lab2-server.jar -host http://localhost -port 9595 -db_host localhost -db_port 5439 -db_name tws_db -db_username postgres -db_password admin
+
 ## WAR package
 
 You can deploy `WAR` package to you application server

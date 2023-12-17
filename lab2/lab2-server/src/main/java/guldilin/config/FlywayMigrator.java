@@ -13,7 +13,7 @@ import org.flywaydb.core.Flyway;
 
 @Singleton
 @Startup
-@TransactionManagement(value=TransactionManagementType.BEAN)
+@TransactionManagement(value = TransactionManagementType.BEAN)
 public class FlywayMigrator {
     private static final Logger LOGGER = LogManager.getLogger(FlywayMigrator.class);
 

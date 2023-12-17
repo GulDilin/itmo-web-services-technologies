@@ -22,22 +22,23 @@ import java.util.stream.Collectors;
 /**
  * Implementation for CityService.
  */
-@WebService(name = "City", serviceName = "CityService", targetNamespace = "http://service.guldilin")
+@WebService(
+        name = "CityWs",
+        serviceName = "CityService",
+        targetNamespace = "http://service.guldilin",
+        portName = "CityPort",
+        endpointInterface = "guldilin.service.interfaces.CityService"
+)
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class CityServiceImpl implements CityService {
     /**
-     * City repository implementation. Autoinjected.
+     * City repository implementation. Auto-injected.
      */
     @Inject
     private CityRepository cityRepository;
 
     /**
-     * Find elements by field-value filters.
-     *
-     * @param filters    List of field-value filters
-     * @param pagination pagination information
-     * @return Found elements
-     * @throws FieldIsNotFilterable for incorrect filters argument
+     * {@inheritDoc}
      */
     @Override
     @WebMethod

@@ -57,7 +57,7 @@ public interface CityService {
      * @return updated city
      */
     @WebMethod
-    CityDTO updatePart(@WebParam(name = "id") Integer id, @WebParam(name = "city") CityCreateUpdateDTO city)
+    CityDTO patch(@WebParam(name = "id") Integer id, @WebParam(name = "city") CityCreateUpdateDTO city)
             throws EntryNotFound;
 
     /**

@@ -9,6 +9,9 @@ import lombok.Data;
  */
 @Data
 public class HelpArgs {
+    /**
+     *
+     */
     @Parameter(
             names = {"-help", "-h"},
             help = true,

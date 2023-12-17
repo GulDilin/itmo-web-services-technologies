@@ -10,6 +10,7 @@ public enum Command {
     find,
     create,
     update,
+    patch,
     delete;
 
     /**
