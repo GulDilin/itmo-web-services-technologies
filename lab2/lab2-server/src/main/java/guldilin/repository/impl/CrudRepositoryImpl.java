@@ -127,6 +127,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
             Root<T> root = criteriaQuery.from(tClass);
             criteriaQuery.select(root);
             applyFilters(cb, root, criteriaQuery, filters);
+            criteriaQuery.orderBy(cb.asc(root.get("id")));
 
             return criteriaQuery;
         }

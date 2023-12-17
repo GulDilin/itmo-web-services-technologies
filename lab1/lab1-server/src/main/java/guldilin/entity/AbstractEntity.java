@@ -5,14 +5,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  * Abstract entity class for other entities.
@@ -38,7 +39,6 @@ public abstract class AbstractEntity implements Mappable {
      */
     @FilterableField
     @Column(name = "created_at", nullable = false, updatable = false)
-    @CreationTimestamp
     private Timestamp createdAt;
 
     /**
@@ -46,8 +46,24 @@ public abstract class AbstractEntity implements Mappable {
      */
     @FilterableField
     @Column(name = "updated_at", nullable = false, updatable = false)
-    @UpdateTimestamp
     private Timestamp updatedAt;
+
+    /**
+     * Set creation timestamp.
+     */
+    @PrePersist
+    public void onCreate() {
+        this.createdAt = Timestamp.from(Instant.now());
+        this.updatedAt = this.createdAt;
+    }
+
+    /**
+     * Set timestamp on updated.
+     */
+    @PreUpdate
+    public void onUpdate() {
+        this.updatedAt = Timestamp.from(Instant.now());
+    }
 
     /**
      * {@inheritDoc}

@@ -5,15 +5,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.proxy.HibernateProxy;
 
 /**
  * Abstract entity class for other entities.
@@ -39,7 +39,6 @@ public abstract class AbstractEntity implements MappableToDTO {
      */
     @FilterableField
     @Column(name = "created_at", nullable = false, updatable = false)
-    @CreationTimestamp
     private Timestamp createdAt;
 
     /**
@@ -47,8 +46,24 @@ public abstract class AbstractEntity implements MappableToDTO {
      */
     @FilterableField
     @Column(name = "updated_at", nullable = false, updatable = false)
-    @UpdateTimestamp
     private Timestamp updatedAt;
+
+    /**
+     * Set creation timestamp.
+     */
+    @PrePersist
+    public void onCreate() {
+        this.createdAt = Timestamp.from(Instant.now());
+        this.updatedAt = this.createdAt;
+    }
+
+    /**
+     * Set timestamp on updated.
+     */
+    @PreUpdate
+    public void onUpdate() {
+        this.updatedAt = Timestamp.from(Instant.now());
+    }
 
     /**
      * {@inheritDoc}
@@ -56,16 +71,11 @@ public abstract class AbstractEntity implements MappableToDTO {
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy
-                ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass()
-                : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy
-                ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
-                : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         AbstractEntity that = (AbstractEntity) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        return Objects.equals(id, that.id)
+                && Objects.equals(createdAt, that.createdAt)
+                && Objects.equals(updatedAt, that.updatedAt);
     }
 
     /**
@@ -73,11 +83,6 @@ public abstract class AbstractEntity implements MappableToDTO {
      */
     @Override
     public int hashCode() {
-        return this instanceof HibernateProxy
-                ? ((HibernateProxy) this)
-                        .getHibernateLazyInitializer()
-                        .getPersistentClass()
-                        .hashCode()
-                : getClass().hashCode();
+        return Objects.hash(id, createdAt, updatedAt);
     }
 }
