@@ -1,7 +1,3 @@
-MAVEN_REPO=https://repo1.maven.org/maven2
-POSTGRES_DRIVER_VERSION=42.6.0
-POSTGRES_JAR_NAME=postgresql-$POSTGRES_DRIVER_VERSION.jar
-
 JBOSS_HOME=/opt/jboss/wildfly
 JBOSS_CLI=$JBOSS_HOME/bin/jboss-cli.sh
 JBOSS_MODE=standalone

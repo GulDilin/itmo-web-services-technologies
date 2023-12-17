@@ -2,6 +2,9 @@ package guldilin.commands.common;
 
 import com.beust.jcommander.JCommander;
 
+/**
+ * Executor interface for commands.
+ */
 public interface Executor {
     /**
      * Execute command.

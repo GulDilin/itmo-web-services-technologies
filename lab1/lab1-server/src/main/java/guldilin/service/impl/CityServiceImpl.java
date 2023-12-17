@@ -19,19 +19,25 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@WebService(name = "City", serviceName = "CityService", targetNamespace = "http://service.guldilin")
+/**
+ * Implementation for CityService.
+ */
+@WebService(
+        name = "CityWs",
+        serviceName = "CityService",
+        targetNamespace = "http://service.guldilin",
+        portName = "CityPort",
+        wsdlLocation = "META-INF/wsdl/CityService.wsdl")
 @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
 public class CityServiceImpl implements CityService {
+    /**
+     * City repository implementation. Auto-injected.
+     */
     @Inject
     private CityRepository cityRepository;
 
     /**
-     * Find elements by field-value filters.
-     *
-     * @param filters    List of field-value filters
-     * @param pagination pagination information
-     * @return Found elements
-     * @throws FieldIsNotFilterable for incorrect filters argument
+     * {@inheritDoc}
      */
     @Override
     @WebMethod

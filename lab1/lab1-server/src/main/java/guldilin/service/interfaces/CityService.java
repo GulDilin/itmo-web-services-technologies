@@ -11,7 +11,15 @@ import jakarta.jws.WebService;
 import jakarta.validation.Valid;
 import java.util.List;
 
-@WebService(serviceName = "CityService", targetNamespace = "http://service.guldilin")
+/**
+ * CityService interface.
+ */
+@WebService(
+        name = "CityWs",
+        serviceName = "CityService",
+        targetNamespace = "http://service.guldilin",
+        portName = "CityPort",
+        wsdlLocation = "META-INF/wsdl/CityService.wsdl")
 public interface CityService {
     /**
      * Find elements by field-value filters.

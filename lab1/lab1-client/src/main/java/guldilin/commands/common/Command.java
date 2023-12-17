@@ -7,6 +7,9 @@ import java.util.List;
  * Command enum for cli commands.
  */
 public enum Command {
+    /**
+     * Find command.
+     */
     find;
 
     /**

@@ -10,6 +10,11 @@ import java.util.List;
 import java.util.Optional;
 import org.hibernate.Session;
 
+/**
+ * Generic Interface for Entity Repository.
+ *
+ * @param <T> Entity class
+ */
 public interface CrudRepository<T extends Mappable> {
     /**
      * Find all Elements by CriteriaQuery.
@@ -57,6 +62,7 @@ public interface CrudRepository<T extends Mappable> {
      *
      * @param filterArguments List of filters
      * @return CriteriaQuery
+     * @throws FieldIsNotFilterable if some filter fields are incorrect
      */
     CriteriaQuery<Long> createCounterQuery(List<FilterArgumentDTO> filterArguments) throws FieldIsNotFilterable;
 

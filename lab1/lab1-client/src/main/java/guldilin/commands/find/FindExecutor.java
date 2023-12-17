@@ -3,8 +3,8 @@ package guldilin.commands.find;
 import com.beust.jcommander.JCommander;
 import guldilin.commands.common.EntitiesPrinter;
 import guldilin.commands.common.Executor;
-import guldilin.proxy.api.City;
 import guldilin.proxy.api.CityService;
+import guldilin.proxy.api.CityWs;
 import guldilin.proxy.api.FieldIsNotFilterable_Exception;
 import guldilin.proxy.api.FilterArgumentDTO;
 import guldilin.proxy.api.PaginationDTO;
@@ -65,7 +65,7 @@ public class FindExecutor implements Executor {
         try {
             var url = new URL(String.format("%s/CityService?wsdl", args.getUrl()));
             CityService service = new CityService(url);
-            City cityService = service.getCityPort();
+            CityWs cityService = service.getCityPort();
             PaginationDTO cityResults = cityService.findByFilter(parseFilters(args), pagination);
 
             EntitiesPrinter.print(System.out, cityResults);

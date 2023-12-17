@@ -4,7 +4,6 @@ import com.beust.jcommander.JCommander;
 import guldilin.config.FlywayMigrator;
 import guldilin.config.PropertyKey;
 import guldilin.service.interfaces.CityService;
-import jakarta.enterprise.inject.se.SeContainer;
 import jakarta.xml.ws.Endpoint;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -14,7 +13,13 @@ import java.util.Map;
 import org.jboss.weld.environment.se.Weld;
 import org.jboss.weld.environment.se.WeldContainer;
 
+/**
+ * CLI wrapper for standalone server run (without application server).
+ */
 public final class Standalone {
+    /**
+     * Default empty constructor.
+     */
     private Standalone() {
         // empty constructor
     }
@@ -50,7 +55,7 @@ public final class Standalone {
      * @param container CDI container
      * @param params    property-value params map
      */
-    public static void publish(final SeContainer container, final Map<PropertyKey, String> params) {
+    public static void publish(final WeldContainer container, final Map<PropertyKey, String> params) {
         try {
             String baseUrl = params.get(PropertyKey.APP_URL);
             System.out.println("Start server on address " + baseUrl);

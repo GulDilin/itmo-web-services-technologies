@@ -99,6 +99,8 @@ This command will:
 - attach datasource
 - deploy WAR package
 
+#### Prepare project report
+
 #### Add database migrations
 
 Project uses Flyway migrations. They are stored in /resources/db/migrations.
