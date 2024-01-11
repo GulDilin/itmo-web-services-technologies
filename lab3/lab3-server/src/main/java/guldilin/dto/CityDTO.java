@@ -1,6 +1,7 @@
 package guldilin.dto;
 
 import guldilin.entity.City;
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +17,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CityDTO extends AbstractEntityDTO {
+public class CityDTO extends AbstractEntityDTO implements Serializable {
     /**
      * DTO field shading an entity field with same name.
      */

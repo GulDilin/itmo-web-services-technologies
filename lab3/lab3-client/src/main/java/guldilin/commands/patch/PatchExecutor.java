@@ -2,8 +2,8 @@ package guldilin.commands.patch;
 
 import guldilin.commands.common.EntitiesPrinter;
 import guldilin.commands.common.Executor;
-import guldilin.proxy.api.EntryNotFound_Exception;
 import guldilin.service.ServiceProvider;
+import lombok.SneakyThrows;
 
 /**
  * Executor for patch command. Update only specified fields.
@@ -27,8 +27,8 @@ public class PatchExecutor extends Executor<PatchArgs> {
      * @param serviceProvider ServiceProvider implementation
      */
     @Override
-    public void execute(final String[] argv, final PatchArgs args, final ServiceProvider serviceProvider)
-            throws EntryNotFound_Exception {
+    @SneakyThrows
+    public void execute(final String[] argv, final PatchArgs args, final ServiceProvider serviceProvider) {
         var cityService = serviceProvider.provideCityService();
         var updated = cityService.patch(args.getId(), args.toDTO());
         EntitiesPrinter.print(System.out, updated);

@@ -41,7 +41,7 @@ public abstract class Executor<T extends Args> {
             ServiceProvider serviceProvider = new ServiceProviderImpl(args.getUrl());
             this.execute(argv, args, serviceProvider);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            ExceptionHandler.handleException(e);
         }
     }
 

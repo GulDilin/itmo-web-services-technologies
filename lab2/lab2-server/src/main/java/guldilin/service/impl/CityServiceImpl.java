@@ -70,6 +70,7 @@ public class CityServiceImpl implements CityService {
     /**
      * {@inheritDoc}
      */
+    @Override
     @WebMethod
     @Action(
             input = "http://service.guldilin/City/createRequest",
@@ -81,6 +82,7 @@ public class CityServiceImpl implements CityService {
     /**
      * {@inheritDoc}
      */
+    @Override
     @WebMethod
     @Action(
             input = "http://service.guldilin/City/updateRequest",
@@ -101,6 +103,7 @@ public class CityServiceImpl implements CityService {
     /**
      * {@inheritDoc}
      */
+    @Override
     @WebMethod
     @Action(
             input = "http://service.guldilin/City/patchRequest",

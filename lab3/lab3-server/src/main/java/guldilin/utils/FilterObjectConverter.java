@@ -1,8 +1,8 @@
 package guldilin.utils;
 
 import guldilin.entity.FilterableField;
-import guldilin.exceptions.ErrorMessages;
 import guldilin.exceptions.FieldIsNotFilterable;
+import guldilin.exceptions.FieldIsNotFilterableFault;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +49,9 @@ public final class FilterObjectConverter {
      */
     public static void checkIfFieldFilterable(final Class<?> tClass, final String field) throws FieldIsNotFilterable {
         var filterableFields = Set.copyOf(FilterObjectConverter.getFilterableFields(tClass));
-        if (!filterableFields.contains(field))
-            throw new FieldIsNotFilterable(String.format("%s: %s", ErrorMessages.FIELD_NOT_FILTERABLE, field));
+        if (!filterableFields.contains(field)) {
+            throw new FieldIsNotFilterable(
+                    FieldIsNotFilterableFault.builder().field(field).build());
+        }
     }
 }

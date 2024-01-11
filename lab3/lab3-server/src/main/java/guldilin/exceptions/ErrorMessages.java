@@ -37,6 +37,10 @@ public final class ErrorMessages {
      */
     public static final String NOT_FOUND = "Entry not found";
     /**
+     * Validation error message.
+     */
+    public static final String VALIDATION_FAILED = "Validation failed";
+    /**
      * Missing required env variable message.
      */
     public static final String MISSING_REQUIRED_ENV = "Missing required env variable \"%s\"";

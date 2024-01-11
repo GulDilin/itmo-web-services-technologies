@@ -190,7 +190,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
      */
     @Override
     public T getById(final Integer id) throws EntryNotFound {
-        return this.findById(id).orElseThrow(EntryNotFound::new);
+        return this.findById(id).orElseThrow(() -> new EntryNotFound(this.tClass.getSimpleName(), id));
     }
 
     /**

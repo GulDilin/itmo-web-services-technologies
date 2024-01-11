@@ -1,6 +1,7 @@
 package guldilin.dto;
 
 import guldilin.entity.City;
+import java.io.Serializable;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class CityCreateUpdateDTO implements MappableToEntity, UpdatableToEntity<City> {
+public class CityCreateUpdateDTO implements MappableToEntity, UpdatableToEntity<City>, Serializable {
     /**
      * DTO field shading an entity field with same name.
      */

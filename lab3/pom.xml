@@ -9,19 +9,12 @@
         <version>1.2.0</version>
     </parent>
 
-    <artifactId>lab2</artifactId>
+    <artifactId>lab3</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>lab2-server</module>
-        <module>lab2-proxy-api</module>
-        <module>lab2-client</module>
+        <module>lab3-server</module>
+        <module>lab3-proxy-api</module>
+        <module>lab3-client</module>
     </modules>
-
-    <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
 </project>

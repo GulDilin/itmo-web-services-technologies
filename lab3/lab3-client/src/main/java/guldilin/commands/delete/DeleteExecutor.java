@@ -2,6 +2,7 @@ package guldilin.commands.delete;
 
 import guldilin.commands.common.Executor;
 import guldilin.service.ServiceProvider;
+import lombok.SneakyThrows;
 
 /**
  * Executor for create method.
@@ -26,6 +27,7 @@ public class DeleteExecutor extends Executor<DeleteArgs> {
      * @param serviceProvider ServiceProvider implementation
      */
     @Override
+    @SneakyThrows
     public void execute(final String[] argv, final DeleteArgs args, final ServiceProvider serviceProvider) {
         var cityService = serviceProvider.provideCityService();
         var deleted = cityService.deleteById(args.getId());

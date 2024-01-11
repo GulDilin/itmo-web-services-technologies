@@ -2,11 +2,11 @@ package guldilin.commands.find;
 
 import guldilin.commands.common.EntitiesPrinter;
 import guldilin.commands.common.Executor;
-import guldilin.proxy.api.FieldIsNotFilterable_Exception;
 import guldilin.proxy.api.FilterArgumentDTO;
 import guldilin.proxy.api.PaginationDTO;
 import guldilin.service.ServiceProvider;
 import java.util.List;
+import lombok.SneakyThrows;
 
 /**
  * Executor for find command.
@@ -52,11 +52,10 @@ public class FindExecutor extends Executor<FindArgs> {
      * Execute find command.
      *
      * @param args Parsed CLI args
-     * @throws FieldIsNotFilterable_Exception for incorrect filter.
      */
     @Override
-    public void execute(final String[] argv, final FindArgs args, final ServiceProvider serviceProvider)
-            throws FieldIsNotFilterable_Exception {
+    @SneakyThrows
+    public void execute(final String[] argv, final FindArgs args, final ServiceProvider serviceProvider) {
         var pagination = args.toDTO();
         PaginationDTO cityResults = serviceProvider.provideCityService().findByFilter(parseFilters(args), pagination);
         EntitiesPrinter.print(System.out, cityResults);

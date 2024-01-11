@@ -3,6 +3,7 @@ package guldilin.commands.main;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import guldilin.commands.common.Args;
+import guldilin.commands.common.ExceptionHandler;
 import guldilin.commands.common.Executor;
 import guldilin.commands.common.HelpArgs;
 import guldilin.commands.create.CreateExecutor;
@@ -11,6 +12,7 @@ import guldilin.commands.find.FindExecutor;
 import guldilin.commands.patch.PatchExecutor;
 import guldilin.commands.update.UpdateExecutor;
 import guldilin.service.ServiceProvider;
+import lombok.SneakyThrows;
 
 /**
  * Executor for main method.
@@ -51,7 +53,7 @@ public class MainExecutor extends Executor<MainArgs> {
             var args = this.parseArgs(argv);
             this.execute(argv, args, null);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            ExceptionHandler.handleException(e);
         }
     }
 
@@ -73,6 +75,7 @@ public class MainExecutor extends Executor<MainArgs> {
      * @param serviceProvider ServiceProvider implementation
      */
     @Override
+    @SneakyThrows
     public void execute(final String[] argv, final MainArgs args, final ServiceProvider serviceProvider) {
         Executor<?> executor = getExecutorByCommand(args);
         executor.executeWrapper(argv);

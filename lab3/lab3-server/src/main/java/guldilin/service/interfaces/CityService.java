@@ -7,10 +7,10 @@ import guldilin.dto.PaginationDTO;
 import guldilin.dto.PaginationRequestDTO;
 import guldilin.exceptions.EntryNotFound;
 import guldilin.exceptions.FieldIsNotFilterable;
+import guldilin.exceptions.ValidationFailed;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
 import jakarta.jws.WebService;
-import jakarta.validation.Valid;
 import java.util.List;
 
 /**
@@ -33,9 +33,9 @@ public interface CityService {
      */
     @WebMethod
     PaginationDTO<CityDTO> findByFilter(
-            @WebParam(name = "filters") List<FilterArgumentDTO> filters,
-            @WebParam(name = "pagination") @Valid PaginationRequestDTO pagination)
-            throws FieldIsNotFilterable;
+            @WebParam(name = "filters") final List<FilterArgumentDTO> filters,
+            @WebParam(name = "pagination") final PaginationRequestDTO pagination)
+            throws FieldIsNotFilterable, ValidationFailed;
 
     /**
      * Create city.
@@ -44,7 +44,7 @@ public interface CityService {
      * @return created city
      */
     @WebMethod
-    CityDTO create(@WebParam(name = "city") CityCreateUpdateDTO city);
+    CityDTO create(@WebParam(name = "city") CityCreateUpdateDTO city) throws ValidationFailed;
 
     /**
      * Update city.
@@ -54,8 +54,8 @@ public interface CityService {
      * @return updated city
      */
     @WebMethod
-    CityDTO update(@WebParam(name = "id") Integer id, @WebParam(name = "city") CityCreateUpdateDTO city)
-            throws EntryNotFound;
+    CityDTO update(@WebParam(name = "id") final Integer id, @WebParam(name = "city") final CityCreateUpdateDTO city)
+            throws EntryNotFound, ValidationFailed;
 
     /**
      * Update city part.
@@ -65,8 +65,8 @@ public interface CityService {
      * @return updated city
      */
     @WebMethod
-    CityDTO patch(@WebParam(name = "id") Integer id, @WebParam(name = "city") CityCreateUpdateDTO city)
-            throws EntryNotFound;
+    CityDTO patch(@WebParam(name = "id") final Integer id, @WebParam(name = "city") final CityCreateUpdateDTO city)
+            throws EntryNotFound, ValidationFailed;
 
     /**
      * Delete city by id.
@@ -75,5 +75,5 @@ public interface CityService {
      * @return delete status
      */
     @WebMethod
-    Boolean deleteById(@WebParam(name = "id") Integer id) throws EntryNotFound;
+    Boolean deleteById(@WebParam(name = "id") Integer id) throws EntryNotFound, ValidationFailed;
 }

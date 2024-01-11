@@ -79,7 +79,6 @@ public final class City extends AbstractEntity {
     @Column(name = "car_code")
     @Min(value = 0, message = ErrorMessages.MIN_0)
     @Max(value = City.MAX_CAR_CODE, message = ErrorMessages.MAX_1000)
-    @FilterableField
     private Integer carCode;
 
     /**
