@@ -12,6 +12,7 @@
         <jaxws.version>4.0.1</jaxws.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.compilerArgs>--enable-preview</maven.compiler.compilerArgs>
         <maven.plugin.validation>VERBOSE</maven.plugin.validation>
         <log4j.version>2.20.0</log4j.version>
         <lombok.version>1.18.30</lombok.version>
@@ -53,6 +54,7 @@
     <modules>
         <module>lab1</module>
         <module>lab2</module>
+        <module>lab3</module>
     </modules>
 
     <dependencyManagement>
@@ -334,6 +336,7 @@
                     </annotationProcessorPaths>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+                    <compilerArgs>${maven.compiler.compilerArgs}</compilerArgs>
                 </configuration>
             </plugin>
 

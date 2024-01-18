@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="46e0c7f9-9d4c-4e0f-9aaa-a6362b291460" activeEnvironment="Default" name="TWS lab3" resourceRoot="" soapui-version="5.7.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="a19a154b-4601-4da3-a707-1b121e2f3a8e" wsaVersion="NONE" name="CityPortBinding" type="wsdl" bindingName="{http://service.guldilin}CityPortBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/lab3-server/CityService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/lab3-server/CityService?wsdl"><con:part><con:url>http://localhost:8080/lab3-server/CityService?wsdl</con:url><con:content><![CDATA[<definitions name="CityService" targetNamespace="http://service.guldilin" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://service.guldilin" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://service.guldilin" schemaLocation="http://host.docker.internal:8080/lab3-server/CityService?xsd=CityService_schema1.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="update">
+    <part element="tns:update" name="parameters"></part>
+  </message>
+  <message name="create">
+    <part element="tns:create" name="parameters"></part>
+  </message>
+  <message name="createResponse">
+    <part element="tns:createResponse" name="parameters"></part>
+  </message>
+  <message name="findByFilterResponse">
+    <part element="tns:findByFilterResponse" name="parameters"></part>
+  </message>
+  <message name="deleteById">
+    <part element="tns:deleteById" name="parameters"></part>
+  </message>
+  <message name="updateResponse">
+    <part element="tns:updateResponse" name="parameters"></part>
+  </message>
+  <message name="EntryNotFound">
+    <part element="tns:EntryNotFound" name="fault"></part>
+  </message>
+  <message name="patchResponse">
+    <part element="tns:patchResponse" name="parameters"></part>
+  </message>
+  <message name="deleteByIdResponse">
+    <part element="tns:deleteByIdResponse" name="parameters"></part>
+  </message>
+  <message name="patch">
+    <part element="tns:patch" name="parameters"></part>
+  </message>
+  <message name="FieldIsNotFilterable">
+    <part element="tns:FieldIsNotFilterable" name="fault"></part>
+  </message>
+  <message name="findByFilter">
+    <part element="tns:findByFilter" name="parameters"></part>
+  </message>
+  <portType name="CityWs">
+    <operation name="update">
+      <input message="tns:update" wsam:Action="http://service.guldilin/City/updateRequest"></input>
+      <output message="tns:updateResponse" wsam:Action="http://service.guldilin/City/updateResponse"></output>
+      <fault message="tns:EntryNotFound" name="EntryNotFound" wsam:Action="http://service.guldilin/City/update/Fault/EntryNotFound"></fault>
+    </operation>
+    <operation name="create">
+      <input message="tns:create" wsam:Action="http://service.guldilin/City/createRequest"></input>
+      <output message="tns:createResponse" wsam:Action="http://service.guldilin/City/createResponse"></output>
+    </operation>
+    <operation name="patch">
+      <input message="tns:patch" wsam:Action="http://service.guldilin/City/patchRequest"></input>
+      <output message="tns:patchResponse" wsam:Action="http://service.guldilin/City/patchResponse"></output>
+      <fault message="tns:EntryNotFound" name="EntryNotFound" wsam:Action="http://service.guldilin/City/patch/Fault/EntryNotFound"></fault>
+    </operation>
+    <operation name="findByFilter">
+      <input message="tns:findByFilter" wsam:Action="http://service.guldilin/CityWs/findByFilterRequest"></input>
+      <output message="tns:findByFilterResponse" wsam:Action="http://service.guldilin/CityWs/findByFilterResponse"></output>
+      <fault message="tns:FieldIsNotFilterable" name="FieldIsNotFilterable" wsam:Action="http://service.guldilin/CityWs/findByFilter/Fault/FieldIsNotFilterable"></fault>
+    </operation>
+    <operation name="deleteById">
+      <input message="tns:deleteById" wsam:Action="http://service.guldilin/City/deleteByIdRequest"></input>
+      <output message="tns:deleteByIdResponse" wsam:Action="http://service.guldilin/City/deleteByIdResponse"></output>
+    </operation>
+  </portType>
+  <binding name="CityPortBinding" type="tns:CityWs">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="update">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="EntryNotFound">
+        <soap:fault name="EntryNotFound" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="create">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="patch">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="EntryNotFound">
+        <soap:fault name="EntryNotFound" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="findByFilter">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="FieldIsNotFilterable">
+        <soap:fault name="FieldIsNotFilterable" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="deleteById">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="CityService">
+    <port binding="tns:CityPortBinding" name="CityPort">
+      <soap:address location="http://host.docker.internal:8080/lab3-server/CityService"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://host.docker.internal:8080/lab3-server/CityService?xsd=CityService_schema1.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://service.guldilin" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://service.guldilin">
+  <xs:element name="EntryNotFound" nillable="true" type="tns:faultDetail"/>
+  <xs:element name="FieldIsNotFilterable" type="tns:FieldIsNotFilterable"/>
+  <xs:element name="create" type="tns:create"/>
+  <xs:element name="createResponse" type="tns:createResponse"/>
+  <xs:element name="deleteById" type="tns:deleteById"/>
+  <xs:element name="deleteByIdResponse" type="tns:deleteByIdResponse"/>
+  <xs:element name="findByFilter" type="tns:findByFilter"/>
+  <xs:element name="findByFilterResponse" type="tns:findByFilterResponse"/>
+  <xs:element name="patch" type="tns:patch"/>
+  <xs:element name="patchResponse" type="tns:patchResponse"/>
+  <xs:element name="update" type="tns:update"/>
+  <xs:element name="updateResponse" type="tns:updateResponse"/>
+  <xs:complexType name="update">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int"/>
+      <xs:element minOccurs="0" name="city" type="tns:cityCreateUpdateDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cityCreateUpdateDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="area" type="xs:int"/>
+      <xs:element minOccurs="0" name="carCode" type="xs:int"/>
+      <xs:element minOccurs="0" name="metersAboveSeaLevel" type="xs:float"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="population" type="xs:int"/>
+      <xs:element minOccurs="0" name="populationDensity" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:cityDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cityDTO">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractEntityDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="area" type="xs:int"/>
+          <xs:element minOccurs="0" name="carCode" type="xs:int"/>
+          <xs:element minOccurs="0" name="metersAboveSeaLevel" type="xs:float"/>
+          <xs:element minOccurs="0" name="name" type="xs:string"/>
+          <xs:element minOccurs="0" name="population" type="xs:int"/>
+          <xs:element minOccurs="0" name="populationDensity" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType abstract="true" name="abstractEntityDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="creationAt" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="id" type="xs:int"/>
+      <xs:element minOccurs="0" name="updatedAt" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="faultDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" type="tns:errorCode"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="create">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="city" type="tns:cityCreateUpdateDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:cityDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteById">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteByIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="patch">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int"/>
+      <xs:element minOccurs="0" name="city" type="tns:cityCreateUpdateDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="patchResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:cityDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="findByFilter">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="filters" type="tns:filterArgumentDTO"/>
+      <xs:element minOccurs="0" name="pagination" type="tns:paginationRequestDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="filterArgumentDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="field" type="xs:string"/>
+      <xs:element minOccurs="0" name="value" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="paginationRequestDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="limit" type="xs:int"/>
+      <xs:element minOccurs="0" name="offset" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="findByFilterResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:paginationDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="paginationDTO">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="items" nillable="true" type="tns:abstractEntityDTO"/>
+      <xs:element minOccurs="0" name="nextOffset" type="xs:long"/>
+      <xs:element minOccurs="0" name="total" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FieldIsNotFilterable">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="errorCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ENTITY_NOT_FOUND"/>
+      <xs:enumeration value="UNEXPECTED_INTERNAL_ERROR"/>
+      <xs:enumeration value="REQUEST_INVALID"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://host.docker.internal:8080/lab3-server/CityService</con:endpoint></con:endpoints><con:operation id="19028d24-1135-4390-a9ce-08b34152c971" isOneWay="false" action="" name="create" bindingOperationName="create" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="52a5d7fd-e843-4da8-9954-0121b3253c4c" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://host.docker.internal:8080/lab3-server/CityService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.guldilin">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:create>\r
+         <!--Optional:-->\r
+         <city>\r
+            <!--Optional:-->\r
+            <area>?</area>\r
+            <!--Optional:-->\r
+            <carCode>?</carCode>\r
+            <!--Optional:-->\r
+            <metersAboveSeaLevel>?</metersAboveSeaLevel>\r
+            <!--Optional:-->\r
+            <name>?</name>\r
+            <!--Optional:-->\r
+            <population>?</population>\r
+            <!--Optional:-->\r
+            <populationDensity>?</populationDensity>\r
+         </city>\r
+      </ser:create>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.guldilin/City/createRequest"/></con:call></con:operation><con:operation id="0c2dd789-9e9a-4935-bda6-d3b88bdf1063" isOneWay="false" action="" name="deleteById" bindingOperationName="deleteById" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="268cbf74-2270-4bf9-b97f-c8379c0ad818" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://host.docker.internal:8080/lab3-server/CityService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.guldilin">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:deleteById>\r
+         <!--Optional:-->\r
+         <id>?</id>\r
+      </ser:deleteById>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.guldilin/City/deleteByIdRequest"/></con:call></con:operation><con:operation id="e3c1c36d-7d74-483e-8236-1d836c8c9ec3" isOneWay="false" action="" name="findByFilter" bindingOperationName="findByFilter" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="696ab1a7-e2ed-4329-bb83-fa872d3e6db3" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://host.docker.internal:8080/lab3-server/CityService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.guldilin">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:findByFilter>\r
+         <!--Zero or more repetitions:-->\r
+         <filters>\r
+            <!--Optional:-->\r
+            <field>?</field>\r
+            <!--Optional:-->\r
+            <value>?</value>\r
+         </filters>\r
+         <!--Optional:-->\r
+         <pagination>\r
+            <!--Optional:-->\r
+            <limit>?</limit>\r
+            <!--Optional:-->\r
+            <offset>?</offset>\r
+         </pagination>\r
+      </ser:findByFilter>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.guldilin/CityWs/findByFilterRequest"/></con:call></con:operation><con:operation id="e7348e5f-7373-47cc-97c7-55a9e527fc19" isOneWay="false" action="" name="patch" bindingOperationName="patch" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="6156284a-2ee2-4b77-8d21-4616ab53c24e" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://host.docker.internal:8080/lab3-server/CityService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.guldilin">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:patch>\r
+         <!--Optional:-->\r
+         <id>?</id>\r
+         <!--Optional:-->\r
+         <city>\r
+            <!--Optional:-->\r
+            <area>?</area>\r
+            <!--Optional:-->\r
+            <carCode>?</carCode>\r
+            <!--Optional:-->\r
+            <metersAboveSeaLevel>?</metersAboveSeaLevel>\r
+            <!--Optional:-->\r
+            <name>?</name>\r
+            <!--Optional:-->\r
+            <population>?</population>\r
+            <!--Optional:-->\r
+            <populationDensity>?</populationDensity>\r
+         </city>\r
+      </ser:patch>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.guldilin/City/patchRequest"/></con:call></con:operation><con:operation id="35f2089b-40d2-4f71-9ecd-a288ccf4529c" isOneWay="false" action="" name="update" bindingOperationName="update" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="db1a9f20-2b17-4ebe-881f-7d37bb83b01f" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://host.docker.internal:8080/lab3-server/CityService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.guldilin">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <ser:update>\r
+         <!--Optional:-->\r
+         <id>800</id>\r
+         <!--Optional:-->\r
+         <city>\r
+            <!--Optional:-->\r
+            <area>189</area>\r
+            <!--Optional:-->\r
+            <carCode>189</carCode>\r
+            <!--Optional:-->\r
+            <metersAboveSeaLevel>189</metersAboveSeaLevel>\r
+            <!--Optional:-->\r
+            <name>aa</name>\r
+            <!--Optional:-->\r
+            <population>128</population>\r
+            <!--Optional:-->\r
+            <populationDensity>1289</populationDensity>\r
+         </city>\r
+      </ser:update>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://service.guldilin/City/updateRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
