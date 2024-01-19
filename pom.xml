@@ -13,6 +13,7 @@
         <jaxrs.version>3.1.0</jaxrs.version>
         <jersey.version>3.1.5</jersey.version>
         <grizzly.version>4.0.2</grizzly.version>
+        <weld.version>5.1.2.Final</weld.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.compilerArgs>--enable-preview</maven.compiler.compilerArgs>
@@ -76,7 +77,12 @@
             <dependency>
                 <groupId>org.jboss.weld.se</groupId>
                 <artifactId>weld-se-core</artifactId>
-                <version>5.1.2.Final</version>
+                <version>${weld.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.weld.servlet</groupId>
+                <artifactId>weld-servlet-core</artifactId>
+                <version>${weld.version}</version>
             </dependency>
             <!-- /CDI 2.0 -->
 
@@ -105,6 +111,12 @@
                 <groupId>jakarta.xml.bind</groupId>
                 <artifactId>jakarta.xml.bind-api</artifactId>
                 <version>${jakarta.enterprise.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>2.1.1</version>
+                <scope>provided</scope>
             </dependency>
             <!-- /Jakarta EE -->
 
@@ -231,10 +243,46 @@
                 <artifactId>jersey-container-grizzly2-http</artifactId>
                 <version>${jersey.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet -->
+            <dependency>
+                <groupId>org.glassfish.jersey.containers</groupId>
+                <artifactId>jersey-container-servlet</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet-core -->
+            <dependency> <!-- this is to avoid Jersey jars to be bundled with the WAR -->
+                <groupId>org.glassfish.jersey.containers</groupId>
+                <artifactId>jersey-container-servlet-core</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.ext.cdi/jersey-weld2-se -->
+            <dependency>
+                <groupId>org.glassfish.jersey.ext.cdi</groupId>
+                <artifactId>jersey-weld2-se</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.ext.cdi/jersey-cdi1x -->
+            <dependency>
+                <groupId>org.glassfish.jersey.ext.cdi</groupId>
+                <artifactId>jersey-cdi1x</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <dependency>
+                <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.ext.cdi/jersey-cdi1x-servlet -->
+                <groupId>org.glassfish.jersey.ext.cdi</groupId>
+                <artifactId>jersey-cdi1x-servlet</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2 -->
             <dependency>
                 <groupId>org.glassfish.jersey.inject</groupId>
                 <artifactId>jersey-hk2</artifactId>
+                <version>${jersey.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-server -->
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-server</artifactId>
                 <version>${jersey.version}</version>
             </dependency>
             <!-- /Grizzly HTTP Server for SE Standalone app -->

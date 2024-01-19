@@ -7,8 +7,10 @@ import jakarta.ws.rs.core.Application;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 @ApplicationPath("/api")
 public class RestApplication extends Application {
@@ -16,9 +18,8 @@ public class RestApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-        final Set<Class<?>> classSet = new HashSet<>();
-        classSet.add( CityResource.class );
-        return classSet;
+//        return Stream.of(CityResource.class, OpenApiResource.class).collect(Collectors.toSet());
+        return Stream.of(CityResource.class).collect(Collectors.toSet());
     }
 
     @PostConstruct

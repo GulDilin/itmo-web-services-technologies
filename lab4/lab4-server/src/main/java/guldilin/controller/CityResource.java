@@ -5,6 +5,11 @@ import guldilin.dto.FilterArgumentDTO;
 import guldilin.dto.PaginationDTO;
 import guldilin.dto.PaginationRequestDTO;
 import guldilin.service.interfaces.CityService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -28,15 +33,24 @@ public class CityResource {
     @GET
     @Path("/")
     @SneakyThrows
+    @Operation(summary = "Find cities by filters",
+            tags = {"city"},
+            description = "Returns a list of cities",
+            responses = {
+                    @ApiResponse(description = "The city list", content = @Content(
+                            schema = @Schema(implementation = PaginationDTO.class)
+                    )),
+                    @ApiResponse(responseCode = "400", description = "Invalid request data"),
+            })
     public PaginationDTO<CityDTO> findByFilter(
-            @QueryParam("name") final String name,
-            @QueryParam("area") final Integer area,
-            @QueryParam("population") final Integer population,
-            @QueryParam("meters_above_sea_level") final Integer metersAboveSeaLevel,
-            @QueryParam("population_density") final Integer populationDensity,
-            @QueryParam("car_code") final Integer carCode,
-            @QueryParam("limit") final Integer limit,
-            @QueryParam("offset") final Integer offset
+            @Parameter(description = "City name") @QueryParam("name") final String name,
+            @Parameter(description = "City area") @QueryParam("area") final Integer area,
+            @Parameter(description = "City population") @QueryParam("population") final Integer population,
+            @Parameter(description = "City meters_above_sea_level") @QueryParam("meters_above_sea_level") final Integer metersAboveSeaLevel,
+            @Parameter(description = "City population_density") @QueryParam("population_density") final Integer populationDensity,
+            @Parameter(description = "City car_code") @QueryParam("car_code") final Integer carCode,
+            @Parameter(description = "City limit") @QueryParam("limit") final Integer limit,
+            @Parameter(description = "City offset") @QueryParam("offset") final Integer offset
     ) {
         var paginationBuiler = PaginationRequestDTO.builder();
         Optional.ofNullable(limit).ifPresent(paginationBuiler::limit);

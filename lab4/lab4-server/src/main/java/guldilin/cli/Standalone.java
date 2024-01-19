@@ -13,6 +13,7 @@ import java.util.Map;
 
 import jakarta.ws.rs.core.Application;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.jboss.weld.environment.se.Weld;
@@ -60,14 +61,20 @@ public final class Standalone {
      * @param container CDI container
      * @param params    property-value params map
      */
-    public static void publish(final SeContainer container, final Map<PropertyKey, String> params) {
+    public static void publish(final Weld initializer, final SeContainer container, final Map<PropertyKey, String> params) {
         try {
             String baseUrl = params.get(PropertyKey.APP_URL);
             if (!baseUrl.endsWith("/")) baseUrl += "/";
             System.out.println("Start server on address " + baseUrl);
 
             Application application = container.select(RestApplication.class).get();
-            final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create(baseUrl), ResourceConfig.forApplication(application));
+//            ResourceConfig.forApplication(application)
+            final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(URI.create(baseUrl), new ResourceConfig(application.getClasses()));
+            server.getServerConfiguration().addHttpHandler(new StaticHttpHandler("openapi.json"), "/api/openapi.json");
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                server.shutdownNow();
+                initializer.shutdown();
+            }));
             server.start();
             Thread.currentThread().join();
         } catch (Exception e) {
@@ -99,7 +106,7 @@ public final class Standalone {
         }
         Weld initializer = new Weld();
         WeldContainer container = initializer.initialize();
-        publish(container, generateParams(args));
+        publish(initializer, container, generateParams(args));
 
         System.out.println("Server endpoints published");
     }
