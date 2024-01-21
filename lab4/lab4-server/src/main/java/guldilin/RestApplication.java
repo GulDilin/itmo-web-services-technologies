@@ -1,6 +1,7 @@
 package guldilin;
 
 import guldilin.controller.CityResource;
+import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 import jakarta.annotation.PostConstruct;
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
@@ -18,8 +19,8 @@ public class RestApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
-//        return Stream.of(CityResource.class, OpenApiResource.class).collect(Collectors.toSet());
-        return Stream.of(CityResource.class).collect(Collectors.toSet());
+        return Stream.of(CityResource.class, OpenApiResource.class).collect(Collectors.toSet());
+//        return Stream.of(CityResource.class).collect(Collectors.toSet());
     }
 
     @PostConstruct

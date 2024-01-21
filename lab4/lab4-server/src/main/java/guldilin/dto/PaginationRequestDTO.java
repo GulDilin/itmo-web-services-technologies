@@ -23,6 +23,10 @@ public class PaginationRequestDTO implements Serializable {
      */
     public static final int DEFAULT_LIMIT = 10;
     /**
+     * Default offset of items list.
+     */
+    public static final int DEFAULT_OFFSET = 0;
+    /**
      * Max value for part of values limit.
      */
     public static final int MAX_LIMIT = 100;
@@ -38,5 +42,5 @@ public class PaginationRequestDTO implements Serializable {
      * Offset for first element of items.
      */
     @Min(0)
-    private Integer offset = 0;
+    private Integer offset = DEFAULT_OFFSET;
 }
