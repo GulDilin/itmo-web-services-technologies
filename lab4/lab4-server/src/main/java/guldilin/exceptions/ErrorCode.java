@@ -2,6 +2,7 @@ package guldilin.exceptions;
 
 public enum ErrorCode {
     RESOURCE_NOT_FOUND,
+    METHOD_NOT_ALLOWED,
     ENTITY_NOT_FOUND,
     INTERNAL_SERVER_ERROR,
     REQUEST_INVALID,

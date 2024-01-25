@@ -9,6 +9,9 @@
         <jakarta.enterprise.version>4.0.1</jakarta.enterprise.version>
         <jakarta.inject.version>2.0.1</jakarta.inject.version>
         <jakarta.xml.ws.version>4.0.0</jakarta.xml.ws.version>
+        <jakarta.el-api.version>5.0.1</jakarta.el-api.version>
+        <jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
+        <glassfish.jakarta.el.version>5.0.0-M1</glassfish.jakarta.el.version>
         <jaxws.version>4.0.1</jaxws.version>
         <jaxrs.version>3.1.0</jaxrs.version>
 <!--        <jersey.version>3.0.12</jersey.version>-->
@@ -125,10 +128,18 @@
                 <version>${jakarta.enterprise.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/jakarta.el/jakarta.el-api -->
+            <!-- Expression language API-->
             <dependency>
                 <groupId>jakarta.el</groupId>
                 <artifactId>jakarta.el-api</artifactId>
-                <version>6.0.0-M2</version>
+                <version>${jakarta.el-api.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
+            <dependency>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>${jakarta.servlet-api.version}</version>
+                <scope>provided</scope>
             </dependency>
             <!-- /Jakarta EE -->
 
@@ -258,11 +269,7 @@
             <!-- /JAX-RS -->
 
             <!-- RestEasy -->
-            <dependency>
-                <groupId>org.jboss.resteasy</groupId>
-                <artifactId>resteasy-core</artifactId>
-                <version>${resteasy.version}</version>
-            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-client -->
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-client</artifactId>
@@ -274,22 +281,28 @@
                 <artifactId>resteasy-jackson2-provider</artifactId>
                 <version>${resteasy.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-cdi -->
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-cdi</artifactId>
                 <version>${resteasy.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-undertow -->
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-undertow</artifactId>
                 <version>${resteasy.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.jboss.resteasy</groupId>
-                <artifactId>resteasy-core-spi</artifactId>
-                <version>${resteasy.version}</version>
-            </dependency>
             <!-- /RestEasy -->
+
+            <!-- Expression language API Implementation -->
+            <!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.el -->
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>jakarta.el</artifactId>
+                <version>${glassfish.jakarta.el.version}</version>
+            </dependency>
+            <!-- /Expression language API Implementation -->
 
             <!-- Embedded server -->
             <dependency>

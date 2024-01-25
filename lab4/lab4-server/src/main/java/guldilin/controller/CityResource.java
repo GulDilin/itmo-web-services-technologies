@@ -35,7 +35,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @RequestScoped
-@Path("/api/city")
+@Path("/city")
 @Produces(MediaType.APPLICATION_JSON)
 public class CityResource {
     private static final Logger LOGGER = LogManager.getLogger(CityResource.class);

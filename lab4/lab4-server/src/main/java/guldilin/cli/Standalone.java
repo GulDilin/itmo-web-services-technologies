@@ -3,19 +3,22 @@ package guldilin.cli;
 import com.beust.jcommander.JCommander;
 import guldilin.RestApplication;
 import guldilin.config.PropertyKey;
-
-import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
 import io.undertow.Undertow;
+import io.undertow.server.handlers.cache.DirectBufferCache;
+import io.undertow.server.handlers.resource.CachingResourceManager;
+import io.undertow.server.handlers.resource.ClassPathResourceManager;
+import io.undertow.server.handlers.resource.ResourceHandler;
+import io.undertow.server.handlers.resource.ResourceManager;
 import io.undertow.servlet.Servlets;
 import io.undertow.servlet.api.DeploymentInfo;
-
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jboss.resteasy.cdi.CdiInjectorFactory;
 import org.jboss.resteasy.core.ResteasyDeploymentImpl;
+import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 
@@ -29,10 +32,11 @@ public final class Standalone {
     private Standalone() {
         // empty constructor
     }
-    //    /**
-    //     * Just logger.
-    //     */
-    //    private static final Logger LOGGER = LogManager.getLogger(Standalone.class);
+
+    /**
+     * Just logger.
+     */
+    private static final Logger LOGGER = LogManager.getLogger(Standalone.class);
 
     /**
      * @param args Parsed arguments
@@ -43,11 +47,7 @@ public final class Standalone {
         params.put(PropertyKey.APP_HOST, args.getHost());
         params.put(PropertyKey.APP_PORT, args.getPort().toString());
         String url = String.format("%s:%s", params.get(PropertyKey.APP_HOST), params.get(PropertyKey.APP_PORT));
-        try {
-            new URL(url).toURI();
-        } catch (MalformedURLException | URISyntaxException e) {
-            throw new IllegalArgumentException("Incorrect URL format for " + url);
-        }
+
         params.put(PropertyKey.APP_URL, url);
         params.put(PropertyKey.DB_HOST, args.getDbHost());
         params.put(PropertyKey.DB_PORT, args.getDbPort());
@@ -59,27 +59,47 @@ public final class Standalone {
         return params;
     }
 
-    public static void runUndertow(final Map<PropertyKey, String> params) {
-        UndertowJaxrsServer server = new UndertowJaxrsServer();
+    private static ResourceHandler createStaticResourceHandler() {
+        final ResourceManager staticResources =
+                new ClassPathResourceManager(RestApplication.class.getClassLoader(), "static");
+        // Cache tuning is copied from Undertow unit tests.
+        final var cache = new DirectBufferCache(1024, 10, 10480);
+        final ResourceManager cachedResources = new CachingResourceManager(
+                100, 65536, cache, staticResources, (int) Duration.ofDays(1).getSeconds());
+        final ResourceHandler resourceHandler = new ResourceHandler(cachedResources);
+        resourceHandler.setWelcomeFiles("index.html");
+        return resourceHandler;
+    }
 
+    private static ResteasyDeployment createDeployment() {
         ResteasyDeployment deployment = new ResteasyDeploymentImpl();
         deployment.setApplicationClass(RestApplication.class.getName());
-        deployment.setInjectorFactoryClass("org.jboss.resteasy.cdi.CdiInjectorFactory");
+        deployment.setInjectorFactoryClass(CdiInjectorFactory.class.getName());
+        // register json provider
         deployment.getProviderClasses().add(ResteasyJackson2Provider.class.getName());
+        return deployment;
+    }
 
+    private static DeploymentInfo createDeploymentInfo(UndertowJaxrsServer server, ResteasyDeployment deployment) {
         DeploymentInfo deploymentInfo = server.undertowDeployment(deployment, "/");
-        deploymentInfo.setClassLoader(RestApplication.class.getClassLoader())
-                .setContextPath("/lab4-server")
+        deploymentInfo
+                .setClassLoader(RestApplication.class.getClassLoader())
+                .setContextPath("/lab4-server/api")
                 .setDeploymentName("Rest Application")
                 .addListeners(Servlets.listener(org.jboss.weld.environment.servlet.Listener.class));
+        return deploymentInfo;
+    }
 
+    public static void startServer(final Map<PropertyKey, String> params) {
+        UndertowJaxrsServer server = new UndertowJaxrsServer();
+        var deployment = createDeployment();
+        var deploymentInfo = createDeploymentInfo(server, deployment);
         server.deploy(deploymentInfo);
 
-        Undertow.Builder serverBuilder = Undertow.builder().addHttpListener(
-                Integer.parseInt(params.get(PropertyKey.APP_PORT)),
-                "0.0.0.0"
-        );
+        Undertow.Builder serverBuilder = Undertow.builder()
+                .addHttpListener(Integer.parseInt(params.get(PropertyKey.APP_PORT)), params.get(PropertyKey.APP_HOST));
         server.start(serverBuilder);
+        server.addResourcePrefixPath("/lab4-server", createStaticResourceHandler());
     }
 
     /**
@@ -87,7 +107,7 @@ public final class Standalone {
      *
      * @param argv CLI args
      */
-    public static void main(final String[] argv) throws InterruptedException {
+    public static void main(final String[] argv) {
         Args args = new Args();
         JCommander commander = JCommander.newBuilder()
                 .programName("lab2-server.jar")
@@ -104,8 +124,7 @@ public final class Standalone {
             return;
         }
 
-        runUndertow(generateParams(args));
-
-        System.out.println("Server endpoints published");
+        startServer(generateParams(args));
+        LOGGER.info("Server endpoints published");
     }
 }

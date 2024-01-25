@@ -14,7 +14,6 @@ import guldilin.service.interfaces.CityService;
 import guldilin.utils.Validator;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Startup;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;

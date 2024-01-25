@@ -3,6 +3,7 @@ package guldilin.exceptions.mapper;
 import guldilin.dto.ErrorDTO;
 import guldilin.exceptions.ErrorCode;
 import guldilin.exceptions.FieldIsNotFilterable;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
@@ -17,6 +18,7 @@ public class FieldIsNotFilterableMapper implements ExceptionMapper<FieldIsNotFil
                         .message(e.getMessage())
                         .detail(e.getFaultInfo())
                         .build())
+                .type(MediaType.APPLICATION_JSON)
                 .build();
     }
 }
