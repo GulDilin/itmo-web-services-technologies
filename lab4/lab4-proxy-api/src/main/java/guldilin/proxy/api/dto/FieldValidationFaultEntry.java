@@ -1,4 +1,4 @@
-package guldilin.exceptions;
+package guldilin.proxy.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FieldValidationFaultEntry {
     /**
-     * Field name.
+     * Field name;
      */
     private String field;
 
     /**
-     * Error message.
+     * Error message;
      */
     private String message;
 }

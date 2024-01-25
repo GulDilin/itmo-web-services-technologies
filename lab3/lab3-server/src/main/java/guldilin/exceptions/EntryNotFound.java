@@ -33,13 +33,13 @@ public class EntryNotFound extends Exception {
      * @param faultInfo additional info
      * @param cause exception cause
      */
-    public EntryNotFound(final String message, final EntryNotFoundFault faultInfo, Throwable cause) {
+    public EntryNotFound(final String message, final EntryNotFoundFault faultInfo, final Throwable cause) {
         super(message, cause);
         this.faultInfo = faultInfo;
     }
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     public EntryNotFound() {
         super(ErrorMessages.NOT_FOUND);
@@ -60,6 +60,7 @@ public class EntryNotFound extends Exception {
      * Constructor.
      *
      * @param entity entity name
+     * @param id entity identifier
      */
     public EntryNotFound(final String entity, final Integer id) {
         super(ErrorMessages.NOT_FOUND);

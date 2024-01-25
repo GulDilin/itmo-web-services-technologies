@@ -1,8 +1,8 @@
 package guldilin.commands.common;
 
-import guldilin.proxy.api.AbstractEntityDTO;
-import guldilin.proxy.api.CityDTO;
-import guldilin.proxy.api.PaginationDTO;
+import guldilin.proxy.api.dto.AbstractEntityDTO;
+import guldilin.proxy.api.dto.CityDTO;
+import guldilin.proxy.api.dto.PaginationDTO;
 import java.io.PrintStream;
 import java.util.stream.Collectors;
 
@@ -75,7 +75,7 @@ public final class EntitiesPrinter {
      * @param paginationDTO dto object
      * @return string for printing
      */
-    public static String getStringValue(final PaginationDTO paginationDTO) {
+    public static String getStringValue(final PaginationDTO<?> paginationDTO) {
         final int separatorLen = 40;
         String separator = "=".repeat(separatorLen) + "\n";
         return String.format(
@@ -99,7 +99,7 @@ public final class EntitiesPrinter {
      * @param printStream target print stream
      * @param paginationDTO pagination dto object
      */
-    public static void print(final PrintStream printStream, final PaginationDTO paginationDTO) {
+    public static void print(final PrintStream printStream, final PaginationDTO<?> paginationDTO) {
         printStream.print(getStringValue(paginationDTO));
     }
 

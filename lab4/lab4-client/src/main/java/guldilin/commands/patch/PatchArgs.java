@@ -2,7 +2,7 @@ package guldilin.commands.patch;
 
 import com.beust.jcommander.Parameter;
 import guldilin.commands.common.Args;
-import guldilin.proxy.api.CityCreateUpdateDTO;
+import guldilin.proxy.api.dto.CityCreateUpdateDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,7 +23,7 @@ public class PatchArgs extends Args {
 
     /**
      * City name.
-     * {@link guldilin.proxy.api.CityDTO#getName()}
+     * {@link guldilin.proxy.api.dto.CityDTO#getName()}
      */
     @Parameter(
             names = {"-name"},
@@ -32,7 +32,7 @@ public class PatchArgs extends Args {
 
     /**
      * City area.
-     * {@link guldilin.proxy.api.CityDTO#getArea()}
+     * {@link guldilin.proxy.api.dto.CityDTO#getArea()}
      */
     @Parameter(
             names = {"-area"},
@@ -41,7 +41,7 @@ public class PatchArgs extends Args {
 
     /**
      * City population.
-     * {@link guldilin.proxy.api.CityDTO#getPopulation()}
+     * {@link guldilin.proxy.api.dto.CityDTO#getPopulation()}
      */
     @Parameter(
             names = {"-population"},
@@ -50,7 +50,7 @@ public class PatchArgs extends Args {
 
     /**
      * City metersAboveSeaLevel.
-     * {@link guldilin.proxy.api.CityDTO#getMetersAboveSeaLevel()}
+     * {@link guldilin.proxy.api.dto.CityDTO#getMetersAboveSeaLevel()}
      */
     @Parameter(
             names = {"-meters-above-sea-level"},
@@ -59,7 +59,7 @@ public class PatchArgs extends Args {
 
     /**
      * City populationDensity.
-     * {@link guldilin.proxy.api.CityDTO#getPopulationDensity()}
+     * {@link guldilin.proxy.api.dto.CityDTO#getPopulationDensity()}
      */
     @Parameter(
             names = {"-population-density"},
@@ -68,7 +68,7 @@ public class PatchArgs extends Args {
 
     /**
      * City carCode.
-     * {@link guldilin.proxy.api.CityDTO#getCarCode()}
+     * {@link guldilin.proxy.api.dto.CityDTO#getCarCode()}
      */
     @Parameter(
             names = {"-car-code"},

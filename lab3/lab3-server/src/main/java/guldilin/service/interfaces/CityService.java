@@ -33,8 +33,8 @@ public interface CityService {
      */
     @WebMethod
     PaginationDTO<CityDTO> findByFilter(
-            @WebParam(name = "filters") final List<FilterArgumentDTO> filters,
-            @WebParam(name = "pagination") final PaginationRequestDTO pagination)
+            @WebParam(name = "filters") List<FilterArgumentDTO> filters,
+            @WebParam(name = "pagination") PaginationRequestDTO pagination)
             throws FieldIsNotFilterable, ValidationFailed;
 
     /**
@@ -54,7 +54,7 @@ public interface CityService {
      * @return updated city
      */
     @WebMethod
-    CityDTO update(@WebParam(name = "id") final Integer id, @WebParam(name = "city") final CityCreateUpdateDTO city)
+    CityDTO update(@WebParam(name = "id") Integer id, @WebParam(name = "city") CityCreateUpdateDTO city)
             throws EntryNotFound, ValidationFailed;
 
     /**
@@ -65,7 +65,7 @@ public interface CityService {
      * @return updated city
      */
     @WebMethod
-    CityDTO patch(@WebParam(name = "id") final Integer id, @WebParam(name = "city") final CityCreateUpdateDTO city)
+    CityDTO patch(@WebParam(name = "id") Integer id, @WebParam(name = "city") CityCreateUpdateDTO city)
             throws EntryNotFound, ValidationFailed;
 
     /**

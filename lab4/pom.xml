@@ -14,7 +14,7 @@
 
     <modules>
         <module>lab4-server</module>
-<!--        <module>lab4-proxy-api</module>-->
-<!--        <module>lab4-client</module>-->
+        <module>lab4-proxy-api</module>
+        <module>lab4-client</module>
     </modules>
 </project>

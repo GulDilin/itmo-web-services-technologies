@@ -21,7 +21,7 @@ public class ValidationFailed extends Exception {
      * @param message The error message
      * @param faultInfo additional info
      */
-    public ValidationFailed(String message, FieldValidationFault faultInfo) {
+    public ValidationFailed(final String message, final FieldValidationFault faultInfo) {
         super(message);
         this.faultInfo = faultInfo;
     }
@@ -33,7 +33,7 @@ public class ValidationFailed extends Exception {
      * @param faultInfo additional info
      * @param cause exception cause
      */
-    public ValidationFailed(String message, FieldValidationFault faultInfo, Throwable cause) {
+    public ValidationFailed(final String message, final FieldValidationFault faultInfo, final Throwable cause) {
         super(message, cause);
         this.faultInfo = faultInfo;
     }
@@ -51,7 +51,7 @@ public class ValidationFailed extends Exception {
      *
      * @param exception original validation exception
      */
-    public ValidationFailed(ConstraintViolationException exception) {
+    public ValidationFailed(final ConstraintViolationException exception) {
         super(ErrorMessages.VALIDATION_FAILED);
         this.faultInfo = new FieldValidationFault(exception);
     }
@@ -61,7 +61,7 @@ public class ValidationFailed extends Exception {
      *
      * @param faultInfo additional info
      */
-    public ValidationFailed(FieldValidationFault faultInfo) {
+    public ValidationFailed(final FieldValidationFault faultInfo) {
         super(ErrorMessages.VALIDATION_FAILED);
         this.faultInfo = faultInfo;
     }

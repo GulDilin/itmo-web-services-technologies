@@ -21,50 +21,32 @@
 
     <dependencies>
         <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-        </dependency>
-        <!-- JAX-WS -->
-        <dependency>
-            <groupId>jakarta.xml.ws</groupId>
-            <artifactId>jakarta.xml.ws-api</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.sun.xml.ws</groupId>
-            <artifactId>jaxws-rt</artifactId>
-            <scope>runtime</scope>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+        </dependency>
+        <!-- RestEasy Client -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sun.xml.ws</groupId>
-            <artifactId>rt</artifactId>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson2-provider</artifactId>
         </dependency>
-        <!-- /JAX-WS -->
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.resteasy</groupId>-->
+<!--            <artifactId>resteasy-jaxrs</artifactId>-->
+<!--        </dependency>-->
+        <!-- /RestEasy Client -->
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Generate WSDL client classes -->
-            <plugin>
-                <groupId>com.sun.xml.ws</groupId>
-                <artifactId>jaxws-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>wsimport</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>wsimport</goal>
-                        </goals>
-                        <configuration>
-                            <wsdlDirectory>../lab4-server/target/generated-sources/wsdl</wsdlDirectory>
-                            <destDir>target/classes</destDir>
-                            <packageName>guldilin.proxy.api</packageName>
-                            <xnocompile>false</xnocompile>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- /Generate WSDL client classes -->
-
             <!-- Package to JAR -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

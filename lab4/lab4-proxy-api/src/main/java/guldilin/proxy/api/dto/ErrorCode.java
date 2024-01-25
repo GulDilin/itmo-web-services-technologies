@@ -1,7 +1,6 @@
-package guldilin.exceptions;
+package guldilin.proxy.api.dto;
 
 public enum ErrorCode {
-    RESOURCE_NOT_FOUND,
     ENTITY_NOT_FOUND,
     INTERNAL_SERVER_ERROR,
     REQUEST_INVALID,

@@ -2,9 +2,6 @@ package guldilin.commands.find;
 
 import com.beust.jcommander.Parameter;
 import guldilin.commands.common.Args;
-import guldilin.proxy.api.PaginationRequestDTO;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,13 +12,58 @@ import lombok.EqualsAndHashCode;
 @Data
 public class FindArgs extends Args {
     /**
-     * Filter list.
+     * City name.
+     * {@link guldilin.proxy.api.dto.CityDTO#getName()}
      */
     @Parameter(
-            names = {"-filter", "-f"},
-            description = "Filters for read command in format field:operation:value (area:=:1)",
-            validateWith = {FindFilterArgumentValidator.class})
-    private List<String> filters = new ArrayList<>();
+            names = {"-name"},
+            description = "City name")
+    private String name;
+
+    /**
+     * City area.
+     * {@link guldilin.proxy.api.dto.CityDTO#getArea()}
+     */
+    @Parameter(
+            names = {"-area"},
+            description = "City area number")
+    private Integer area;
+
+    /**
+     * City population.
+     * {@link guldilin.proxy.api.dto.CityDTO#getPopulation()}
+     */
+    @Parameter(
+            names = {"-population"},
+            description = "City population value")
+    private Integer population;
+
+    /**
+     * City metersAboveSeaLevel.
+     * {@link guldilin.proxy.api.dto.CityDTO#getMetersAboveSeaLevel()}
+     */
+    @Parameter(
+            names = {"-meters-above-sea-level"},
+            description = "Meters above sea level for City")
+    private Integer metersAboveSeaLevel;
+
+    /**
+     * City populationDensity.
+     * {@link guldilin.proxy.api.dto.CityDTO#getPopulationDensity()}
+     */
+    @Parameter(
+            names = {"-population-density"},
+            description = "City population density")
+    private Integer populationDensity;
+
+    /**
+     * City carCode.
+     * {@link guldilin.proxy.api.dto.CityDTO#getCarCode()}
+     */
+    @Parameter(
+            names = {"-car-code"},
+            description = "City car code number")
+    private Integer carCode;
 
     /**
      * Items limit.
@@ -38,16 +80,4 @@ public class FindArgs extends Args {
             names = {"-offset"},
             description = "Results offset")
     private Integer offset;
-
-    /**
-     * Convert arguments to DTO for service usage.
-     *
-     * @return PaginationRequestDTO instance
-     */
-    public PaginationRequestDTO toDTO() {
-        var pagination = new PaginationRequestDTO();
-        pagination.setLimit(this.limit);
-        pagination.setOffset(this.offset);
-        return pagination;
-    }
 }

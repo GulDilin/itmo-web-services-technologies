@@ -1,4 +1,4 @@
-package guldilin.exceptions;
+package guldilin.proxy.api.dto;
 
 import jakarta.validation.ConstraintViolationException;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class FieldValidationFault {
      *
      * @param errors map field - error
      */
-    public FieldValidationFault(final List<FieldValidationFaultEntry> errors) {
+    public FieldValidationFault(List<FieldValidationFaultEntry> errors) {
         this.errors = errors;
     }
 
@@ -38,7 +38,7 @@ public class FieldValidationFault {
      *
      * @param exception original validation exception
      */
-    public FieldValidationFault(final ConstraintViolationException exception) {
+    public FieldValidationFault(ConstraintViolationException exception) {
         this();
         exception
                 .getConstraintViolations()
@@ -50,10 +50,8 @@ public class FieldValidationFault {
      *
      * @param field field name
      * @param errorMessage error message
-     *
-     * @return self
      */
-    public FieldValidationFault addFieldError(final String field, final String errorMessage) {
+    public FieldValidationFault addFieldError(String field, String errorMessage) {
         this.errors.add(FieldValidationFaultEntry.builder()
                 .field(field)
                 .message(errorMessage)
@@ -61,11 +59,6 @@ public class FieldValidationFault {
         return this;
     }
 
-    /**
-     * Is error list empty.
-     *
-     * @return true if empty, false otherwise
-     */
     public boolean isEmpty() {
         return this.errors.isEmpty();
     }

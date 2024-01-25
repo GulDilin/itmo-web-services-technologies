@@ -3,6 +3,9 @@
         <Console name="stdout">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %p %m%n"/>
         </Console>
+<!--        <Appender class="io.netty.util.internal.logging.InternalLoggerFactory">-->
+<!--            <AppenderRef ref="stdout"/>-->
+<!--        </Appender>-->
     </Appenders>
     <Loggers>
         <Root level="info">

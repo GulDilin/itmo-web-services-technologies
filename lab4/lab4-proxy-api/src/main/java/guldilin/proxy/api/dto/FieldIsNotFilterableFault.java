@@ -1,4 +1,4 @@
-package guldilin.exceptions;
+package guldilin.proxy.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,20 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Fault info about fields validation errors.
+ * Fault info for FieldIsNotFilterable exception.
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FieldValidationFaultEntry {
+public class FieldIsNotFilterableFault {
     /**
-     * Field name.
+     * Name of field that is not filterable.
      */
     private String field;
-
-    /**
-     * Error message.
-     */
-    private String message;
 }

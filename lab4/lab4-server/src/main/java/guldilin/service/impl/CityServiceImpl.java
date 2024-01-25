@@ -12,20 +12,26 @@ import guldilin.exceptions.ValidationFailed;
 import guldilin.repository.interfaces.CityRepository;
 import guldilin.service.interfaces.CityService;
 import guldilin.utils.Validator;
+import jakarta.annotation.PostConstruct;
+import jakarta.ejb.Startup;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.inject.Singleton;
 import jakarta.validation.ConstraintViolationException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.NoArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Implementation for CityService.
  */
 @NoArgsConstructor
-@ApplicationScoped
+@Startup
+@Singleton
 public class CityServiceImpl implements CityService {
     /**
      * City repository implementation. Auto-injected.
@@ -33,13 +39,19 @@ public class CityServiceImpl implements CityService {
     @Inject
     private CityRepository cityRepository;
 
+    private static final Logger LOGGER = LogManager.getLogger(CityServiceImpl.class);
+
+    @PostConstruct
+    public void init() {
+        LOGGER.info("CityServiceImpl init");
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public PaginationDTO<CityDTO> findByFilter(
-            final List<FilterArgumentDTO> filters,
-            final PaginationRequestDTO pagination)
+            final List<FilterArgumentDTO> filters, final PaginationRequestDTO pagination)
             throws FieldIsNotFilterable, ValidationFailed {
         Validator.validate(pagination);
         var filtersV = Optional.ofNullable(filters).orElse(Collections.emptyList());
@@ -76,8 +88,7 @@ public class CityServiceImpl implements CityService {
      * {@inheritDoc}
      */
     @Override
-    public CityDTO update(final Integer id, final CityCreateUpdateDTO city)
-            throws EntryNotFound, ValidationFailed {
+    public CityDTO update(final Integer id, final CityCreateUpdateDTO city) throws EntryNotFound, ValidationFailed {
         Validator.validateNotNull(id, "id");
         Validator.validateNotNull(city, "city");
         City cityEntry = this.cityRepository.getById(id);
@@ -93,9 +104,7 @@ public class CityServiceImpl implements CityService {
      * {@inheritDoc}
      */
     @Override
-    public CityDTO patch(
-            final Integer id, final CityCreateUpdateDTO city)
-            throws EntryNotFound, ValidationFailed {
+    public CityDTO patch(final Integer id, final CityCreateUpdateDTO city) throws EntryNotFound, ValidationFailed {
         Validator.validateNotNull(id, "id");
         Validator.validateNotNull(city, "city");
         City cityEntry = this.cityRepository.getById(id);

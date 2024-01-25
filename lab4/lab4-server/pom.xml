@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>guldilin</groupId>
@@ -8,7 +9,7 @@
     </parent>
 
     <artifactId>lab4-server</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -18,13 +19,21 @@
         </dependency>
 
         <!-- CDI 2.0 with SE context loader (for executable jar packaging) -->
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.weld.se</groupId>-->
+<!--            <artifactId>weld-se-core</artifactId>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>org.jboss.weld.se</groupId>
-            <artifactId>weld-se-core</artifactId>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-core-impl</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-shaded</artifactId>
         </dependency>
         <!-- /CDI 2.0 -->
 
@@ -47,10 +56,6 @@
             <version>5.0.0</version>
             <scope>provided</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>jakarta.annotation</groupId>-->
-<!--            <artifactId>jakarta.annotation-api</artifactId>-->
-<!--        </dependency>-->
         <!-- /Jakarta EE -->
 
         <!-- logging -->
@@ -60,8 +65,25 @@
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-1.2-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>org.slf4j</groupId>-->
+        <!--            <artifactId>slf4j-log4j12</artifactId>-->
+        <!--            <scope>runtime</scope>-->
+        <!--        </dependency>-->
         <!-- /logging -->
 
         <!-- Database Driver -->
@@ -71,27 +93,41 @@
         </dependency>
         <!-- /Database Driver -->
 
-        <!-- Persistence API -->
+        <!-- Persistence API + Impl -->
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
         </dependency>
         <!-- /Persistence API -->
 
-        <!-- Persistence API Implementation -->
+        <!-- Validation -->
         <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-        <!-- /Persistence API Implementation -->
+        <!-- /Validation -->
+
+        <!-- Expression Lang-->
+        <dependency>
+            <groupId>jakarta.el</groupId>
+            <artifactId>jakarta.el-api</artifactId>
+            <version>5.0.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.el -->
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.el</artifactId>
+            <version>5.0.0-M1</version>
+        </dependency>
+        <!-- /Expression Lang-->
 
         <!-- database migrations -->
         <dependency>
@@ -105,76 +141,117 @@
             <groupId>jakarta.ws.rs</groupId>
             <artifactId>jakarta.ws.rs-api</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>jakarta.ws.rs</groupId>-->
-<!--            <artifactId>all</artifactId>-->
-<!--            <type>pom</type>-->
-<!--        </dependency>-->
         <!-- /JAX-RS -->
 
+        <!-- RestEasy JAX-RS Implementation for Java SE and embedded server-->
 <!--        <dependency>-->
-<!--            <groupId>io.swagger.core.v3</groupId>-->
-<!--            <artifactId>swagger-jaxrs2-jakarta</artifactId>-->
+<!--            <groupId>org.jboss.resteasy</groupId>-->
+<!--            <artifactId>resteasy-core</artifactId>-->
 <!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.resteasy</groupId>-->
+<!--            <artifactId>resteasy-undertow-cdi</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.resteasy</groupId>-->
+<!--            <artifactId>resteasy-undertow</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.resteasy</groupId>-->
+<!--            <artifactId>resteasy-netty4</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-cdi</artifactId>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.resteasy</groupId>-->
+<!--            <artifactId>resteasy-core-spi</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.resteasy</groupId>-->
+<!--            <artifactId>resteasy-netty4-cdi</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>io.netty</groupId>-->
+<!--            <artifactId>netty-all</artifactId>-->
+<!--            <version>4.1.86.Final</version>-->
+<!--        </dependency>-->
+        <!-- /RestEasy JAX-RS Implementation for Java SE -->
+
+        <!-- Embedded server -->
+<!--        <dependency>-->
+<!--            <groupId>io.undertow</groupId>-->
+<!--            <artifactId>undertow-core</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-servlet</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-undertow</artifactId>
+        </dependency>
+        <!-- /Embedded server -->
+
+        <!-- JSON provider -->
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider -->
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.jaxrs</groupId>-->
+<!--            <artifactId>jackson-jaxrs-json-provider</artifactId>-->
+<!--            <version>2.16.1</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/jakarta.json/jakarta.json-api -->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.json</groupId>-->
+<!--            <artifactId>jakarta.json-api</artifactId>-->
+<!--            <version>2.1.3</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.glassfish/jakarta.json &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish</groupId>-->
+<!--            <artifactId>jakarta.json</artifactId>-->
+<!--            <version>2.0.1</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson2-provider</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.jboss.resteasy</groupId>-->
+<!--            <artifactId>resteasy-jaxb-provider</artifactId>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-core</artifactId>-->
+<!--            <version>2.16.1</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+        </dependency>
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jaxb</groupId>-->
+<!--            <artifactId>jaxb-runtime</artifactId>-->
+<!--            <version>4.0.1</version>-->
+<!--        </dependency>-->
+
+        <!-- /JSON provider -->
+
+        <!-- Swagger -->
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-jaxrs2-jakarta</artifactId>
-            <version>2.2.20</version>
         </dependency>
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-jaxrs2-servlet-initializer-v2-jakarta</artifactId>
-            <version>2.2.20</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>io.swagger.core.v3</groupId>-->
-<!--            <artifactId>swagger-jaxrs2-servlet-initializer-v2-jakarta</artifactId>-->
-<!--            <version>2.2.20</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api &ndash;&gt;-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.inject</groupId>-->
-<!--            <artifactId>jersey-hk2</artifactId>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.ext.cdi</groupId>-->
-<!--            <artifactId>jersey-cdi1x</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.ext.cdi</groupId>-->
-<!--            <artifactId>jersey-cdi1x-servlet</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.ext.cdi</groupId>-->
-<!--            <artifactId>jersey-weld2-se</artifactId>-->
-<!--        </dependency>-->
-
-        <!-- Grizzly Server for SE Standalone app -->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.grizzly</groupId>-->
-<!--            <artifactId>grizzly-http-server</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.containers</groupId>-->
-<!--            <artifactId>jersey-container-servlet</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency> &lt;!&ndash; this is to avoid Jersey jars to be bundled with the WAR &ndash;&gt;-->
-<!--            <groupId>org.glassfish.jersey.containers</groupId>-->
-<!--            <artifactId>jersey-container-servlet-core</artifactId>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.containers</groupId>-->
-<!--            <artifactId>jersey-container-grizzly2-http</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.glassfish.jersey.core</groupId>-->
-<!--            <artifactId>jersey-server</artifactId>-->
-<!--        </dependency>-->
-
-        <!-- /Grizzly Server-->
+        <!-- /Swagger -->
 
         <!-- CLI wrapper -->
         <dependency>
@@ -250,85 +327,116 @@
                     <packagingExcludes>
                         WEB-INF/classes/guldilin/cli/*,
                         WEB-INF/lib/weld-*.jar,
-                        WEB-INF/lib/grizzly-*.jar,
-                        WEB-INF/lib/jersey-*.jar
+                        WEB-INF/lib/resteasy-*.jar
                     </packagingExcludes>
                 </configuration>
             </plugin>
             <!-- /Package to WAR-->
 
-<!--            &lt;!&ndash; Package to JAR&ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-assembly-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <appendAssemblyId>false</appendAssemblyId>-->
-<!--                    <archive>-->
-<!--                        <manifest>-->
-<!--                            <mainClass>guldilin.cli.Standalone</mainClass>-->
-<!--                        </manifest>-->
-<!--                    </archive>-->
-<!--                    <descriptorRefs>-->
-<!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
-<!--                    </descriptorRefs>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        &lt;!&ndash; Do not change to package, it won't include project classes for unknown reason&ndash;&gt;-->
-<!--                        <phase>prepare-package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>single</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash; /Package to JAR &ndash;&gt;-->
-            <!-- Generate OpenApi config-->
+            <!-- Package to JAR-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-assembly-plugin</artifactId>-->
+            <!--                <configuration>-->
+            <!--                    <appendAssemblyId>false</appendAssemblyId>-->
+            <!--                    <archive>-->
+            <!--                        <manifest>-->
+            <!--                            <mainClass>guldilin.cli.Standalone</mainClass>-->
+            <!--                        </manifest>-->
+            <!--                    </archive>-->
+            <!--                    <descriptorRefs>-->
+            <!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
+            <!--                    </descriptorRefs>-->
+            <!--                </configuration>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        &lt;!&ndash; Do not change to package, it won't include project classes for unknown reason&ndash;&gt;-->
+            <!--                        <phase>prepare-package</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>single</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
             <plugin>
-                <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-maven-plugin-jakarta</artifactId>
-                <version>2.2.20</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
                 <configuration>
-                    <outputFileName>openapi</outputFileName>
-                    <outputPath>${project.build.directory}/openapi</outputPath>
-                    <outputFormat>JSONANDYAML</outputFormat>
-                    <resourcePackages>
-                        <package>guldilin</package>
-                    </resourcePackages>
-                    <prettyPrint>TRUE</prettyPrint>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>**/Log4j2Plugins.dat</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                    <transformers>
+                        <transformer
+                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>guldilin.cli.Standalone</mainClass>
+                        </transformer>
+                    </transformers>
+
                 </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
-                            <goal>resolve</goal>
+                            <goal>shade</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
 
+            <!-- /Package to JAR -->
+
+            <!-- Generate Swagger UI part  -->
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>download-swagger-ui</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <skipCache>true</skipCache>
+                            <url>https://github.com/swagger-api/swagger-ui/archive/master.tar.gz</url>
+                            <unpack>true</unpack>
+                            <outputDirectory>${project.build.directory}/swagger-ui</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>copy-resources</id>
-                        <phase>package</phase>
+                        <id>copy-swagger-ui</id>
+                        <phase>process-classes</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}/classes/</outputDirectory>
+                            <outputDirectory>target/${project.artifactId}</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.build.directory}/openapi</directory>
+                                    <directory>${project.build.directory}/swagger-ui/swagger-ui-master/dist</directory>
                                     <filtering>true</filtering>
+                                    <excludes>
+                                        <exclude>index.html</exclude>
+                                    </excludes>
                                 </resource>
                             </resources>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-            <!-- Generate OpenApi config  -->
+            <!-- /Generate Swagger UI part  -->
 
             <!-- Deployment -->
             <plugin>
