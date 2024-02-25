@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * Validator wrapper for jakarta validation.
  */
-public class Validator {
+public final class Validator {
     /**
      * Empty constructor for util class.
      */
@@ -23,7 +23,7 @@ public class Validator {
      * @param o any object to validate (with jakarta validation annotations)
      * @throws ValidationFailed if not valid
      */
-    public static void validate(Object o) throws ValidationFailed {
+    public static void validate(final Object o) throws ValidationFailed {
         if (o == null) return;
         try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
             var validator = factory.getValidator();
@@ -42,7 +42,7 @@ public class Validator {
      * @param fieldName name of field for ValidationFailed exception
      * @throws ValidationFailed if value is null
      */
-    public static void validateNotNull(Object o, String fieldName) throws ValidationFailed {
+    public static void validateNotNull(final Object o, final String fieldName) throws ValidationFailed {
         Optional.ofNullable(o)
                 .orElseThrow(() -> new ValidationFailed(
                         new FieldValidationFault().addFieldError(fieldName, ErrorMessages.NOT_NULL)));

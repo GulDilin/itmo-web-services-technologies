@@ -15,25 +15,36 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
+/**
+ * API interface for city entity management.
+ */
 @Path("/api/city")
 @Produces(MediaType.APPLICATION_JSON)
 public interface CityApi {
     /**
-     * Find elements by field-value filters.
+     * Find city paginated list by filter.
      *
-     * @return Found elements
+     * @param name city name. Optional.
+     * @param area city area. Optional.
+     * @param population city population. Optional.
+     * @param metersAboveSeaLevel city meters above sea level. Optional.
+     * @param populationDensity city population density. Optional.
+     * @param carCode city car code. Optional.
+     * @param limit limit number of entities. Optional.
+     * @param offset offset number of entities. Used for pagination. Optional
+     * @return paginated entities list
      */
     @GET
     @Path("/")
     PaginationDTO<CityDTO> findByFilter(
-            @QueryParam("name") final String name,
-            @QueryParam("area") final Integer area,
-            @QueryParam("population") final Integer population,
-            @QueryParam("meters_above_sea_level") final Integer metersAboveSeaLevel,
-            @QueryParam("population_density") final Integer populationDensity,
-            @QueryParam("car_code") final Integer carCode,
-            @QueryParam("limit") final Integer limit,
-            @QueryParam("offset") final Integer offset);
+            @QueryParam("name") String name,
+            @QueryParam("area") Integer area,
+            @QueryParam("population") Integer population,
+            @QueryParam("meters_above_sea_level") Integer metersAboveSeaLevel,
+            @QueryParam("population_density") Integer populationDensity,
+            @QueryParam("car_code") Integer carCode,
+            @QueryParam("limit") Integer limit,
+            @QueryParam("offset") Integer offset);
 
     /**
      * Create city.
@@ -44,7 +55,7 @@ public interface CityApi {
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    CityDTO create(final CityCreateUpdateDTO city);
+    CityDTO create(CityCreateUpdateDTO city);
 
     /**
      * Update city.
@@ -56,7 +67,7 @@ public interface CityApi {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    CityDTO update(@PathParam("id") final Integer id, final CityCreateUpdateDTO city);
+    CityDTO update(@PathParam("id") Integer id, CityCreateUpdateDTO city);
 
     /**
      * Update city part.
@@ -68,7 +79,7 @@ public interface CityApi {
     @PATCH
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    CityDTO patch(@PathParam("id") final Integer id, final CityCreateUpdateDTO city);
+    CityDTO patch(@PathParam("id") Integer id, CityCreateUpdateDTO city);
 
     /**
      * Delete city by id.
@@ -78,5 +89,5 @@ public interface CityApi {
      */
     @DELETE
     @Path("/{id}")
-    Boolean deleteById(@PathParam("id") final Integer id);
+    Boolean deleteById(@PathParam("id") Integer id);
 }

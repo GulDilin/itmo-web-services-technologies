@@ -7,15 +7,34 @@ import guldilin.proxy.api.dto.FieldIsNotFilterableFault;
 import guldilin.proxy.api.dto.FieldValidationFault;
 import jakarta.ws.rs.WebApplicationException;
 
-public class ExceptionHandler {
-    public static void handleException(Exception e) {
+/**
+ * Handler for server exceptions.
+ */
+public final class ExceptionHandler {
+    /**
+     * Constructor.
+     */
+    private ExceptionHandler() {
+        // default private constructor for utility class.
+    }
+    /**
+     * Main functions of that class. Handles any exception.
+     *
+     * @param e the exception.
+     */
+    public static void handleException(final Exception e) {
         if (e instanceof WebApplicationException err) {
             ErrorDTO dto = err.getResponse().readEntity(ErrorDTO.class);
             handleException(dto);
         } else handleDefault(e);
     }
 
-    public static void handleException(ErrorDTO e) {
+    /**
+     * Handle an error DTO.
+     *
+     * @param e The ErrorDTO info.
+     */
+    public static void handleException(final ErrorDTO e) {
         switch (e.getCode()) {
             case ENTITY_NOT_FOUND -> handleEntryNotFound(e);
             case VALIDATION_FAILED -> handleValidationFailed(e);
@@ -24,14 +43,24 @@ public class ExceptionHandler {
         }
     }
 
-    public static void handleEntryNotFound(ErrorDTO e) {
+    /**
+     * Handle EntryNotFoundFault.
+     *
+     * @param e the exception DTO.
+     */
+    public static void handleEntryNotFound(final ErrorDTO e) {
         var detailMap = e.getDetail();
         ObjectMapper mapper = new ObjectMapper();
         EntryNotFoundFault detail = mapper.convertValue(detailMap, EntryNotFoundFault.class);
         System.err.printf("ERROR: %s for entity %s with id %d\n", e.getMessage(), detail.getEntity(), detail.getId());
     }
 
-    public static void handleValidationFailed(ErrorDTO e) {
+    /**
+     * Handle FieldValidationFault.
+     *
+     * @param e the exception DTO.
+     */
+    public static void handleValidationFailed(final ErrorDTO e) {
         var detailMap = e.getDetail();
         ObjectMapper mapper = new ObjectMapper();
         FieldValidationFault detail = mapper.convertValue(detailMap, FieldValidationFault.class);
@@ -39,18 +68,33 @@ public class ExceptionHandler {
         detail.getErrors().forEach(c -> System.out.printf("\t- %s: %s\n", c.getField(), c.getMessage()));
     }
 
-    public static void handleFieldIsNotFilterable(ErrorDTO e) {
+    /**
+     * Handle FieldIsNotFilterableFault.
+     *
+     * @param e the exception DTO.
+     */
+    public static void handleFieldIsNotFilterable(final ErrorDTO e) {
         var detailMap = e.getDetail();
         ObjectMapper mapper = new ObjectMapper();
         FieldIsNotFilterableFault detail = mapper.convertValue(detailMap, FieldIsNotFilterableFault.class);
         System.err.printf("ERROR: %s for %s\n", e.getMessage(), detail.getField());
     }
 
-    public static void handleDefault(ErrorDTO e) {
+    /**
+     * Default error dto handler.
+     *
+     * @param e the exception DTO.
+     */
+    public static void handleDefault(final ErrorDTO e) {
         System.err.printf("ERROR: %s\n", e.getMessage());
     }
 
-    public static void handleDefault(Exception e) {
+    /**
+     * Default exception handler.
+     *
+     * @param e the exception DTO.
+     */
+    public static void handleDefault(final Exception e) {
         System.err.printf("ERROR: %s\n", e.getMessage());
     }
 }

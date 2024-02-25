@@ -80,7 +80,8 @@ public final class Standalone {
         return deployment;
     }
 
-    private static DeploymentInfo createDeploymentInfo(UndertowJaxrsServer server, ResteasyDeployment deployment) {
+    private static DeploymentInfo createDeploymentInfo(
+            final UndertowJaxrsServer server, final ResteasyDeployment deployment) {
         DeploymentInfo deploymentInfo = server.undertowDeployment(deployment, "/");
         deploymentInfo
                 .setClassLoader(RestApplication.class.getClassLoader())
@@ -90,6 +91,10 @@ public final class Standalone {
         return deploymentInfo;
     }
 
+    /**
+     * Creates and start Undertow JAX-RS embedded server.
+     * @param params startup parameters
+     */
     public static void startServer(final Map<PropertyKey, String> params) {
         UndertowJaxrsServer server = new UndertowJaxrsServer();
         var deployment = createDeployment();

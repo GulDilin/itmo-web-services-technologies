@@ -34,15 +34,37 @@ import lombok.SneakyThrows;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * REST API resource for City entity.
+ */
 @RequestScoped
 @Path("/city")
 @Produces(MediaType.APPLICATION_JSON)
 public class CityResource {
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = LogManager.getLogger(CityResource.class);
 
+    /**
+     * The city service.
+     */
     @Inject
     private CityService cityService;
 
+    /**
+     * Find city paginated list by filter.
+     *
+     * @param name city name. Optional.
+     * @param area city area. Optional.
+     * @param population city population. Optional.
+     * @param metersAboveSeaLevel city meters above sea level. Optional.
+     * @param populationDensity city population density. Optional.
+     * @param carCode city car code. Optional.
+     * @param limit limit number of entities. Optional.
+     * @param offset offset number of entities. Used for pagination. Optional
+     * @return paginated entities list
+     */
     @GET
     @Path("/")
     @SneakyThrows
@@ -94,6 +116,12 @@ public class CityResource {
         return this.cityService.findByFilter(filters, pagination);
     }
 
+    /**
+     * Creates a city.
+     *
+     * @param city creation info DTO.
+     * @return created city.
+     */
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -117,6 +145,13 @@ public class CityResource {
         return this.cityService.create(city);
     }
 
+    /**
+     * Update city by id with full-data entity.
+     *
+     * @param id city identifier.
+     * @param city new city data.
+     * @return updated city.
+     */
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -142,6 +177,13 @@ public class CityResource {
         return this.cityService.update(id, city);
     }
 
+    /**
+     * Update part of city data. Updates only non-empty fields.
+     *
+     * @param id city identifier.
+     * @param city city update data.
+     * @return updated city.
+     */
     @PATCH
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -167,6 +209,12 @@ public class CityResource {
         return this.cityService.patch(id, city);
     }
 
+    /**
+     * Delete city by id.
+     *
+     * @param id The city identifier.
+     * @return OK if deleted.
+     */
     @DELETE
     @Path("/{id}")
     @SneakyThrows

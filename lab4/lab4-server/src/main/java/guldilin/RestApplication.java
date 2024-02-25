@@ -18,11 +18,21 @@ import java.util.stream.Stream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Rest application configuration.
+ */
 @ApplicationPath("/api")
 @OpenAPIDefinition(servers = @Server(url = "/lab4-server"))
 public class RestApplication extends Application {
+    /**
+     * The logger.
+     */
     private static final Logger LOGGER = LogManager.getLogger(RestApplication.class);
 
+    /**
+     * Provide services and mappers classes for app.
+     * @return classes set.
+     */
     @Override
     public Set<Class<?>> getClasses() {
         return Stream.of(
@@ -32,11 +42,13 @@ public class RestApplication extends Application {
                         NotAllowedMapper.class,
                         EntryNotFoundMapper.class,
                         FieldIsNotFilterableMapper.class,
-                        //                        NotFoundMapper.class,
                         ValidationMapper.class)
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * Post init.
+     */
     @PostConstruct
     public void init() {
         LOGGER.info("init RestApplication");

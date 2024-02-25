@@ -12,7 +12,6 @@ import guldilin.exceptions.ValidationFailed;
 import guldilin.repository.interfaces.CityRepository;
 import guldilin.service.interfaces.CityService;
 import guldilin.utils.Validator;
-import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Startup;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -22,8 +21,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.NoArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * Implementation for CityService.
@@ -37,13 +34,6 @@ public class CityServiceImpl implements CityService {
      */
     @Inject
     private CityRepository cityRepository;
-
-    private static final Logger LOGGER = LogManager.getLogger(CityServiceImpl.class);
-
-    @PostConstruct
-    public void init() {
-        LOGGER.info("CityServiceImpl init");
-    }
 
     /**
      * {@inheritDoc}

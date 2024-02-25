@@ -8,10 +8,17 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
+/**
+ * ExceptionMapper for ValidationFailed.
+ * Maps an ValidationFailed exception to json response.
+ */
 @Provider
 public class ValidationMapper implements ExceptionMapper<ValidationFailed> {
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Response toResponse(ValidationFailed e) {
+    public Response toResponse(final ValidationFailed e) {
         return Response.status(Response.Status.BAD_REQUEST)
                 .entity(ErrorDTO.builder()
                         .code(ErrorCode.VALIDATION_FAILED)

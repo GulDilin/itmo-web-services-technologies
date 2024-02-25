@@ -8,10 +8,17 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
+/**
+ * ExceptionMapper for FieldIsNotFilterableMapper.
+ * Maps an FieldIsNotFilterableMapper exception to json response.
+ */
 @Provider
 public class FieldIsNotFilterableMapper implements ExceptionMapper<FieldIsNotFilterable> {
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Response toResponse(FieldIsNotFilterable e) {
+    public Response toResponse(final FieldIsNotFilterable e) {
         return Response.status(Response.Status.BAD_REQUEST)
                 .entity(ErrorDTO.builder()
                         .code(ErrorCode.FIELD_IS_NOT_FILTERABLE)

@@ -22,7 +22,7 @@ public interface CityService {
      * @return Found elements
      * @throws FieldIsNotFilterable for incorrect filters argument
      */
-    PaginationDTO<CityDTO> findByFilter(final List<FilterArgumentDTO> filters, final PaginationRequestDTO pagination)
+    PaginationDTO<CityDTO> findByFilter(List<FilterArgumentDTO> filters, PaginationRequestDTO pagination)
             throws FieldIsNotFilterable, ValidationFailed;
 
     /**
@@ -40,7 +40,7 @@ public interface CityService {
      * @param city city data you want to update
      * @return updated city
      */
-    CityDTO update(final Integer id, final CityCreateUpdateDTO city) throws EntryNotFound, ValidationFailed;
+    CityDTO update(Integer id, CityCreateUpdateDTO city) throws EntryNotFound, ValidationFailed;
 
     /**
      * Update city part.
@@ -49,7 +49,7 @@ public interface CityService {
      * @param city city data you want to update
      * @return updated city
      */
-    CityDTO patch(final Integer id, final CityCreateUpdateDTO city) throws EntryNotFound, ValidationFailed;
+    CityDTO patch(Integer id, CityCreateUpdateDTO city) throws EntryNotFound, ValidationFailed;
 
     /**
      * Delete city by id.
