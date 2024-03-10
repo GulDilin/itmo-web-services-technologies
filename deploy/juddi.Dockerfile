@@ -23,14 +23,22 @@ ARG USERNAME=${USERNAME:-juddi}
 ARG PASSWORD=${PASSWORD:-juddi}
 
 ENV PRG_PATH="/juddi/juddi-distro-${JUDDI_VERSION}/juddi-tomcat-${JUDDI_VERSION}"
+
 ENV USERS_CONF_NAME="tomcat-users.xml"
 ENV USERS_CONF_PATH="${PRG_PATH}/conf/${USERS_CONF_NAME}"
+COPY ./juddi/${USERS_CONF_NAME} ${USERS_CONF_PATH}
+
+ENV SERVER_CONF_NAME="server.xml"
+ENV SERVER_CONF_PATH="${PRG_PATH}/conf/${SERVER_CONF_NAME}"
+COPY ./juddi/${SERVER_CONF_NAME} ${SERVER_CONF_PATH}
+
 ENV USERNAME=$USERNAME
 ENV PASSWORD=$PASSWORD
+RUN sed -i "s/{{ USERNAME }}/${USERNAME}/" ${USERS_CONF_PATH}
+RUN sed -i "s/{{ PASSWORD }}/${PASSWORD}/" ${USERS_CONF_PATH}
 
-COPY ./juddi/${USERS_CONF_NAME} ${USERS_CONF_PATH}
-RUN sed -i 's/{{ USERNAME }}/${USERNAME}/' ${USERS_CONF_PATH}
-RUN sed -i 's/{{ PASSWORD }}/${PASSWORD}/' ${USERS_CONF_PATH}
+# https://stackoverflow.com/questions/23011547/webservice-client-generation-error-with-jdk8
+RUN echo "javax.xml.accessExternalDTD = all" > /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/jaxp.properties
 
 EXPOSE 8080
 

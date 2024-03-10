@@ -22,7 +22,7 @@ import jakarta.jws.WebService;
 import jakarta.jws.soap.SOAPBinding;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.xml.ws.Action;
-
+import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.List;
@@ -33,11 +33,6 @@ import lombok.NoArgsConstructor;
 /**
  * Implementation for CityService.
  */
-//@UDDIService(businessKey = "uddi:tws", serviceKey = "uddi:CityWs", description = "City management service")
-//@UDDIServiceBinding(
-//        bindingKey = "uddi:CityWsBinding",
-//        description = "WSDL endpoint for the City Service",
-//        accessPoint = "http://localhost:8080/lab7-server/CityService?wsdl")
 @WebService(
         name = "CityWs",
         serviceName = "CityService",
@@ -52,11 +47,15 @@ public class CityServiceImpl implements CityService {
      */
     @Inject
     private CityRepository cityRepository;
+
+    /**
+     * Service discovery client to register service on startup. Auto-injected.
+     */
     @Inject
     private ServiceDiscovery serviceDiscovery;
 
     @PostConstruct
-    private void onInit() throws RemoteException {
+    private void onInit() throws RemoteException, MalformedURLException {
         this.serviceDiscovery.registerService(PropertyKey.APP_URL.lookupValue(), CityService.class);
     }
 

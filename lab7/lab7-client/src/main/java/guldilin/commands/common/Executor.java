@@ -38,7 +38,7 @@ public abstract class Executor<T extends Args> {
         if (this.printOptionalHelp(args)) return;
 
         try {
-            ServiceProvider serviceProvider = new ServiceProviderImpl("juddi", "admin");
+            ServiceProvider serviceProvider = new ServiceProviderImpl();
             this.execute(argv, args, serviceProvider);
         } catch (Exception e) {
             ExceptionHandler.handleException(e);

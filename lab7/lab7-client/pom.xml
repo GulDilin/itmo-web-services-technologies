@@ -28,7 +28,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>lab7-service-discovery</artifactId>
             <version>${project.parent.version}</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -45,6 +44,10 @@
         <dependency>
             <groupId>jakarta.xml.ws</groupId>
             <artifactId>jakarta.xml.ws-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
@@ -64,6 +67,13 @@
             <version>1.82</version>
         </dependency>
         <!-- /CLI wrapper -->
+
+        <!-- RestEasy Client -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-client</artifactId>
+        </dependency>
+        <!-- /RestEasy Client -->
     </dependencies>
 
     <build>

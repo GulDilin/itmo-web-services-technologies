@@ -1,9 +1,8 @@
 package guldilin.service;
 
-import guldilin.discovery.BusinessNotFound;
-import guldilin.discovery.ServiceNotFound;
+import guldilin.discovery.exceptions.BusinessNotFound;
+import guldilin.discovery.exceptions.ServiceNotFound;
 import guldilin.proxy.api.CityWs;
-
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
 

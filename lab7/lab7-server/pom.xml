@@ -44,6 +44,10 @@
             <groupId>jakarta.inject</groupId>
             <artifactId>jakarta.inject-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>jakarta.el</groupId>
+            <artifactId>jakarta.el-api</artifactId>
+        </dependency>
         <!-- /Jakarta EE -->
 
         <!-- logging -->
@@ -113,6 +117,17 @@
         </dependency>
         <!-- /JAX-WS -->
 
+<!--        <dependency>-->
+<!--            <groupId>com.sun.el</groupId>-->
+<!--            <artifactId>el-ri</artifactId>-->
+<!--            <version>3.0.4</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.el</artifactId>
+        </dependency>
+
         <!-- CLI wrapper -->
         <dependency>
             <groupId>com.beust</groupId>
@@ -147,49 +162,49 @@
             </plugin>
             <!-- /Read properties from parent dir -->
 
-<!--            &lt;!&ndash; Generate WSDL &ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <groupId>com.sun.xml.ws</groupId>-->
-<!--                <artifactId>jaxws-maven-plugin</artifactId>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>generate-wsdl</id>-->
-<!--                        <phase>process-classes</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>wsgen</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <sei>guldilin.service.impl.CityServiceImpl</sei>-->
-<!--                            <genWsdl>true</genWsdl>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash; /Generate WSDL &ndash;&gt;-->
+            <!-- Generate WSDL -->
+            <plugin>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>jaxws-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>generate-wsdl</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>wsgen</goal>
+                        </goals>
+                        <configuration>
+                            <sei>guldilin.service.impl.CityServiceImpl</sei>
+                            <genWsdl>true</genWsdl>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Generate WSDL -->
 
-<!--            &lt;!&ndash; Copy generated WSDL to META-INF/wsdl&ndash;&gt;-->
-<!--            <plugin>-->
-<!--                <artifactId>maven-resources-plugin</artifactId>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>copy-resources</id>-->
-<!--                        <phase>process-classes</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>copy-resources</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <outputDirectory>${project.build.directory}/classes/META-INF/wsdl</outputDirectory>-->
-<!--                            <resources>-->
-<!--                                <resource>-->
-<!--                                    <directory>${project.build.directory}/generated-sources/wsdl</directory>-->
-<!--                                    <filtering>true</filtering>-->
-<!--                                </resource>-->
-<!--                            </resources>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--            &lt;!&ndash; /Copy generated WSDL to META-INF/wsdl&ndash;&gt;-->
+            <!-- Copy generated WSDL to META-INF/wsdl-->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/classes/META-INF/wsdl</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/generated-sources/wsdl</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Copy generated WSDL to META-INF/wsdl-->
 
             <!-- Index beans-->
             <plugin>

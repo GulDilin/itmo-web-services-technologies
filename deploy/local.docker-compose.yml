@@ -40,7 +40,7 @@ services:
       - DB_PASSWORD=${POSTGRES_PASSWORD:-admin}
     ports:
       - "8080:8080"
-      - "9990:9990"
+      - "9999:9990"
     logging:
       driver: "json-file"
       options:
@@ -53,9 +53,9 @@ services:
     build:
       context: .
       dockerfile: juddi.Dockerfile
-    environment:
-      - USERNAME=${JUDDI_USER:-juddi}
-      - PASSWORD=${JUDDI_PASSWORD:-admin}
+      args:
+        - USERNAME=${JUDDI_USER:-juddi}
+        - PASSWORD=${JUDDI_PASSWORD:-admin}
     ports:
       - "8099:8080"
     logging:

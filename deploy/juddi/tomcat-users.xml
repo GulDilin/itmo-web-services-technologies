@@ -42,5 +42,4 @@
     <role rolename="replication" />
     <role rolename="manager" />
     <user username="{{ USERNAME }}" password="{{ PASSWORD }}" roles="uddiadmin,tomcat,manager" />
-    <user username="CN=localhost, OU=jUDDI Test, O=Apache Software Foundation, L=Anytown, ST=MD, C=US" password="null" roles="replication" />
 </tomcat-users>

@@ -26,7 +26,7 @@
         <log4j.version>2.20.0</log4j.version>
         <slf4j.version>2.0.11</slf4j.version>
         <lombok.version>1.18.30</lombok.version>
-        <juddi.version>3.3.10</juddi.version>
+        <juddi.version>3.2.1</juddi.version>
         <scm.url>scm:git:git@github.com:GulDilin/itmo-web-services-technologies.git</scm.url>
         <repo.url>https://github.com/GulDilin/itmo-web-services-technologies</repo.url>
 
@@ -252,7 +252,22 @@
                 <artifactId>rt</artifactId>
                 <version>${jaxws.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>${jaxws.version}</version>
+            </dependency>
             <!-- /JAX-WS -->
+
+            <!-- Expression Language Implementation-->
+            <!-- https://mvnrepository.com/artifact/com.sun.el/el-ri -->
+            <dependency>
+                <groupId>com.sun.el</groupId>
+                <artifactId>el-ri</artifactId>
+                <version>3.0.4</version>
+            </dependency>
+            <!-- /Expression Language Implementation-->
+
 
             <!-- JAX-RS -->
             <!-- https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api -->
@@ -364,6 +379,12 @@
                 <artifactId>juddi-client</artifactId>
                 <version>${juddi.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.juddi/uddi-ws -->
+            <dependency>
+                <groupId>org.apache.juddi</groupId>
+                <artifactId>uddi-ws</artifactId>
+                <version>${juddi.version}</version>
+            </dependency>
             <!-- /jUDDI-->
         </dependencies>
     </dependencyManagement>
@@ -442,6 +463,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>3.6.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.5.2</version>
                 </plugin>
                 <plugin>
                     <groupId>com.sun.xml.ws</groupId>

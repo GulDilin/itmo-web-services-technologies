@@ -55,7 +55,8 @@
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
-                            <wsdlDirectory>../lab7-server/src/main/resources/META-INF/wsdl</wsdlDirectory>
+<!--                            <wsdlDirectory>../lab7-server/src/main/resources/META-INF/wsdl</wsdlDirectory>-->
+                            <wsdlDirectory>../lab7-server/target/generated-sources/wsdl</wsdlDirectory>
                             <destDir>target/classes</destDir>
                             <packageName>guldilin.proxy.api</packageName>
                             <xnocompile>false</xnocompile>

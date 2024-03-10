@@ -3,6 +3,7 @@ package guldilin.utils;
 import guldilin.exceptions.ErrorMessages;
 import guldilin.exceptions.FieldValidationFault;
 import guldilin.exceptions.ValidationFailed;
+import jakarta.el.ExpressionFactory;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
 import java.util.Optional;
@@ -25,6 +26,7 @@ public final class Validator {
      */
     public static void validate(final Object o) throws ValidationFailed {
         if (o == null) return;
+        ExpressionFactory.newInstance();
         try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
             var validator = factory.getValidator();
             var constraintViolations = validator.validate(o);

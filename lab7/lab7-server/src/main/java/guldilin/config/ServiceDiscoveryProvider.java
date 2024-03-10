@@ -1,8 +1,9 @@
 package guldilin.config;
 
 import guldilin.discovery.JuddiClient;
-import guldilin.discovery.JuddiClientInterface;
+import guldilin.discovery.JuddiClientImpl;
 import guldilin.discovery.ServiceDiscovery;
+import guldilin.discovery.ServiceDiscoveryImpl;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Singleton;
@@ -26,11 +27,10 @@ public class ServiceDiscoveryProvider {
      */
     @Produces
     @Singleton
-    public JuddiClientInterface provideJuddiClient() throws ConfigurationException, TransportException {
+    public JuddiClient provideJuddiClient() throws ConfigurationException, TransportException {
         String username = PropertyKey.UDDI_USERNAME.lookupValue();
         String password = PropertyKey.UDDI_PASSWORD.lookupValue();
-        return new JuddiClient(username, password);
-
+        return new JuddiClientImpl(username, password);
     }
 
     /**
@@ -41,7 +41,7 @@ public class ServiceDiscoveryProvider {
      */
     @Produces
     @Singleton
-    public ServiceDiscovery provideServiceDiscovery(final JuddiClientInterface juddiClient) {
-        return new ServiceDiscovery(juddiClient);
+    public ServiceDiscovery provideServiceDiscovery(final JuddiClient juddiClient) {
+        return new ServiceDiscoveryImpl(juddiClient);
     }
 }

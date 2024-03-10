@@ -1,29 +1,33 @@
 package guldilin.discovery;
 
+import guldilin.discovery.exceptions.BusinessNotFound;
+import guldilin.discovery.exceptions.ServiceNotFound;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.rmi.RemoteException;
+import java.util.List;
 
-public class ServiceDiscovery {
-    private final JuddiClientInterface juddiClient;
+/**
+ * Service Discovery.
+ */
+public interface ServiceDiscovery {
+    /**
+     * Register service and bind to URL by class.
+     *
+     * @param baseUrl base API url (without service path).
+     * @param clazz   service class.
+     * @throws RemoteException if got an error on register
+     */
+    void registerService(String baseUrl, Class<?> clazz) throws RemoteException, MalformedURLException;
 
-    public ServiceDiscovery(JuddiClientInterface juddiClient) {
-        this.juddiClient = juddiClient;
-    }
-
-    private String getServiceName(Class<?> clazz) {
-        return clazz.getSimpleName();
-    }
-    public void registerService(String baseUrl, Class<?> clazz) throws RemoteException {
-        String name = this.getServiceName(clazz);
-        String url = String.format("%s/%s?wsdl", baseUrl, name);
-        System.out.printf("Register Service %s [%s]\n", name, url);
-        this.juddiClient.registerBusinessService(ServiceDiscoveryProperties.BUSINESS_KEY, name, url);
-    }
-
-    public String findService(Class<?> clazz) throws RemoteException, BusinessNotFound, ServiceNotFound {
-        String name = this.getServiceName(clazz);
-        var binding = this.juddiClient.findService(ServiceDiscoveryProperties.BUSINESS_KEY, name);
-        String url = binding.getBindingTemplate().get(0).getAccessPoint().getValue();
-        System.out.printf("Find Service %s [%s]\n", name, url);
-        return url;
-    }
+    /**
+     * Find service bindings in jUDDI by service class.
+     *
+     * @param clazz service class.
+     * @return list of registered service urls
+     * @throws RemoteException  if got an error from jUDDI
+     * @throws BusinessNotFound if business did not find
+     * @throws ServiceNotFound  if service did not find
+     */
+    List<URL> findService(Class<?> clazz) throws RemoteException, BusinessNotFound, ServiceNotFound;
 }
