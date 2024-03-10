@@ -61,7 +61,11 @@ public enum PropertyKey implements Serializable {
     /**
      * jUDDI url.
      */
-    UDDI_URL(true, null, "Url of jUDDI Service"),
+    UDDI_HOST(true, null, "Hostname of jUDDI Service"),
+    /**
+     * jUDDI port.
+     */
+    UDDI_PORT(true, null, "Port of jUDDI Service"),
     /**
      * jUDDI username.
      */

@@ -29,11 +29,14 @@ public class ServiceProviderImpl implements ServiceProvider {
     /**
      * Default Constructor.
      *
+     * @param juddiHost jUDDI host name.
+     * @param juddiPort jUDDI port.
      * @throws ConfigurationException for incorrect config.
      * @throws TransportException     if jUDDI client cannot be created.
      */
-    public ServiceProviderImpl() throws ConfigurationException, TransportException {
-        this.serviceDiscovery = new ServiceDiscoveryImpl(new JuddiClientImpl());
+    public ServiceProviderImpl(final String juddiHost, final Integer juddiPort)
+            throws ConfigurationException, TransportException {
+        this.serviceDiscovery = new ServiceDiscoveryImpl(new JuddiClientImpl(juddiHost, juddiPort));
     }
 
     private Boolean isUrlAlive(final URL url) {

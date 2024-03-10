@@ -83,7 +83,25 @@ public class Args {
     private String dbPassword;
 
     /**
-     * Database username.
+     * jUDDI hostname.
+     */
+    @Parameter(
+            names = {"-uddi_host"},
+            required = true,
+            description = "UDDI host name")
+    private String uddiServerName;
+
+    /**
+     * jUDDI port.
+     */
+    @Parameter(
+            names = {"-uddi_port"},
+            required = true,
+            description = "UDDI port")
+    private Integer uddiPort;
+
+    /**
+     * jUDDI username.
      */
     @Parameter(
             names = {"-uddi_username"},
@@ -92,7 +110,7 @@ public class Args {
     private String uddiUsername;
 
     /**
-     * Database password.
+     * jUDDI password.
      */
     @Parameter(
             names = {"-uddi_password"},

@@ -5,6 +5,7 @@ import guldilin.discovery.exceptions.ServiceNotFound;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.Locale;
+import java.util.Properties;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.juddi.api_v3.AccessPointType;
 import org.apache.juddi.v3.client.config.UDDIClient;
@@ -61,7 +62,16 @@ public class JuddiClientImpl implements JuddiClient {
     /**
      * Default transport node name inside uddi.xml config file.
      */
-    public static final String DEFAULT_TRANSPORT_NODE_NAME = "default";
+    public static final String DEFAULT_NODE_NAME = "default";
+
+    /**
+     * jUDDI host property name.
+     */
+    public static final String PROPERTY_HOST = "serverName";
+    /**
+     * jUDDI port property name.
+     */
+    public static final String PROPERTY_PORT = "serverPort";
 
     /**
      * Logger.
@@ -71,6 +81,8 @@ public class JuddiClientImpl implements JuddiClient {
     /**
      * Full constructor.
      *
+     * @param serverName jUDDI hostname.
+     * @param port jUDDI port.
      * @param username jUDDI username used for publishing and service registration.
      * @param password jUDDI password used for publishing and service registration.
      * @param configPath config path to uddi.xml inside jar.
@@ -79,9 +91,18 @@ public class JuddiClientImpl implements JuddiClient {
      * @throws TransportException if got an error from jUDDI.
      */
     public JuddiClientImpl(
-            final String username, final String password, final String configPath, final String transportNodeName)
+            final String serverName,
+            final Integer port,
+            final String username,
+            final String password,
+            final String configPath,
+            final String transportNodeName)
             throws ConfigurationException, TransportException {
-        UDDIClient client = new UDDIClient(configPath);
+        var nodeProperties = new Properties();
+        nodeProperties.put(PROPERTY_HOST, serverName);
+        nodeProperties.put(PROPERTY_PORT, port.toString());
+
+        UDDIClient client = new UDDIClient(configPath, nodeProperties);
         Transport transport = client.getTransport(transportNodeName);
         this.security = transport.getUDDISecurityService();
         this.publisher = transport.getUDDIPublishService();
@@ -96,24 +117,29 @@ public class JuddiClientImpl implements JuddiClient {
     /**
      * Constructor using default config.
      *
+     * @param serverName jUDDI hostname.
+     * @param port jUDDI port.
      * @param username jUDDI username used for publishing and service registration.
      * @param password jUDDI password used for publishing and service registration.
      * @throws ConfigurationException if provided configuration is not correct.
      * @throws TransportException if got an error from jUDDI.
      */
-    public JuddiClientImpl(final String username, final String password)
+    public JuddiClientImpl(final String serverName, final Integer port, final String username, final String password)
             throws ConfigurationException, TransportException {
-        this(username, password, DEFAULT_CONFIG_PATH, DEFAULT_TRANSPORT_NODE_NAME);
+        this(serverName, port, username, password, DEFAULT_CONFIG_PATH, DEFAULT_NODE_NAME);
     }
 
     /**
      * Default constructor. With empty username or password. Can be used for finding services.
      *
+     * @param serverName jUDDI hostname.
+     * @param port jUDDI port.
      * @throws ConfigurationException if provided configuration is not correct.
      * @throws TransportException if got an error from jUDDI.
      */
-    public JuddiClientImpl() throws ConfigurationException, TransportException {
-        this(null, null, DEFAULT_CONFIG_PATH, DEFAULT_TRANSPORT_NODE_NAME);
+    public JuddiClientImpl(final String serverName, final Integer port)
+            throws ConfigurationException, TransportException {
+        this(serverName, port, null, null, DEFAULT_CONFIG_PATH, DEFAULT_NODE_NAME);
     }
 
     /**

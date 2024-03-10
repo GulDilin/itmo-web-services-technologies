@@ -28,9 +28,11 @@ public class ServiceDiscoveryProvider {
     @Produces
     @Singleton
     public JuddiClient provideJuddiClient() throws ConfigurationException, TransportException {
+        String host = PropertyKey.UDDI_HOST.lookupValue();
+        Integer port = Integer.parseInt(PropertyKey.UDDI_PORT.lookupValue());
         String username = PropertyKey.UDDI_USERNAME.lookupValue();
         String password = PropertyKey.UDDI_PASSWORD.lookupValue();
-        return new JuddiClientImpl(username, password);
+        return new JuddiClientImpl(host, port, username, password);
     }
 
     /**

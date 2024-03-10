@@ -40,10 +40,11 @@ Usage: lab7-client.jar [options]
 Example
 
 ```shell
-java -jar lab7-client.jar \
-    -url http://localhost:8080 \
-    -c find \
+java --add-opens java.base/java.net=ALL-UNNAMED \
+    -jar lab7-client.jar \
+    -juddi_host localhost -juddi_port 8099
+    -c find
     -f area:=:78 -f carCode:=:198 \
     -limit 10 \
-    -offset 10
+    -offset 5
 ```

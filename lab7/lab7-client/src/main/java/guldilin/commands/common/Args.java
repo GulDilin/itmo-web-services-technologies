@@ -1,7 +1,6 @@
 package guldilin.commands.common;
 
 import com.beust.jcommander.Parameter;
-import java.net.URL;
 import lombok.Data;
 
 /**
@@ -29,11 +28,20 @@ public class Args {
     private Command command;
 
     /**
-     * Server URL.
+     * jUDDI host name.
      */
     @Parameter(
-            names = {"-url"},
+            names = {"-juddi_host"},
             required = true,
-            description = "Server URL base (example: http://localhost:8080)")
-    private URL url;
+            description = "jUDDI URL hostname (example: localhost)")
+    private String juddiHost;
+
+    /**
+     * jUDDI port.
+     */
+    @Parameter(
+            names = {"-juddi_port"},
+            required = true,
+            description = "jUDDI port (example: 8080)")
+    private Integer juddiPort;
 }

@@ -45,6 +45,9 @@ public final class Standalone {
         params.put(PropertyKey.DB_NAME, args.getDbName());
         params.put(PropertyKey.DB_USERNAME, args.getDbUsername());
         params.put(PropertyKey.DB_PASSWORD, args.getDbPassword());
+
+        params.put(PropertyKey.UDDI_HOST, args.getUddiServerName());
+        params.put(PropertyKey.UDDI_PORT, args.getUddiPort().toString());
         params.put(PropertyKey.UDDI_USERNAME, args.getUddiUsername());
         params.put(PropertyKey.UDDI_PASSWORD, args.getUddiPassword());
 
