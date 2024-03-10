@@ -59,6 +59,18 @@ public enum PropertyKey implements Serializable {
      */
     DB_JNDI_NAME(false, "java:global/tws_db", "Context datasource lookup JNDI name"),
     /**
+     * jUDDI url
+     */
+    UDDI_URL(true, null, "Url of jUDDI Service"),
+    /**
+     * jUDDI username
+     */
+    UDDI_USERNAME(true, null, "Username for jUDDI Service"),
+    /**
+     * jUDDI password
+     */
+    UDDI_PASSWORD(true, null, "Password for jUDDI Service"),
+    /**
      * Application host.
      */
     APP_HOST(false, "http://localhost", "Application standalone server host listener"),

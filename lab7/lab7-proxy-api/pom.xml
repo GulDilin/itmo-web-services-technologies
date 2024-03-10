@@ -39,12 +39,6 @@
             <artifactId>rt</artifactId>
         </dependency>
         <!-- /JAX-WS -->
-        <!-- jUDDI-->
-        <dependency>
-            <groupId>org.apache.juddi</groupId>
-            <artifactId>juddi-client</artifactId>
-        </dependency>
-        <!-- /jUDDI-->
     </dependencies>
 
     <build>
@@ -61,7 +55,7 @@
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
-                            <wsdlDirectory>../lab7-server/target/generated-sources/wsdl</wsdlDirectory>
+                            <wsdlDirectory>../lab7-server/src/main/resources/META-INF/wsdl</wsdlDirectory>
                             <destDir>target/classes</destDir>
                             <packageName>guldilin.proxy.api</packageName>
                             <xnocompile>false</xnocompile>

@@ -1,6 +1,11 @@
 package guldilin.service;
 
+import guldilin.discovery.BusinessNotFound;
+import guldilin.discovery.ServiceNotFound;
 import guldilin.proxy.api.CityWs;
+
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 
 /**
  * Interface for service provider.
@@ -11,5 +16,5 @@ public interface ServiceProvider {
      *
      * @return City service instance
      */
-    CityWs provideCityService();
+    CityWs provideCityService() throws RemoteException, MalformedURLException, BusinessNotFound, ServiceNotFound;
 }

@@ -1,11 +1,11 @@
-# Web Server for lab2
+# Web Server for lab7
 
 ## Standalone
 
 Usage:
 
 ```shell
-Usage: lab2-server.jar [options]
+Usage: lab7-server.jar [options]
   Options:
   * -db_host
       Database host (example: localhost)
@@ -30,12 +30,14 @@ Usage: lab2-server.jar [options]
 Example:
 
 ```shell
-java -jar lab2-server.jar \
+java --add-opens java.base/java.net=ALL-UNNAMED \
+    -jar lab7-server.jar \
     -host http://localhost -port 9595 \
-    -db_host localhost -db_port 5439 -db_name tws_db -db_username postgres -db_password admin
+    -db_host localhost -db_port 5439 -db_name tws_db -db_username postgres -db_password admin \
+    -uddi_username juddi -uddi_password admin
 ```
 
-java -jar lab2-server.jar -host http://localhost -port 9595 -db_host localhost -db_port 5439 -db_name tws_db -db_username postgres -db_password admin
+java -jar lab7-server.jar -host http://localhost -port 9595 -db_host localhost -db_port 5439 -db_name tws_db -db_username postgres -db_password admin
 
 ## WAR package
 

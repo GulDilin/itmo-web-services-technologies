@@ -8,9 +8,16 @@
     </parent>
 
     <artifactId>lab7-server</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>lab7-service-discovery</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -100,6 +107,10 @@
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>rt</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+        </dependency>
         <!-- /JAX-WS -->
 
         <!-- CLI wrapper -->
@@ -109,13 +120,6 @@
             <version>1.82</version>
         </dependency>
         <!-- /CLI wrapper -->
-
-        <!-- jUDDI-->
-        <dependency>
-            <groupId>org.apache.juddi</groupId>
-            <artifactId>juddi-core</artifactId>
-        </dependency>
-        <!-- /jUDDI-->
     </dependencies>
 
     <build>
@@ -143,49 +147,49 @@
             </plugin>
             <!-- /Read properties from parent dir -->
 
-            <!-- Generate WSDL -->
-            <plugin>
-                <groupId>com.sun.xml.ws</groupId>
-                <artifactId>jaxws-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>generate-wsdl</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>wsgen</goal>
-                        </goals>
-                        <configuration>
-                            <sei>guldilin.service.impl.CityServiceImpl</sei>
-                            <genWsdl>true</genWsdl>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- /Generate WSDL -->
+<!--            &lt;!&ndash; Generate WSDL &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>com.sun.xml.ws</groupId>-->
+<!--                <artifactId>jaxws-maven-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>generate-wsdl</id>-->
+<!--                        <phase>process-classes</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>wsgen</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <sei>guldilin.service.impl.CityServiceImpl</sei>-->
+<!--                            <genWsdl>true</genWsdl>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash; /Generate WSDL &ndash;&gt;-->
 
-            <!-- Copy generated WSDL to META-INF/wsdl-->
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/classes/META-INF/wsdl</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.build.directory}/generated-sources/wsdl</directory>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- /Copy generated WSDL to META-INF/wsdl-->
+<!--            &lt;!&ndash; Copy generated WSDL to META-INF/wsdl&ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <artifactId>maven-resources-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>copy-resources</id>-->
+<!--                        <phase>process-classes</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>copy-resources</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <outputDirectory>${project.build.directory}/classes/META-INF/wsdl</outputDirectory>-->
+<!--                            <resources>-->
+<!--                                <resource>-->
+<!--                                    <directory>${project.build.directory}/generated-sources/wsdl</directory>-->
+<!--                                    <filtering>true</filtering>-->
+<!--                                </resource>-->
+<!--                            </resources>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+<!--            &lt;!&ndash; /Copy generated WSDL to META-INF/wsdl&ndash;&gt;-->
 
             <!-- Index beans-->
             <plugin>
@@ -218,42 +222,74 @@
             <!-- /Index beans-->
 
             <!-- Package to WAR-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
-                    <attachClasses>true</attachClasses>
-                    <packagingExcludes>
-                        WEB-INF/classes/guldilin/cli/*,
-                        WEB-INF/lib/weld-*.jar
-                    </packagingExcludes>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-war-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>-->
+<!--                    <attachClasses>true</attachClasses>-->
+<!--                    <packagingExcludes>-->
+<!--                        WEB-INF/classes/guldilin/cli/*,-->
+<!--                        WEB-INF/lib/weld-*.jar-->
+<!--                    </packagingExcludes>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
             <!-- /Package to WAR-->
 
             <!-- Package to JAR-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-assembly-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <appendAssemblyId>false</appendAssemblyId>-->
+<!--                    <archive>-->
+<!--                        <manifest>-->
+<!--                            <mainClass>guldilin.cli.Standalone</mainClass>-->
+<!--                        </manifest>-->
+<!--                    </archive>-->
+<!--                    <descriptorRefs>-->
+<!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--                    </descriptorRefs>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        &lt;!&ndash; Do not change to package, it won't include project classes for unknown reason&ndash;&gt;-->
+<!--                        <phase>prepare-package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>single</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <archive>
-                        <manifest>
-                            <mainClass>guldilin.cli.Standalone</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
+                <artifactId>maven-shade-plugin</artifactId>
                 <executions>
                     <execution>
-                        <!-- Do not change to package, it won't include project classes for unknown reason-->
-                        <phase>prepare-package</phase>
+                        <phase>package</phase>
                         <goals>
-                            <goal>single</goal>
+                            <goal>shade</goal>
                         </goals>
+                        <configuration>
+<!--                            <relocations>-->
+<!--                                <relocation>-->
+<!--                                    <pattern>com.sun</pattern>-->
+<!--                                    <shadedPattern>servershade.com.sun</shadedPattern>-->
+<!--                                </relocation>-->
+<!--                                <relocation>-->
+<!--                                    <pattern>shaded.com.sun</pattern>-->
+<!--                                    <shadedPattern>com.sun</shadedPattern>-->
+<!--                                </relocation>-->
+<!--                            </relocations>-->
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>guldilin.cli.Standalone</mainClass>
+                                </transformer>
+                            </transformers>
+<!--                            <transformers>-->
+<!--                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>-->
+<!--                            </transformers>-->
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -275,6 +311,8 @@
                             /system-property=DB_HOST:write-attribute(name="value",value="${postgres.db.host}")
                             /system-property=DB_USERNAME:write-attribute(name="value",value="${postgres.db.username}")
                             /system-property=DB_PASSWORD:write-attribute(name="value",value="${postgres.db.password}")
+                            /system-property=UDDI_USERNAME:write-attribute(name="value",value="${uddi.username}")
+                            /system-property=UDDI_PASSWORD:write-attribute(name="value",value="${uddi.password}")
                         </command>
                     </commands>
                 </configuration>

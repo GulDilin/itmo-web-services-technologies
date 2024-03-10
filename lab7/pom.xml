@@ -16,5 +16,6 @@
         <module>lab7-server</module>
         <module>lab7-proxy-api</module>
         <module>lab7-client</module>
+        <module>lab7-service-discovery</module>
     </modules>
 </project>

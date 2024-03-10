@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>guldilin</groupId>
+        <artifactId>lab7</artifactId>
+        <version>1.2.0</version>
+    </parent>
+
+    <artifactId>lab7-service-discovery</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <legacy.apache.cxf.version>3.1.15</legacy.apache.cxf.version>
+        <legacy.jax-ws.version>2.3.1</legacy.jax-ws.version>
+    </properties>
+
+    <dependencies>
+        <!-- jUDDI-->
+        <dependency>
+            <groupId>org.apache.juddi</groupId>
+            <artifactId>juddi-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.juddi</groupId>
+            <artifactId>uddi-ws</artifactId>
+        </dependency>
+        <!-- /jUDDI-->
+
+        <!--
+            legacy javax JAX-WS API
+            jUDDI use old javax API, incompatible with jakarta
+        -->
+        <dependency>
+            <groupId>javax.xml.ws</groupId>
+            <artifactId>jaxws-api</artifactId>
+            <version>${legacy.jax-ws.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.jws/javax.jws-api -->
+        <dependency>
+            <groupId>javax.jws</groupId>
+            <artifactId>javax.jws-api</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${legacy.jax-ws.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/javax.activation/activation -->
+        <!-- /JAX-WS API-->
+
+        <!-- Legacy javax compatible JAXB implementation-->
+        <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>${legacy.jax-ws.version}</version>
+        </dependency>
+        <!-- /JAXB implementation-->
+
+        <!--
+            legacy javax compatible JAX-WS implementation by Apache
+            It is used instead of com.sun.xml because of legacy javax versions conflict
+        -->
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${legacy.apache.cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>${legacy.apache.cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-databinding-jaxb</artifactId>
+            <version>${legacy.apache.cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-security</artifactId>
+            <version>${legacy.apache.cxf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-bindings-soap</artifactId>
+            <version>${legacy.apache.cxf.version}</version>
+        </dependency>
+        <!-- /JAX-WS implementation by Apache -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Package to JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <!--
+                                Fix java.lang.NullPointerException: Cannot invoke "org.apache.cxf.wsdl.WSDLManager.getDefinition(String)"
+                                because the return value of "org.apache.cxf.Bus.getExtension(java.lang.Class)" is null
+
+                                https://stackoverflow.com/questions/68727440/java-soap-ws-client-fails-from-command-line-works-in-eclipse-shocking-right
+                            -->
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>XXX.YYY.ZZZ</mainClass>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>META-INF/cxf/bus-extensions.txt</resource>
+                                </transformer>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Package to JAR -->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>
+                        --add-opens java.base/java.net=ALL-UNNAMED
+                    </argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

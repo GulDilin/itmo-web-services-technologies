@@ -45,6 +45,8 @@ public final class Standalone {
         params.put(PropertyKey.DB_NAME, args.getDbName());
         params.put(PropertyKey.DB_USERNAME, args.getDbUsername());
         params.put(PropertyKey.DB_PASSWORD, args.getDbPassword());
+        params.put(PropertyKey.UDDI_USERNAME, args.getUddiUsername());
+        params.put(PropertyKey.UDDI_PASSWORD, args.getUddiPassword());
 
         params.forEach((key, value) -> System.setProperty(key.name(), value));
         return params;
@@ -65,7 +67,6 @@ public final class Standalone {
             container.select(FlywayMigrator.class).get();
             CityService cityService = container.select(CityService.class).get();
             Endpoint.publish(urlCityService, cityService);
-
         } catch (Exception e) {
             System.err.println("Error during server start. Reason: " + e.getMessage());
             e.printStackTrace();

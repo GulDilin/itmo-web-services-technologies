@@ -1,5 +1,7 @@
 package guldilin.service.impl;
 
+import guldilin.config.PropertyKey;
+import guldilin.discovery.ServiceDiscovery;
 import guldilin.dto.CityCreateUpdateDTO;
 import guldilin.dto.CityDTO;
 import guldilin.dto.FilterArgumentDTO;
@@ -12,6 +14,7 @@ import guldilin.exceptions.ValidationFailed;
 import guldilin.repository.interfaces.CityRepository;
 import guldilin.service.interfaces.CityService;
 import guldilin.utils.Validator;
+import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
@@ -19,22 +22,22 @@ import jakarta.jws.WebService;
 import jakarta.jws.soap.SOAPBinding;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.xml.ws.Action;
+
+import java.rmi.RemoteException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.NoArgsConstructor;
-import org.apache.juddi.v3.annotations.UDDIService;
-import org.apache.juddi.v3.annotations.UDDIServiceBinding;
 
 /**
  * Implementation for CityService.
  */
-@UDDIService(businessKey = "uddi:tws", serviceKey = "uddi:CityWs", description = "City management service")
-@UDDIServiceBinding(
-        bindingKey = "uddi:CityWsBinding",
-        description = "WSDL endpoint for the City Service",
-        accessPoint = "http://localhost:8080/lab7-server/CityService?wsdl")
+//@UDDIService(businessKey = "uddi:tws", serviceKey = "uddi:CityWs", description = "City management service")
+//@UDDIServiceBinding(
+//        bindingKey = "uddi:CityWsBinding",
+//        description = "WSDL endpoint for the City Service",
+//        accessPoint = "http://localhost:8080/lab7-server/CityService?wsdl")
 @WebService(
         name = "CityWs",
         serviceName = "CityService",
@@ -49,6 +52,13 @@ public class CityServiceImpl implements CityService {
      */
     @Inject
     private CityRepository cityRepository;
+    @Inject
+    private ServiceDiscovery serviceDiscovery;
+
+    @PostConstruct
+    private void onInit() throws RemoteException {
+        this.serviceDiscovery.registerService(PropertyKey.APP_URL.lookupValue(), CityService.class);
+    }
 
     /**
      * {@inheritDoc}

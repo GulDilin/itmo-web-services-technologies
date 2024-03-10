@@ -81,4 +81,22 @@ public class Args {
             required = true,
             description = "Database password")
     private String dbPassword;
+
+    /**
+     * Database username.
+     */
+    @Parameter(
+            names = {"-uddi_username"},
+            required = true,
+            description = "UDDI service discovery username")
+    private String uddiUsername;
+
+    /**
+     * Database password.
+     */
+    @Parameter(
+            names = {"-uddi_password"},
+            required = true,
+            description = "UDDI service discovery password")
+    private String uddiPassword;
 }
