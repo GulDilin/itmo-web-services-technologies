@@ -5,7 +5,7 @@
 Usage:
 
 ```shell
-Usage: lab2-server.jar [options]
+Usage: lab4-server.jar [options]
   Options:
   * -db_host
       Database host (example: localhost)
@@ -21,7 +21,7 @@ Usage: lab2-server.jar [options]
 
     -host
       Server URL base
-      Default: http://localhost
+      Default: localhost
     -port
       Server URL port
       Default: 8080
@@ -30,12 +30,10 @@ Usage: lab2-server.jar [options]
 Example:
 
 ```shell
-java -jar lab2-server.jar \
-    -host http://localhost -port 9595 \
+java -jar lab4-server.jar \
+    -host localhost -port 9595 \
     -db_host localhost -db_port 5439 -db_name tws_db -db_username postgres -db_password admin
 ```
-
-java -jar lab2-server.jar -host http://localhost -port 9595 -db_host localhost -db_port 5439 -db_name tws_db -db_username postgres -db_password admin
 
 ## WAR package
 

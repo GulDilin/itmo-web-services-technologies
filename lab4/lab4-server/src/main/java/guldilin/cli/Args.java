@@ -12,6 +12,10 @@ public class Args {
      * Default server port.
      */
     public static final int DEFAULT_PORT = 8080;
+    /**
+     * Default server host.
+     */
+    public static final String DEFAULT_HOST = "localhost";
 
     /**
      * Help argument. If set - help message will be shown and command won't be executed.
@@ -27,7 +31,7 @@ public class Args {
     @Parameter(
             names = {"-host"},
             description = "Server URL base")
-    private String host = "http://localhost";
+    private String host = Args.DEFAULT_HOST;
 
     /**
      * Server port.

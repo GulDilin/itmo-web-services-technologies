@@ -64,7 +64,7 @@ public abstract class Executor<T extends Args> {
      */
     public JCommander buildCommander() {
         return JCommander.newBuilder()
-                .programName("lab2-client.jar")
+                .programName("lab4-client.jar")
                 .addObject(this.createEmptyArgs())
                 .build();
     }
