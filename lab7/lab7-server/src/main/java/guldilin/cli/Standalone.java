@@ -84,7 +84,7 @@ public final class Standalone {
     public static void main(final String[] argv) {
         Args args = new Args();
         JCommander commander = JCommander.newBuilder()
-                .programName("lab2-server.jar")
+                .programName("lab7-server.jar")
                 .addObject(args)
                 .build();
         try {
