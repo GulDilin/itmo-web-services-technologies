@@ -2,6 +2,8 @@
 
 Laboratory works of Web Services Technologies. Software Engineering Course ITMO magistracy 2-year
 
+Introduction to Java Web Services based on SOAP and REST
+
 ## Technology Stack
 
 - [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
