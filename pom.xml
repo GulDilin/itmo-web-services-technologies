@@ -14,8 +14,6 @@
         <glassfish.jakarta.el.version>5.0.0-M1</glassfish.jakarta.el.version>
         <jaxws.version>4.0.1</jaxws.version>
         <jaxrs.version>3.1.0</jaxrs.version>
-<!--        <jersey.version>3.0.12</jersey.version>-->
-<!--        <grizzly.version>4.0.2</grizzly.version>-->
         <weld.version>5.1.2.Final</weld.version>
         <swagger.version>2.2.20</swagger.version>
         <resteasy.version>6.2.7.Final</resteasy.version>
@@ -67,6 +65,8 @@
         <module>lab2</module>
         <module>lab3</module>
         <module>lab4</module>
+        <module>lab5</module>
+        <module>lab6</module>
         <module>lab7</module>
     </modules>
 

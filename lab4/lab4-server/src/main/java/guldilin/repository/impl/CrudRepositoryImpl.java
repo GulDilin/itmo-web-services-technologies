@@ -3,17 +3,13 @@ package guldilin.repository.impl;
 import guldilin.dto.FilterArgumentDTO;
 import guldilin.dto.PaginationRequestDTO;
 import guldilin.entity.AbstractEntity;
-import guldilin.exceptions.EntryNotFound;
-import guldilin.exceptions.FieldIsNotFilterable;
 import guldilin.repository.interfaces.CrudRepository;
 import guldilin.utils.FilterObjectConverter;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,11 +50,9 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
      * @param filterArgument argument filter
      * @param root           Criteria root object
      * @return Predicate
-     * @throws FieldIsNotFilterable if incorrect field placed in argument
      */
     public Predicate getFilterPredicate(
-            final CriteriaBuilder cb, final FilterArgumentDTO filterArgument, final Root<?> root)
-            throws FieldIsNotFilterable {
+            final CriteriaBuilder cb, final FilterArgumentDTO filterArgument, final Root<?> root) throws Exception {
         String field = filterArgument.getField();
         FilterObjectConverter.checkIfFieldFilterable(tClass, field);
         return cb.equal(root.get(field), filterArgument.getValue());
@@ -71,11 +65,9 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
      * @param root    Selection root
      * @param filters Filters list
      * @return List of WHERE predicates
-     * @throws FieldIsNotFilterable if filters are incorrect
      */
     public List<Predicate> parsePredicates(
-            final CriteriaBuilder cb, final Root<T> root, final List<FilterArgumentDTO> filters)
-            throws FieldIsNotFilterable {
+            final CriteriaBuilder cb, final Root<T> root, final List<FilterArgumentDTO> filters) throws Exception {
         List<Predicate> predicates = new ArrayList<>();
         if (filters != null) {
             for (FilterArgumentDTO filterArgument : filters) {
@@ -104,14 +96,14 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
      * @param root          Selection root
      * @param criteriaQuery CriteriaQuery
      * @param filters       Filters list
-     * @throws FieldIsNotFilterable if filters are incorrect
+     * @throws Exception if filters are incorrect
      */
     public void applyFilters(
             final CriteriaBuilder cb,
             final Root<T> root,
             final CriteriaQuery<?> criteriaQuery,
             final List<FilterArgumentDTO> filters)
-            throws FieldIsNotFilterable {
+            throws Exception {
         List<Predicate> predicates = parsePredicates(cb, root, filters);
         applyPredicates(cb, criteriaQuery, predicates);
     }
@@ -119,7 +111,7 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     /**
      * {@inheritDoc}
      */
-    public CriteriaQuery<T> createFilterQuery(final List<FilterArgumentDTO> filters) throws FieldIsNotFilterable {
+    public CriteriaQuery<T> createFilterQuery(final List<FilterArgumentDTO> filters) throws Exception {
         try (EntityManager em = this.createEntityManager()) {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<T> criteriaQuery = cb.createQuery(tClass);
@@ -138,9 +130,9 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
      *
      * @param filters list of filter fields arguments
      * @return Generated CriteriaQuery
-     * @throws FieldIsNotFilterable if some filter fields are incorrect
+     * @throws Exception if some filter fields are incorrect
      */
-    public CriteriaQuery<Long> createCounterQuery(final List<FilterArgumentDTO> filters) throws FieldIsNotFilterable {
+    public CriteriaQuery<Long> createCounterQuery(final List<FilterArgumentDTO> filters) throws Exception {
         try (EntityManager em = this.createEntityManager()) {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Long> criteriaQuery = cb.createQuery(Long.class);
@@ -189,8 +181,8 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
      * {@inheritDoc}
      */
     @Override
-    public T getById(final Integer id) throws EntryNotFound {
-        return this.findById(id).orElseThrow(() -> new EntryNotFound(this.tClass.getSimpleName(), id));
+    public T getById(final Integer id) throws Exception {
+        return this.findById(id).orElseThrow(() -> new Exception("Entity not found"));
     }
 
     /**
@@ -200,48 +192,6 @@ public class CrudRepositoryImpl<T extends AbstractEntity> implements CrudReposit
     public Long countByCriteria(final CriteriaQuery<Long> criteriaQuery) {
         try (EntityManager em = this.createEntityManager()) {
             return em.createQuery(criteriaQuery).getSingleResult();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public T create(@Valid final T entry) {
-        try (EntityManager em = this.createEntityManager()) {
-            EntityTransaction tx = em.getTransaction();
-            tx.begin();
-            em.persist(entry);
-            tx.commit();
-            return entry;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public T update(@Valid final T entry) throws EntryNotFound {
-        try (EntityManager em = this.createEntityManager()) {
-            EntityTransaction tx = em.getTransaction();
-            tx.begin();
-            this.getById(entry.getId());
-            em.merge(entry);
-            tx.commit();
-            return entry;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void deleteById(final Integer id) throws EntryNotFound {
-        try (EntityManager em = this.createEntityManager()) {
-            EntityTransaction tx = em.getTransaction();
-            tx.begin();
-            em.remove(this.getById(id));
-            tx.commit();
         }
     }
 

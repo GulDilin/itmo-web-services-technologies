@@ -27,6 +27,11 @@ import org.jboss.resteasy.spi.ResteasyDeployment;
  */
 public final class Standalone {
     /**
+     * Program name.
+     */
+    public static final String PROG_NAME = "lab4-server";
+
+    /**
      * Default empty constructor.
      */
     private Standalone() {
@@ -85,7 +90,7 @@ public final class Standalone {
         DeploymentInfo deploymentInfo = server.undertowDeployment(deployment, "/");
         deploymentInfo
                 .setClassLoader(RestApplication.class.getClassLoader())
-                .setContextPath("/lab4-server/api")
+                .setContextPath(String.format("/%s/api", PROG_NAME))
                 .setDeploymentName("Rest Application")
                 .addListeners(Servlets.listener(org.jboss.weld.environment.servlet.Listener.class));
         return deploymentInfo;
@@ -104,7 +109,7 @@ public final class Standalone {
         Undertow.Builder serverBuilder = Undertow.builder()
                 .addHttpListener(Integer.parseInt(params.get(PropertyKey.APP_PORT)), params.get(PropertyKey.APP_HOST));
         server.start(serverBuilder);
-        server.addResourcePrefixPath("/lab4-server", createStaticResourceHandler());
+        server.addResourcePrefixPath(String.format("/%s", PROG_NAME), createStaticResourceHandler());
     }
 
     /**
@@ -115,7 +120,7 @@ public final class Standalone {
     public static void main(final String[] argv) {
         Args args = new Args();
         JCommander commander = JCommander.newBuilder()
-                .programName("lab4-server.jar")
+                .programName(String.format("%s.jar", PROG_NAME))
                 .addObject(args)
                 .build();
         try {

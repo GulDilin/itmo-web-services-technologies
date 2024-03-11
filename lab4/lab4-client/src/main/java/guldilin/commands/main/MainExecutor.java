@@ -6,11 +6,7 @@ import guldilin.commands.common.Args;
 import guldilin.commands.common.ExceptionHandler;
 import guldilin.commands.common.Executor;
 import guldilin.commands.common.HelpArgs;
-import guldilin.commands.create.CreateExecutor;
-import guldilin.commands.delete.DeleteExecutor;
 import guldilin.commands.find.FindExecutor;
-import guldilin.commands.patch.PatchExecutor;
-import guldilin.commands.update.UpdateExecutor;
 import guldilin.service.ServiceProvider;
 import lombok.SneakyThrows;
 
@@ -27,10 +23,6 @@ public class MainExecutor extends Executor<MainArgs> {
     private Executor<?> getExecutorByCommand(final Args args) {
         return switch (args.getCommand()) {
             case find -> new FindExecutor();
-            case create -> new CreateExecutor();
-            case update -> new UpdateExecutor();
-            case patch -> new PatchExecutor();
-            case delete -> new DeleteExecutor();
             default -> throw new ParameterException("Executor for command not found");
         };
     }

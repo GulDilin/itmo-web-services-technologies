@@ -30,11 +30,7 @@ public class DeleteExecutor extends Executor<DeleteArgs> {
     @SneakyThrows
     public void execute(final String[] argv, final DeleteArgs args, final ServiceProvider serviceProvider) {
         var cityService = serviceProvider.provideCityService();
-        var deleted = cityService.deleteById(args.getId());
-        if (deleted) {
-            System.out.println("City was deleted");
-        } else {
-            System.out.println("City was not deleted");
-        }
+        cityService.deleteById(args.getId());
+        System.out.println("City was deleted");
     }
 }

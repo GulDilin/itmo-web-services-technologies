@@ -18,10 +18,6 @@ import lombok.ToString;
 @Builder
 public class ErrorDTO implements Serializable {
     /**
-     * The error code.
-     */
-    private ErrorCode code;
-    /**
      * The error message.
      */
     private String message;

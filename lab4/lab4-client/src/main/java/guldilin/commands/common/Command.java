@@ -10,23 +10,7 @@ public enum Command {
     /**
      * Find command.
      */
-    find,
-    /**
-     * Create command.
-     */
-    create,
-    /**
-     * Update command.
-     */
-    update,
-    /**
-     * Patch command.
-     */
-    patch,
-    /**
-     * Delete command.
-     */
-    delete;
+    find;
 
     /**
      * Get enum names list.

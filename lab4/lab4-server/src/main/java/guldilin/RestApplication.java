@@ -1,11 +1,7 @@
 package guldilin;
 
 import guldilin.controller.CityResource;
-import guldilin.exceptions.mapper.EntryNotFoundMapper;
-import guldilin.exceptions.mapper.FieldIsNotFilterableMapper;
-import guldilin.exceptions.mapper.NotAllowedMapper;
 import guldilin.exceptions.mapper.ThrowableMapper;
-import guldilin.exceptions.mapper.ValidationMapper;
 import io.swagger.v3.jaxrs2.integration.resources.OpenApiResource;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.servers.Server;
@@ -35,14 +31,7 @@ public class RestApplication extends Application {
      */
     @Override
     public Set<Class<?>> getClasses() {
-        return Stream.of(
-                        CityResource.class,
-                        OpenApiResource.class,
-                        ThrowableMapper.class,
-                        NotAllowedMapper.class,
-                        EntryNotFoundMapper.class,
-                        FieldIsNotFilterableMapper.class,
-                        ValidationMapper.class)
+        return Stream.of(CityResource.class, OpenApiResource.class, ThrowableMapper.class)
                 .collect(Collectors.toSet());
     }
 

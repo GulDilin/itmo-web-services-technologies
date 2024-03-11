@@ -1,6 +1,5 @@
 package guldilin.dto;
 
-import guldilin.exceptions.ErrorCode;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,10 +16,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 public class ErrorDTO implements Serializable {
-    /**
-     * The error code.
-     */
-    private ErrorCode code;
     /**
      * The error message.
      */
