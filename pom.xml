@@ -9,13 +9,22 @@
         <jakarta.enterprise.version>4.0.1</jakarta.enterprise.version>
         <jakarta.inject.version>2.0.1</jakarta.inject.version>
         <jakarta.xml.ws.version>4.0.0</jakarta.xml.ws.version>
+        <jakarta.el-api.version>5.0.1</jakarta.el-api.version>
+        <jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
+        <glassfish.jakarta.el.version>5.0.0-M1</glassfish.jakarta.el.version>
         <jaxws.version>4.0.1</jaxws.version>
+        <jaxrs.version>3.1.0</jaxrs.version>
+        <weld.version>5.1.2.Final</weld.version>
+        <swagger.version>2.2.20</swagger.version>
+        <resteasy.version>6.2.7.Final</resteasy.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.compilerArgs>--enable-preview</maven.compiler.compilerArgs>
         <maven.plugin.validation>VERBOSE</maven.plugin.validation>
         <log4j.version>2.20.0</log4j.version>
+        <slf4j.version>2.0.11</slf4j.version>
         <lombok.version>1.18.30</lombok.version>
+        <juddi.version>3.2.1</juddi.version>
         <scm.url>scm:git:git@github.com:GulDilin/itmo-web-services-technologies.git</scm.url>
         <repo.url>https://github.com/GulDilin/itmo-web-services-technologies</repo.url>
 
@@ -55,6 +64,10 @@
         <module>lab1</module>
         <module>lab2</module>
         <module>lab3</module>
+        <module>lab4</module>
+        <module>lab5</module>
+        <module>lab6</module>
+        <module>lab7</module>
     </modules>
 
     <dependencyManagement>
@@ -72,10 +85,24 @@
             <dependency>
                 <groupId>org.jboss.weld.se</groupId>
                 <artifactId>weld-se-core</artifactId>
-                <version>5.1.2.Final</version>
+                <version>${weld.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.weld.servlet</groupId>
+                <artifactId>weld-servlet-core</artifactId>
+                <version>${weld.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.weld.servlet</groupId>
+                <artifactId>weld-servlet-shaded</artifactId>
+                <version>${weld.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.weld</groupId>
+                <artifactId>weld-core-impl</artifactId>
+                <version>${weld.version}</version>
             </dependency>
             <!-- /CDI 2.0 -->
-
 
             <!-- Jakarta EE -->
             <!-- https://mvnrepository.com/artifact/jakarta.enterprise/jakarta.enterprise.cdi-api -->
@@ -102,20 +129,58 @@
                 <artifactId>jakarta.xml.bind-api</artifactId>
                 <version>${jakarta.enterprise.version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/jakarta.el/jakarta.el-api -->
+            <!-- Expression language API-->
+            <dependency>
+                <groupId>jakarta.el</groupId>
+                <artifactId>jakarta.el-api</artifactId>
+                <version>${jakarta.el-api.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/jakarta.servlet/jakarta.servlet-api -->
+            <dependency>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>${jakarta.servlet-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
             <!-- /Jakarta EE -->
 
             <!-- logging -->
-            <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api-->
+            <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core-->
+            <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-1.2-api -->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-1.2-api</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-core</artifactId>
                 <version>${log4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>${slf4j.version}</version>
+                <scope>runtime</scope>
             </dependency>
             <!-- /logging -->
 
@@ -128,7 +193,7 @@
             </dependency>
             <!-- /Database Driver -->
 
-            <!-- Persistence API Implementation -->
+            <!-- Persistence API -->
             <!-- https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api -->
             <dependency>
                 <groupId>jakarta.persistence</groupId>
@@ -187,7 +252,101 @@
                 <artifactId>rt</artifactId>
                 <version>${jaxws.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.sun.xml.bind</groupId>
+                <artifactId>jaxb-impl</artifactId>
+                <version>${jaxws.version}</version>
+            </dependency>
             <!-- /JAX-WS -->
+
+            <!-- Expression Language Implementation-->
+            <!-- https://mvnrepository.com/artifact/com.sun.el/el-ri -->
+            <dependency>
+                <groupId>com.sun.el</groupId>
+                <artifactId>el-ri</artifactId>
+                <version>3.0.4</version>
+            </dependency>
+            <!-- /Expression Language Implementation-->
+
+
+            <!-- JAX-RS -->
+            <!-- https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api -->
+            <dependency>
+                <groupId>jakarta.ws.rs</groupId>
+                <artifactId>jakarta.ws.rs-api</artifactId>
+                <version>${jaxrs.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/jakarta.ws.rs/all -->
+            <dependency>
+                <groupId>jakarta.ws.rs</groupId>
+                <artifactId>all</artifactId>
+                <version>${jaxrs.version}</version>
+                <type>pom</type>
+            </dependency>
+            <!-- /JAX-RS -->
+
+            <!-- RestEasy -->
+            <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-client -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-client</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-jackson2-provider -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-jackson2-provider</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-cdi -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-cdi</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-undertow -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-undertow</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <!-- /RestEasy -->
+
+            <!-- Expression language API Implementation -->
+            <!-- https://mvnrepository.com/artifact/org.glassfish/jakarta.el -->
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>jakarta.el</artifactId>
+                <version>${glassfish.jakarta.el.version}</version>
+            </dependency>
+            <!-- /Expression language API Implementation -->
+
+            <!-- Embedded server -->
+            <dependency>
+                <groupId>io.undertow</groupId>
+                <artifactId>undertow-core</artifactId>
+                <version>2.3.10.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>io.undertow</groupId>
+                <artifactId>undertow-servlet</artifactId>
+                <version>2.3.10.Final</version>
+            </dependency>
+            <!-- /Embedded server -->
+
+            <!-- Swagger -->
+            <!-- https://mvnrepository.com/artifact/io.swagger.core.v3/swagger-jaxrs2-jakarta -->
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-jaxrs2-jakarta</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-jaxrs2-servlet-initializer-v2-jakarta</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <!-- /Swagger -->
 
             <!-- testing -->
             <dependency>
@@ -206,6 +365,27 @@
                 <version>1.82</version>
             </dependency>
             <!-- /CLI wrapper -->
+
+            <!-- jUDDI-->
+            <!-- https://mvnrepository.com/artifact/org.apache.juddi/juddi-core -->
+            <dependency>
+                <groupId>org.apache.juddi</groupId>
+                <artifactId>juddi-core</artifactId>
+                <version>${juddi.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.juddi/juddi-client -->
+            <dependency>
+                <groupId>org.apache.juddi</groupId>
+                <artifactId>juddi-client</artifactId>
+                <version>${juddi.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.juddi/uddi-ws -->
+            <dependency>
+                <groupId>org.apache.juddi</groupId>
+                <artifactId>uddi-ws</artifactId>
+                <version>${juddi.version}</version>
+            </dependency>
+            <!-- /jUDDI-->
         </dependencies>
     </dependencyManagement>
 
@@ -283,6 +463,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
                     <version>3.6.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.5.2</version>
                 </plugin>
                 <plugin>
                     <groupId>com.sun.xml.ws</groupId>

@@ -1,0 +1,161 @@
+package guldilin.service.impl;
+
+import guldilin.config.PropertyKey;
+import guldilin.discovery.ServiceDiscovery;
+import guldilin.dto.CityCreateUpdateDTO;
+import guldilin.dto.CityDTO;
+import guldilin.dto.FilterArgumentDTO;
+import guldilin.dto.PaginationDTO;
+import guldilin.dto.PaginationRequestDTO;
+import guldilin.entity.City;
+import guldilin.exceptions.EntryNotFound;
+import guldilin.exceptions.FieldIsNotFilterable;
+import guldilin.exceptions.ValidationFailed;
+import guldilin.repository.interfaces.CityRepository;
+import guldilin.service.interfaces.CityService;
+import guldilin.utils.Validator;
+import jakarta.annotation.PostConstruct;
+import jakarta.inject.Inject;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebParam;
+import jakarta.jws.WebService;
+import jakarta.jws.soap.SOAPBinding;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.xml.ws.Action;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import lombok.NoArgsConstructor;
+
+/**
+ * Implementation for CityService.
+ */
+@WebService(
+        name = "CityWs",
+        serviceName = "CityService",
+        targetNamespace = "http://service.guldilin",
+        portName = "CityPort",
+        wsdlLocation = "META-INF/wsdl/CityService.wsdl")
+@SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.WRAPPED)
+@NoArgsConstructor
+public class CityServiceImpl implements CityService {
+    /**
+     * City repository implementation. Auto-injected.
+     */
+    @Inject
+    private CityRepository cityRepository;
+
+    /**
+     * Service discovery client to register service on startup. Auto-injected.
+     */
+    @Inject
+    private ServiceDiscovery serviceDiscovery;
+
+    @PostConstruct
+    private void onInit() throws RemoteException, MalformedURLException {
+        this.serviceDiscovery.registerService(PropertyKey.APP_URL.lookupValue(), CityService.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @WebMethod
+    public PaginationDTO<CityDTO> findByFilter(
+            @WebParam(name = "filters") final List<FilterArgumentDTO> filters,
+            @WebParam(name = "pagination") final PaginationRequestDTO pagination)
+            throws FieldIsNotFilterable, ValidationFailed {
+        Validator.validate(pagination);
+        var filtersV = Optional.ofNullable(filters).orElse(Collections.emptyList());
+        var paginationV = Optional.ofNullable(pagination).orElse(new PaginationRequestDTO());
+        var items = cityRepository.findByCriteria(cityRepository.createFilterQuery(filtersV), paginationV).stream()
+                .map(City::mapToDTO)
+                .collect(Collectors.toList());
+        var total = cityRepository.countByCriteria(cityRepository.createCounterQuery(filtersV));
+        Long nextOffset = null;
+        if (paginationV.getOffset() + items.size() < total) {
+            nextOffset = (long) (paginationV.getOffset() + paginationV.getLimit());
+        }
+        return PaginationDTO.<CityDTO>builder()
+                .items(items)
+                .total(total)
+                .nextOffset(nextOffset)
+                .build();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @WebMethod
+    @Action(
+            input = "http://service.guldilin/City/createRequest",
+            output = "http://service.guldilin/City/createResponse")
+    public CityDTO create(@WebParam(name = "city") final CityCreateUpdateDTO city) throws ValidationFailed {
+        Validator.validateNotNull(city, "city");
+        try {
+            return this.cityRepository.create(city.mapToEntity()).mapToDTO();
+        } catch (ConstraintViolationException e) {
+            throw new ValidationFailed(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @WebMethod
+    @Action(
+            input = "http://service.guldilin/City/updateRequest",
+            output = "http://service.guldilin/City/updateResponse")
+    public CityDTO update(
+            @WebParam(name = "id") final Integer id, @WebParam(name = "city") final CityCreateUpdateDTO city)
+            throws EntryNotFound, ValidationFailed {
+        Validator.validateNotNull(id, "id");
+        Validator.validateNotNull(city, "city");
+        City cityEntry = this.cityRepository.getById(id);
+        city.updateEntity(cityEntry);
+        try {
+            return this.cityRepository.update(cityEntry).mapToDTO();
+        } catch (ConstraintViolationException e) {
+            throw new ValidationFailed(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @WebMethod
+    @Action(input = "http://service.guldilin/City/patchRequest", output = "http://service.guldilin/City/patchResponse")
+    public CityDTO patch(
+            @WebParam(name = "id") final Integer id, @WebParam(name = "city") final CityCreateUpdateDTO city)
+            throws EntryNotFound, ValidationFailed {
+        Validator.validateNotNull(id, "id");
+        Validator.validateNotNull(city, "city");
+        City cityEntry = this.cityRepository.getById(id);
+        city.patchEntity(cityEntry);
+        try {
+            return this.cityRepository.update(cityEntry).mapToDTO();
+        } catch (ConstraintViolationException e) {
+            throw new ValidationFailed(e);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @WebMethod
+    @Action(
+            input = "http://service.guldilin/City/deleteByIdRequest",
+            output = "http://service.guldilin/City/deleteByIdResponse")
+    public Boolean deleteById(@WebParam(name = "id") final Integer id) throws EntryNotFound, ValidationFailed {
+        Validator.validateNotNull(id, "id");
+        this.cityRepository.deleteById(id);
+        return true;
+    }
+}

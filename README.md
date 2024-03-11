@@ -10,8 +10,11 @@ Laboratory works of Web Services Technologies. Software Engineering Course ITMO 
 - [Flyway](https://flywaydb.org/) For database migrations
 - [Weld](https://weld.cdi-spec.org/) For Provide CDI in Standalone application
 - [Hibernate](https://hibernate.org/) Database ORM
-- [Jakarta EE](https://jakarta.ee/) Java EE specifications
-- [PostgreSQL](https://www.postgresql.org/) DBMS
+- [Jakarta EE](https://jakarta.ee/) Jakarta EE 10 specifications
+- [JAX-WS](https://jakarta.ee/specifications/xml-web-services/4.0/) Jakarta XML Web Services 4.0 for SOAP API
+- [JAX-RS](https://jakarta.ee/specifications/restful-ws/3.1/) Jakarta RESTful Web Services 3.1
+- [PostgreSQL](https://www.postgresql.org/) Database
+- [jUDDI](https://juddi.apache.org/) Apache jUDDI service discovery
 
 ## Dev deps
 
@@ -73,6 +76,7 @@ This command will build next artifacts:
 - packaged `WAR` for deployment on application server
 
 ```shell
+cd lab#
 mvn clean package
 ```
 
@@ -89,6 +93,7 @@ docker compose -f deploy/local/docker-compose.yml up --build -d
 1. Package and deploy app
 
 ```shell
+cd lab#
 mvn clean install
 ```
 

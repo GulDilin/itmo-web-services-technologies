@@ -37,10 +37,27 @@ services:
       dockerfile: wildfly.Dockerfile
     environment:
       - DB_USERNAME=${POSTGRES_USER:-postgres}
-      - DB_PASSWORD=${POSTGRES_USER:-admin}
+      - DB_PASSWORD=${POSTGRES_PASSWORD:-admin}
     ports:
       - "8080:8080"
-      - "9990:9990"
+      - "9999:9990"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  tws-juddi:
+    restart: unless-stopped
+    container_name: tws-juddi
+    build:
+      context: .
+      dockerfile: juddi.Dockerfile
+      args:
+        - USERNAME=${JUDDI_USER:-juddi}
+        - PASSWORD=${JUDDI_PASSWORD:-admin}
+    ports:
+      - "8099:8080"
     logging:
       driver: "json-file"
       options:

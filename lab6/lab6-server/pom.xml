@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>guldilin</groupId>
+        <artifactId>lab6</artifactId>
+        <version>1.2.0</version>
+    </parent>
+
+    <artifactId>lab6-server</artifactId>
+    <packaging>war</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Jakarta EE -->
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.ejb</groupId>
+            <artifactId>jakarta.ejb-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+        <!-- /Jakarta EE -->
+
+        <!-- logging -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!-- /logging -->
+
+        <!-- Database Driver -->
+        <dependency>
+            <groupId>${postgres.driver.groupId}</groupId>
+            <artifactId>${postgres.driver.artifactId}</artifactId>
+        </dependency>
+        <!-- /Database Driver -->
+
+        <!-- Persistence API + Impl -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <!-- /Persistence API -->
+
+        <!-- Validation -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        <!-- /Validation -->
+
+        <!-- database migrations -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <!-- /database migrations -->
+
+        <!-- JAX-RS -->
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+        </dependency>
+        <!-- /JAX-RS -->
+
+        <!-- Swagger -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2-jakarta</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2-servlet-initializer-v2-jakarta</artifactId>
+        </dependency>
+        <!-- /Swagger -->
+
+        <!-- ========== EMBEDDED SERVER ONLY ========== -->
+        <!-- Undertow server with CDI -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-cdi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.undertow</groupId>
+            <artifactId>undertow-servlet</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-undertow</artifactId>
+        </dependency>
+        <!-- /Undertow server with CDI -->
+
+        <!-- JSON provider -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson2-provider</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+        </dependency>
+        <!-- /JSON provider -->
+
+        <!-- CDI 2.0 with SE context loader (for executable jar packaging) -->
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet-shaded</artifactId>
+        </dependency>
+        <!-- /CDI 2.0 -->
+
+        <!-- CLI wrapper -->
+        <dependency>
+            <groupId>com.beust</groupId>
+            <artifactId>jcommander</artifactId>
+        </dependency>
+        <!-- /CLI wrapper -->
+
+        <!-- Expression Lang-->
+        <dependency>
+            <groupId>jakarta.el</groupId>
+            <artifactId>jakarta.el-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.el</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>4.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- /Expression Lang-->
+        <!-- ========== /EMBEDDED SERVER ONLY ========== -->
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- Read properties from parent dir -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <files>
+                        <file>../../configuration.properties</file>
+                    </files>
+                    <properties/>
+                </configuration>
+            </plugin>
+            <!-- /Read properties from parent dir -->
+
+            <!-- Index beans-->
+            <plugin>
+                <!-- https://github.com/wildfly/jandex-maven-plugin -->
+                <groupId>io.smallrye</groupId>
+                <artifactId>jandex-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>make-index</id>
+                        <goals>
+                            <!-- phase is 'process-classes by default' -->
+                            <goal>jandex</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>uberjar-index</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jandex-jar</goal>
+                        </goals>
+                        <configuration>
+                            <jar>${project.build.directory}/${project.build.finalName}.jar</jar>
+                            <includes>
+                                <include>guldilin/**/*.class</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Index beans-->
+
+            <!-- Package to WAR-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <outputFileNameMapping>@{artifactId}@.@{extension}@</outputFileNameMapping>
+                    <attachClasses>true</attachClasses>
+                    <!-- exclude packages used for embedded server -->
+                    <packagingExcludes>
+                        WEB-INF/classes/guldilin/cli/*,
+                        WEB-INF/lib/weld-*.jar,
+                        WEB-INF/lib/resteasy-*.jar,
+                        WEB-INF/lib/undertow-*.jar,
+                        WEB-INF/lib/jakarta.el*.jar,
+                        WEB-INF/lib/jakarta.xml.bind*.jar
+                    </packagingExcludes>
+                </configuration>
+            </plugin>
+            <!-- /Package to WAR-->
+
+            <!-- Package to JAR-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <appendAssemblyId>false</appendAssemblyId>
+                    <archive>
+                        <manifest>
+                            <mainClass>guldilin.cli.Standalone</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <!-- Do not change to package, it won't include project classes for unknown reason -->
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Package to JAR -->
+
+            <!-- Generate Swagger UI part  -->
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>download-swagger-ui</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <skipCache>true</skipCache>
+                            <url>https://github.com/swagger-api/swagger-ui/archive/master.tar.gz</url>
+                            <unpack>true</unpack>
+                            <outputDirectory>${project.build.directory}/swagger-ui</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-swagger-ui</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/${project.artifactId}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/swagger-ui/swagger-ui-master/dist</directory>
+                                    <filtering>true</filtering>
+                                    <excludes>
+                                        <exclude>index.html</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-swagger-ui-2</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/classes/static</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.build.directory}/swagger-ui/swagger-ui-master/dist</directory>
+                                    <filtering>true</filtering>
+                                    <excludes>
+                                        <exclude>index.html</exclude>
+                                    </excludes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Generate Swagger UI part  -->
+
+            <!-- Deployment -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <configuration>
+                    <hostname>${wildfly.hostname}</hostname>
+                    <port>${wildfly.port}</port>
+                    <username>${wildfly.username}</username>
+                    <password>${wildfly.username}</password>
+                    <commands>
+                        <!-- Set system property for application database config -->
+                        <command>
+                            /system-property=DB_JNDI_NAME:write-attribute(name="value",value="${postgres.db.jndi}")
+                            /system-property=DB_HOST:write-attribute(name="value",value="${postgres.db.host}")
+                            /system-property=DB_USERNAME:write-attribute(name="value",value="${postgres.db.username}")
+                            /system-property=DB_PASSWORD:write-attribute(name="value",value="${postgres.db.password}")
+                        </command>
+                    </commands>
+                </configuration>
+                <executions>
+                    <!-- Deploy the JDBC library -->
+                    <execution>
+                        <id>deploy-driver</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deploy-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <groupId>${postgres.driver.groupId}</groupId>
+                            <artifactId>${postgres.driver.artifactId}</artifactId>
+                            <name>${postgres.driver.name}</name>
+                        </configuration>
+                    </execution>
+
+                    <!-- Add a data source -->
+                    <execution>
+                        <id>add-datasource</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <address>subsystem=datasources,data-source=${postgres.db.jndi}</address>
+                            <force>true</force>
+                            <resources>
+                                <resource>
+                                    <properties>
+                                        <jta>true</jta>
+                                        <jndi-name>${postgres.db.jndi}</jndi-name>
+                                        <enabled>true</enabled>
+                                        <connection-url>${postgres.db.url}</connection-url>
+                                        <driver-class>org.postgresql.Driver</driver-class>
+                                        <driver-name>${postgres.driver.name}</driver-name>
+                                        <user-name>${postgres.db.username}</user-name>
+                                        <password>${postgres.db.password}</password>
+                                    </properties>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>deploy</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- /Deployment -->
+        </plugins>
+    </build>
+</project>
