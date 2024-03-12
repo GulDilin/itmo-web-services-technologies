@@ -5,7 +5,7 @@
 Usage:
 
 ```shell
-Usage: lab2-server.jar [options]
+Usage: lab3-server.jar [options]
   Options:
   * -db_host
       Database host (example: localhost)
@@ -30,7 +30,7 @@ Usage: lab2-server.jar [options]
 Example:
 
 ```shell
-java -jar lab2-server.jar \
+java -jar lab3-server.jar \
     -host http://localhost -port 9595 \
     -db_host localhost -db_port 5439 -db_name tws_db -db_username postgres -db_password admin
 ```
