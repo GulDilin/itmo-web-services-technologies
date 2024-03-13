@@ -7,8 +7,10 @@ repos:
     hooks:
       - id: trailing-whitespace
         name: (Global) Run trailing-whitespace
+        exclude: \.(docx|pdf)$
       - id: end-of-file-fixer
         name: (Global) Run end-of-file-fixer
+        exclude: \.(docx|pdf)$
       - id: check-yaml
         name: (Global) Run check-yaml
       - id: check-added-large-files
@@ -19,10 +21,10 @@ repos:
     hooks:
       - id: forbid-crlf
         name: (Global) Forbid CRLF line endings
-        exclude: \.(txt|lock)$
+        exclude: \.(txt|lock|docx|pdf)$
       - id: remove-crlf
         name: (Global) Remove CRLF line endings
-        exclude: \.(txt|lock)$
+        exclude: \.(txt|lock|docx|pdf)$
 
   - repo: local
     hooks:
