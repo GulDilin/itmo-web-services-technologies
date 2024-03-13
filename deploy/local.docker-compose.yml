@@ -40,7 +40,7 @@ services:
       - DB_PASSWORD=${POSTGRES_PASSWORD:-admin}
     ports:
       - "8080:8080"
-      - "9999:9990"
+      - "9990:9990"
     logging:
       driver: "json-file"
       options:
@@ -57,7 +57,7 @@ services:
         - USERNAME=${JUDDI_USER:-juddi}
         - PASSWORD=${JUDDI_PASSWORD:-admin}
     ports:
-      - "8099:8080"
+      - "8999:8080"
     logging:
       driver: "json-file"
       options:
