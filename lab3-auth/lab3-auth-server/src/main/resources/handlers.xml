@@ -1,0 +1,8 @@
+<handler-chains xmlns="https://jakarta.ee/xml/ns/jakartaee">
+    <handler-chain>
+        <handler>
+            <handler-name>AuthHandler</handler-name>
+            <handler-class>guldilin.security.AuthHandler</handler-class>
+        </handler>
+    </handler-chain>
+</handler-chains>

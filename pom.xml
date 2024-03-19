@@ -64,6 +64,7 @@
         <module>lab1</module>
         <module>lab2</module>
         <module>lab3</module>
+        <module>lab3-auth</module>
         <module>lab4</module>
         <module>lab5</module>
         <module>lab6</module>
@@ -142,6 +143,12 @@
                 <artifactId>jakarta.servlet-api</artifactId>
                 <version>${jakarta.servlet-api.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/jakarta.security.enterprise/jakarta.security.enterprise-api -->
+            <dependency>
+                <groupId>jakarta.security.enterprise</groupId>
+                <artifactId>jakarta.security.enterprise-api</artifactId>
+                <version>3.0.0</version>
             </dependency>
             <!-- /Jakarta EE -->
 
