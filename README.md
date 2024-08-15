@@ -4,7 +4,7 @@ Laboratory works of Web Services Technologies. Software Engineering Course ITMO 
 
 Introduction to Java Web Services based on SOAP and REST
 
-Some change 2
+Some change 3
 
 ## Technology Stack
 
